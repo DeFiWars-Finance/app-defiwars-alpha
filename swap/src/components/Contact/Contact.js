@@ -1,9 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import style from  './Contact.css';
-import appStyle from '../../App.module.css';
-import Footer from '../Footer/Footer';
-import Header from '../Header/Header';
+import appStyle from '../../pages/App.module.css';
 
 class Contact extends React.Component {
   constructor(props) {
@@ -21,9 +19,7 @@ class Contact extends React.Component {
   handleSubmit = async (event) => {
     event.preventDefault();
     console.log('form is submitted');
-    const me = this;
-    // const letter = 'name: ' + this.state.name + '\n email: ' + this.state.email + '\n message: ' + this.state.message
-    // window.open('mailto:info@defiwars.finance?subject=DefiWars%20contact%20form&body=' + encodeURIComponent(letter))
+    const that = this;
 
     axios
       .post(
@@ -34,34 +30,27 @@ class Contact extends React.Component {
           email: this.state.email,
           message: this.state.message,
         },
-        {
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-          }
-        },
+        { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } },
       )
       .then(function(response) {
-        me.setState({ errorMessage: response.data });
+        that.setState({errorMessage:response.data});
       })
       .catch((error) => {
-        if (error.response){
-          me.setState({ errorMessage: error.response.data });
-        }
+          if( error.response ){
+              that.setState({errorMessage:error.response.data});
+          }
       });
   }
   
   onChange = (event) => {
     let val = []
-
     val[event.target.id] = event.target.value
     this.setState(val)
   }
 
   render() {
     return (
-      <div className={style.Sword}>
-        <Header />
-
+      <div className='contact-form'>
         <div className={appStyle.container}>
           <div className='main-form'>
             <div className='left-form'>
@@ -80,7 +69,6 @@ class Contact extends React.Component {
                     value={this.state.name}
                     onChange={this.onChange}
                   ></input>
-
                   <input
                     name='email'
                     id='email'
@@ -88,15 +76,14 @@ class Contact extends React.Component {
                     value={this.state.email}
                     onChange={this.onChange}
                   ></input>
-
                   <textarea
                     value={this.state.message}
-                    onChange={this.onChange}
+                    onChange={this.onChange} 
                     name='message'
                     id='message'
                     rows='6'
                     placeholder='Message'
-                  ></textarea>
+                  />
 
                   <button type='submit'>Submit</button>
                 </div>
@@ -104,8 +91,6 @@ class Contact extends React.Component {
             </div>
           </div>
         </div>
-
-        <Footer />
       </div>
     );
   }

@@ -1,8 +1,8 @@
-import React from "react";
-import { Collapse } from "react-collapse";
-import { NavLink } from "react-router-dom";
-import { slide as MenuMobile } from "react-burger-menu";
-import style from "./Menu.module.css";
+import React, { Suspense, useEffect, useState } from 'react';
+import { HashRouter, Route, Switch, NavLink, Link } from 'react-router-dom';
+import { Collapse } from 'react-collapse';
+import { slide as MenuMobile } from 'react-burger-menu';
+import style from './Menu.module.css';
 
 let styles = {
   bmBurgerButton: {
@@ -122,8 +122,6 @@ class Menu extends React.Component {
               </div>
             </Collapse>
 
-            <NavLink exact to="/NFA_Collections">Claim NFT</NavLink>
-
             <NavLink exact to="/About_the_Team">The Team</NavLink>
 
             <NavLink exact to="/Make_Contact">Make Contact</NavLink>
@@ -152,10 +150,6 @@ class Menu extends React.Component {
                   <NavLink exact to="/The_Army">My NFTs</NavLink>
                 </div>
               </Collapse>
-            </li>
-            <li>
-              {" "}
-              <NavLink exact to="/NFA_Collections">Claim NFT</NavLink>
             </li>
             <li>
               <NavLink exact to="/About_the_Team">The Team</NavLink>

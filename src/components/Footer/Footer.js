@@ -1,7 +1,7 @@
 import React from 'react';
+import { NavLink, Link } from 'react-router-dom';
 import style from './Footer.css';
 import appStyle from '../../App.module.css';
-import { NavLink, Link } from 'react-router-dom';
 
 class Footer extends React.Component {
   openLinkTab(event) {

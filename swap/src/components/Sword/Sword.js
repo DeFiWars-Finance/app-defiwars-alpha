@@ -1,6 +1,6 @@
 import React from "react";
 import style from "./Sword.module.css";
-import appStyle from "../../App.module.css";
+import appStyle from "../../pages/App.module.css";
 import Menu from "../Menu/Menu";
 import Footer from "../Footer/Footer";
 import Header from "../Header/Header";
@@ -27,7 +27,7 @@ class Sword extends React.Component {
 
   swap() {
     const { accountAddress } = this.state;
-    var address = store.getStore("accountAddress");
+    let address = store.getStore("accountAddress");
     const web3 = store.getStore("web3");
     if (!web3) {
       store.connect();
@@ -38,7 +38,7 @@ class Sword extends React.Component {
   }
   
   addAddress() {
-    var address = store.getStore("accountAddress");
+    let address = store.getStore("accountAddress");
     this.setState({
         accountAddress:address,
     })
@@ -46,17 +46,18 @@ class Sword extends React.Component {
   }
     
   componentWillMount() {
-    emitter.on('enabled', this.addAddress);
+      emitter.on('enabled', this.addAddress);
   }
   
   componentWillUnmount() {
-    emitter.removeListener('enabled', this.addAddress);
+      emitter.removeListener('enabled', this.addAddress);
   }
+  
   
   render() {
     const { showSword, accountAddress } = this.state;
-    var connectButton = "CONNECT <br /> WALLET";
-    var address = "";
+    let connectButton = "Connect <br /> Wallet";
+    let address = "";
     if (accountAddress) {
       address = accountAddress.substring(0,6)+'...'+accountAddress.substring(accountAddress.length-4,accountAddress.length)
     }
@@ -73,16 +74,15 @@ class Sword extends React.Component {
           <div className={appStyle.container}>
             {/* <div className={style.text}>
               <p>
-                DeFiWars Finance is an NFT(Non-Fungible Token)-based GameFi
-                ecosystem comprised of multiple digital assets, including
-                diverse NFTs (Non-Fungible Tokens), where users can accrue
-                value via impermanent-loss-free PoLPs (Polarized Liquidity
-                Pools), as well as be able to stake, swap, and claim/buy
-                tokens to increase their individual APY, using proprietary
-                consensus algorithm ‘PoLP’ (Proof-of-Liquidity Provision).
-                DeFiWars Finance works with at least 3 different fungible
-                tokens: $DWARF (native and governance),	$DARTH, and $JEDI
-                (these latter, a polarized pair of utilities).
+                How to Play?
+                1) Hold at least 3,000 $DWARF in your wallet. We strongly recommend you to acquire 5,000 $DWARF
+                in order to be able to buy some $JEDI or $DARTH, according to your choice, at our <a href="https://pancakeswap.finance/add/0x33C29af05cA9aE21D8e1bf01Ad5adeFE7b2EE5Ff/BNB">official
+                PancakeSwap LP</a>.
+                2) Login to DeFiWars Finance, and then provide some liquidity over either JEDI and/or DARTH PoLPs
+                (Polarized Liquidity Pools).
+                3) Direct yourself to our Scheduled Warfare section at the Top Menu, and select a period to stake
+                your $DWARF. We suggest you to firstly select a 1-day period; when it has fully ended, you may
+                claim your very first NFT over the chosen PoLP.
               </p>
             </div>*/}
             <div className={style.mobileSword}>
@@ -104,7 +104,6 @@ class Sword extends React.Component {
               </div>
             </div>
           </div>
-
           <div className={appStyle.container}>
             <div className={style.mainSword}>
               <img
@@ -117,7 +116,6 @@ class Sword extends React.Component {
                 alt="Light Saber" />
             </div>
           </div>
-
           <div className={appStyle.container}>
             <div className={style.mainConnectWallet}>
               <div>
@@ -125,7 +123,6 @@ class Sword extends React.Component {
                   <a onClick={this.swap}>
                     {Parser(connectButton)}
                   </a>
-
                   <svg
                     width="260"
                     height="91"
@@ -241,7 +238,7 @@ class Sword extends React.Component {
                       x2="321"
                       y2="2.00003"
                       stroke="url(#paint0_linear)"
-                      stroke-width="4"
+                      strokeWidth="4"
                     />
                     <rect x="9" width="5" height="4" fill="white" />
                     <rect width="5" height="4" fill="white" />
@@ -254,8 +251,8 @@ class Sword extends React.Component {
                         y2="4.00119"
                         gradientUnits="userSpaceOnUse"
                       >
-                        <stop stop-color="white" />
-                        <stop offset="1" stop-color="white" stop-opacity="0" />
+                        <stop stopColor="white" />
+                        <stop offset="1" stopColor="white" stopOpacity="0" />
                       </linearGradient>
                     </defs>
                   </svg>
