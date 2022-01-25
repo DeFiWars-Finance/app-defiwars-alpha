@@ -52,6 +52,8 @@
     "react/jsx-fragments": 0,
     "@typescript-eslint/no-this-alias": 0,
     "react/self-closing-comp": 0,
+    "react/no-unused-state": 0,
+    "react/button-has-type": 0,
     // End temporary rules
   }
 }

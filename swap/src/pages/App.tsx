@@ -21,6 +21,7 @@ import Home from '../components/Home/Home';
 import About from '../components/About/About';
 import Collections from '../components/Collections/Collections';
 import Auction from '../components/Auction/Auction';
+import Market from '../components/Market/Market';
 import Header from '../components/Header/Header';
 import Footer from '../components/Footer/Footer';
 
@@ -58,6 +59,7 @@ export default function App() {
                 <Route exact strict path='/What_is_DWARF' component={Home} />
                 <Route exact strict path='/About_the_Team' component={About} />
                 <Route exact strict path='/Make_Contact' component={Contact} />
+                <Route exact strict path='/NFA_Market' component={Market} />
                 <Route exact strict path='/swap' component={Swap} />
                 <Route exact strict path='/find' component={PoolFinder} />
                 <Route exact strict path='/pool' component={Pool} />

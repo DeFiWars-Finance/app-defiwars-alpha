@@ -21,13 +21,14 @@ class Header extends React.Component {
 
     this.state = {
       accountAddress: accountAddress,
-      haveNFT:haveNFT,
-      isInWar:isInWar,
-      netId:netId,
+      haveNFT: haveNFT,
+      isInWar: isInWar,
+      netId: netId,
       inProcess:false,
-      mainNetId:mainNetId,
-      loggedin:loggedin,
+      mainNetId: mainNetId,
+      loggedin: loggedin,
     };
+
     this.changeStatus = this.changeStatus.bind(this);
     this.addAddress = this.addAddress.bind(this);
     this.checkNFTs = this.checkNFTs.bind(this);
@@ -57,31 +58,32 @@ class Header extends React.Component {
   checknetId() {
     var netId = store.getStore('netId');
     this.setState({
-      netId:netId,
+      netId: netId,
     })
   }
   
   checkReady() {
     var inProcess = store.getStore('inProcess');
     var loggedin = store.getStore('loggedin');
+
     this.setState({
-      inProcess:inProcess,
-      loggedin:loggedin,
+      inProcess: inProcess,
+      loggedin: loggedin,
     })
   }
 
   checkNFTs() {
     var haveNFT = store.getStore('haveNFT');
     this.setState({
-      haveNFT:haveNFT,
+      haveNFT: haveNFT,
     })
     var isInWar = store.getStore('isInWar');
     this.setState({
-      isInWar:isInWar,
+      isInWar: isInWar,
     })
     var netId = store.getStore('netId');
     this.setState({
-      netId:netId,
+      netId: netId,
     })
   }
 
@@ -93,13 +95,13 @@ class Header extends React.Component {
     var isInWar = store.getStore('isInWar');
     var mainNetId = store.getStore('mainNetId');
     var netId = store.getStore('netId');
+
     if (!inProcess) {
-      if ( address && netId===mainNetId ) {
+      if ( address && netId === mainNetId ) {
         if (!haveNFT) {
           if (loggedin) {
             store.mint();
           } else {
-
             this.props.history.push('/login');
           }
         } else if (isInWar) {
@@ -115,46 +117,61 @@ class Header extends React.Component {
   }
 
   componentWillMount() {
-    emitter.on('enabled', this.addAddress);
-    emitter.on('isInWar', this.checkNFTs);
-    emitter.on('haveNFT', this.checkNFTs);
     emitter.on('netId', this.checknetId);
+    emitter.on('enabled', this.addAddress);
+    emitter.on('haveNFT', this.checkNFTs);
+    emitter.on('isInWar', this.checkNFTs);
     emitter.on('ready', this.checkReady);
   }
   
   componentWillUnmount() {
-    emitter.removeListener('enabled', this.addAddress);
-    emitter.removeListener('isInWar', this.checkNFTs);
+    emitter.removeListener('netId', this.addAddress);
+    emitter.removeListener('enabled', this.checkNFTs);
     emitter.removeListener('haveNFT', this.checkNFTs);
-    emitter.removeListener('netId', this.checknetId);
+    emitter.removeListener('isInWar', this.checknetId);
     emitter.removeListener('ready', this.checkReady);
   }
   
   render() {
-    const { accountAddress, isInWar, haveNFT, netId, inProcess, mainNetId, loggedin } = this.state;
-    var connectButton = 'CONNECT <br /> WALLET';
+    var connectButton = 'CONNECT <br />WALLET';
+    var menuitems = '';
+    const {
+      accountAddress,
+      isInWar,
+      haveNFT,
+      netId,
+      inProcess,
+      mainNetId,
+      loggedin
+    } = this.state;
+
     if (accountAddress) {
-      connectButton = 'WAR <br /> NFT';
+      connectButton = 'MINT my WAR <br />ngNFT';
       if (haveNFT && isInWar) {
-        connectButton = 'PEACE <br />NFT';
+        connectButton = 'MINT my PEACE <br />ngNFT';
       }
+
       if (haveNFT && !isInWar) {
-        connectButton = 'Stake <br />NFTs';
+        connectButton = 'Select PoLP <br />& Stake';
       }
+
       if (!haveNFT && !loggedin) {
-        connectButton = 'Login or<br />Sign Up';
+        connectButton = 'LOGIN';
       }
+
       if (netId != mainNetId) {
-        connectButton = 'Wrong <br />Network';
+        connectButton = 'Connect to <br /> BSC Mainnet';
       }
+
       if (inProcess) {
         connectButton = 'processing <br /> ...';
       }
     }
-    var menuitems = '';
+
     if (isInWar) {
-        menuitems = <Menu />
-      }
+      menuitems = <Menu />
+    }
+
     return (
       <header  className={appStyle.flexauto}>
         <div className={style.logo}>
@@ -163,6 +180,7 @@ class Header extends React.Component {
             <a onClick={this.changeStatus}>
               {Parser(connectButton)}
             </a>
+
             <svg
               width='100'
               height='32'

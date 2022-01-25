@@ -40,7 +40,7 @@ class Sword extends React.Component {
   addAddress() {
     var address = store.getStore("accountAddress");
     this.setState({
-        accountAddress:address,
+      accountAddress:address,
     })
     this.activateSword();
   }
