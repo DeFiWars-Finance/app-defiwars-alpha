@@ -89,32 +89,38 @@ class Header extends React.Component {
 
   changeStatus() {
     const { inProcess } = this.state;
-    var address = store.getStore('accountAddress');
-    var loggedin = store.getStore('loggedin');
-    var haveNFT = store.getStore('haveNFT');
-    var isInWar = store.getStore('isInWar');
-    var mainNetId = store.getStore('mainNetId');
-    var netId = store.getStore('netId');
-
+    var address = store.getStore("accountAddress");
+    var loggedin = store.getStore("loggedin");
+    var haveNFT = store.getStore("haveNFT");
+    var isInWar = store.getStore("isInWar");
+    var mainNetId = store.getStore("mainNetId");
+    var netId = store.getStore("netId");
     if (!inProcess) {
-      if ( address && netId === mainNetId ) {
-        if (!haveNFT) {
-          if (loggedin) {
-            store.mint();
-          } else {
-            this.props.history.push('/login');
+      while (address && netId === mainNetId) {
+        if (loggedin) {
+          //This is the actual Key to access DeFiWars Finance
+          if (haveNFT) {
+            if (isInWar) {
+              //This means to unstake $DWARF
+              store.peace();
+              this.props.history.push('/NFA_Market');
+              }
+              else {
+                //This means to stake $DWARF
+                store.war();
+                this.props.history.push('/NFA_Collections');
+                }
+            }
+            else {
+              store.mint();
+              this.props.history.push('/Liquidity_Pools');
+              }
           }
-        } else if (isInWar) {
-          store.peace();
-          this.props.history.push('/');
-        } else {
-          store.war();
-        }
-      } else {
-        store.connect();
+          else this.props.history.push('/login');
       }
-    }
-  }
+        store.connect();
+        }
+      }
 
   componentWillMount() {
     emitter.on('netId', this.checknetId);
