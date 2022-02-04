@@ -2,7 +2,6 @@ import React, { Component, Fragment } from 'react';
 import Web3 from 'web3';
 
 var EventEmitter = require('events').EventEmitter;
-
 var emitter = new EventEmitter();
 
 const getAccountsCallback = (
@@ -10,13 +9,12 @@ const getAccountsCallback = (
   ) => (error, accounts) => {
   if (error) {
     const message = 'Cannot retrieve account data.';
-    }
-    else {
-      const accountAddress = accounts.length === 0 ? null : accounts[0];
+    } else {
+      const accountAddress = accounts.length === 0 ? null: accounts[0];
       updateAccountAddress(accountAddress);
       emitter.emit('enabled', accountAddress);
       console.log('enabled');
-      }
+    }
   };
 
 class Store extends React.Component {
@@ -46,10 +44,9 @@ class Store extends React.Component {
       lpJediAddress: '0xdad7ce09f6e5243fa5f0b64a48e4318c69eaf5b7',
       lpDarthAddress: '0xcda8906ca5b25c1664edaf6e57850238f4aa19db',
       auctionAddress: '0x9AD0197363c0f23b4c097F04A2577c15866696A6',
-      dwarfABI: [{'inputs':[{'internalType':'address','name':'_DWARFToken','type':'address'},{'internalType':'address','name':'_DarthLPToken','type':'address'},{'internalType':'address','name':'_JediLPToken','type':'address'},{'internalType':'address','name':'_DarthNFT','type':'address'},{'internalType':'address','name':'_JediNFT','type':'address'},{'internalType':'address','name':'_JediToken','type':'address'},{'internalType':'address','name':'_DarthToken','type':'address'}],'stateMutability':'nonpayable','type':'constructor'},{'anonymous':false,'inputs':[{'indexed':true,'internalType':'address','name':'owner','type':'address'},{'indexed':true,'internalType':'address','name':'approved','type':'address'},{'indexed':true,'internalType':'uint256','name':'tokenId','type':'uint256'}],'name':'Approval','type':'event'},{'anonymous':false,'inputs':[{'indexed':true,'internalType':'address','name':'owner','type':'address'},{'indexed':true,'internalType':'address','name':'operator','type':'address'},{'indexed':false,'internalType':'bool','name':'approved','type':'bool'}],'name':'ApprovalForAll','type':'event'},{'anonymous':false,'inputs':[{'indexed':true,'internalType':'address','name':'previousOwner','type':'address'},{'indexed':true,'internalType':'address','name':'newOwner','type':'address'}],'name':'OwnershipTransferred','type':'event'},{'anonymous':false,'inputs':[{'indexed':true,'internalType':'address','name':'from','type':'address'},{'indexed':true,'internalType':'address','name':'to','type':'address'},{'indexed':true,'internalType':'uint256','name':'tokenId','type':'uint256'}],'name':'Transfer','type':'event'},{'inputs':[],'name':'DWARFToken','outputs':[{'internalType':'address','name':'','type':'address'}],'stateMutability':'view','type':'function'},{'inputs':[],'name':'DarthLPToken','outputs':[{'internalType':'address','name':'','type':'address'}],'stateMutability':'view','type':'function'},{'inputs':[],'name':'DarthNFT','outputs':[{'internalType':'address','name':'','type':'address'}],'stateMutability':'view','type':'function'},{'inputs':[],'name':'DarthToken','outputs':[{'internalType':'address','name':'','type':'address'}],'stateMutability':'view','type':'function'},{'inputs':[],'name':'JediLPToken','outputs':[{'internalType':'address','name':'','type':'address'}],'stateMutability':'view','type':'function'},{'inputs':[],'name':'JediNFT','outputs':[{'internalType':'address','name':'','type':'address'}],'stateMutability':'view','type':'function'},{'inputs':[],'name':'JediToken','outputs':[{'internalType':'address','name':'','type':'address'}],'stateMutability':'view','type':'function'},{'inputs':[{'internalType':'address','name':'to','type':'address'},{'internalType':'uint256','name':'tokenId','type':'uint256'}],'name':'approve','outputs':[],'stateMutability':'nonpayable','type':'function'},{'inputs':[{'internalType':'address','name':'owner','type':'address'}],'name':'balanceOf','outputs':[{'internalType':'uint256','name':'','type':'uint256'}],'stateMutability':'view','type':'function'},{'inputs':[],'name':'baseTokenURI','outputs':[{'internalType':'string','name':'','type':'string'}],'stateMutability':'view','type':'function'},{'inputs':[],'name':'baseURI','outputs':[{'internalType':'string','name':'','type':'string'}],'stateMutability':'view','type':'function'},{'inputs':[],'name':'burn','outputs':[],'stateMutability':'nonpayable','type':'function'},{'inputs':[{'internalType':'uint256','name':'tokenId','type':'uint256'}],'name':'buydarth','outputs':[],'stateMutability':'nonpayable','type':'function'},{'inputs':[{'internalType':'uint256','name':'tokenId','type':'uint256'}],'name':'buyjedi','outputs':[],'stateMutability':'nonpayable','type':'function'},{'inputs':[{'internalType':'address','name':'a','type':'address'}],'name':'canClaim','outputs':[{'internalType':'bool','name':'','type':'bool'}],'stateMutability':'view','type':'function'},{'inputs':[{'internalType':'uint256','name':'tokenId','type':'uint256'}],'name':'claim','outputs':[],'stateMutability':'nonpayable','type':'function'},{'inputs':[],'name':'closemarket','outputs':[],'stateMutability':'nonpayable','type':'function'},{'inputs':[],'name':'darthPower','outputs':[{'internalType':'uint256','name':'','type':'uint256'}],'stateMutability':'view','type':'function'},{'inputs':[{'internalType':'uint256','name':'tokenId','type':'uint256'}],'name':'exists','outputs':[{'internalType':'bool','name':'','type':'bool'}],'stateMutability':'view','type':'function'},{'inputs':[{'internalType':'address','name':'a','type':'address'}],'name':'expiryDate','outputs':[{'internalType':'uint256','name':'','type':'uint256'}],'stateMutability':'view','type':'function'},{'inputs':[{'internalType':'uint256','name':'tokenId','type':'uint256'}],'name':'getApproved','outputs':[{'internalType':'address','name':'','type':'address'}],'stateMutability':'view','type':'function'},{'inputs':[],'name':'getOwner','outputs':[{'internalType':'address','name':'','type':'address'}],'stateMutability':'view','type':'function'},{'inputs':[],'name':'hodlamount','outputs':[{'internalType':'uint256','name':'','type':'uint256'}],'stateMutability':'view','type':'function'},{'inputs':[{'internalType':'address','name':'owner','type':'address'},{'internalType':'address','name':'operator','type':'address'}],'name':'isApprovedForAll','outputs':[{'internalType':'bool','name':'','type':'bool'}],'stateMutability':'view','type':'function'},{'inputs':[{'internalType':'address','name':'a','type':'address'}],'name':'isInWar','outputs':[{'internalType':'bool','name':'','type':'bool'}],'stateMutability':'view','type':'function'},{'inputs':[{'internalType':'address','name':'a','type':'address'}],'name':'isOpened','outputs':[{'internalType':'bool','name':'','type':'bool'}],'stateMutability':'view','type':'function'},{'inputs':[],'name':'isOwner','outputs':[{'internalType':'bool','name':'','type':'bool'}],'stateMutability':'view','type':'function'},{'inputs':[],'name':'jediPower','outputs':[{'internalType':'uint256','name':'','type':'uint256'}],'stateMutability':'view','type':'function'},{'inputs':[],'name':'mint','outputs':[],'stateMutability':'nonpayable','type':'function'},{'inputs':[],'name':'name','outputs':[{'internalType':'string','name':'','type':'string'}],'stateMutability':'view','type':'function'},{'inputs':[],'name':'openmarket','outputs':[],'stateMutability':'nonpayable','type':'function'},{'inputs':[],'name':'owner','outputs':[{'internalType':'address','name':'','type':'address'}],'stateMutability':'view','type':'function'},{'inputs':[{'internalType':'uint256','name':'tokenId','type':'uint256'}],'name':'ownerOf','outputs':[{'internalType':'address','name':'','type':'address'}],'stateMutability':'view','type':'function'},{'inputs':[],'name':'peace','outputs':[],'stateMutability':'nonpayable','type':'function'},{'inputs':[],'name':'renounceOwnership','outputs':[],'stateMutability':'nonpayable','type':'function'},{'inputs':[{'internalType':'address','name':'a','type':'address'}],'name':'resetExpiryDate','outputs':[],'stateMutability':'nonpayable','type':'function'},{'inputs':[{'internalType':'address','name':'from','type':'address'},{'internalType':'address','name':'to','type':'address'},{'internalType':'uint256','name':'tokenId','type':'uint256'}],'name':'safeTransferFrom','outputs':[],'stateMutability':'nonpayable','type':'function'},{'inputs':[{'internalType':'address','name':'from','type':'address'},{'internalType':'address','name':'to','type':'address'},{'internalType':'uint256','name':'tokenId','type':'uint256'},{'internalType':'bytes','name':'_data','type':'bytes'}],'name':'safeTransferFrom','outputs':[],'stateMutability':'nonpayable','type':'function'},{'inputs':[{'internalType':'address','name':'operator','type':'address'},{'internalType':'bool','name':'approved','type':'bool'}],'name':'setApprovalForAll','outputs':[],'stateMutability':'nonpayable','type':'function'},{'inputs':[{'internalType':'string','name':'baseURI_','type':'string'}],'name':'setBaseURI','outputs':[],'stateMutability':'nonpayable','type':'function'},{'inputs':[{'internalType':'address','name':'_DWARFToken','type':'address'}],'name':'setDWARFToken','outputs':[],'stateMutability':'nonpayable','type':'function'},{'inputs':[{'internalType':'address','name':'_DarthLPToken','type':'address'}],'name':'setDarthLPToken','outputs':[],'stateMutability':'nonpayable','type':'function'},{'inputs':[{'internalType':'address','name':'_DarthNFT','type':'address'}],'name':'setDarthNFT','outputs':[],'stateMutability':'nonpayable','type':'function'},{'inputs':[{'internalType':'address','name':'_JediLPToken','type':'address'}],'name':'setJediLPToken','outputs':[],'stateMutability':'nonpayable','type':'function'},{'inputs':[{'internalType':'address','name':'_JediNFT','type':'address'}],'name':'setJediNFT','outputs':[],'stateMutability':'nonpayable','type':'function'},{'inputs':[{'internalType':'uint256','name':'period','type':'uint256'}],'name':'stakeDarth','outputs':[],'stateMutability':'nonpayable','type':'function'},{'inputs':[{'internalType':'uint256','name':'period','type':'uint256'}],'name':'stakeJedi','outputs':[],'stateMutability':'nonpayable','type':'function'},{'inputs':[{'internalType':'address','name':'a','type':'address'}],'name':'staked','outputs':[{'internalType':'bool','name':'','type':'bool'}],'stateMutability':'view','type':'function'},{'inputs':[{'internalType':'address','name':'a','type':'address'}],'name':'stakedDarth','outputs':[{'internalType':'uint256','name':'','type':'uint256'}],'stateMutability':'view','type':'function'},{'inputs':[{'internalType':'address','name':'a','type':'address'}],'name':'stakedJedi','outputs':[{'internalType':'uint256','name':'','type':'uint256'}],'stateMutability':'view','type':'function'},{'inputs':[{'internalType':'bytes4','name':'interfaceId','type':'bytes4'}],'name':'supportsInterface','outputs':[{'internalType':'bool','name':'','type':'bool'}],'stateMutability':'view','type':'function'},{'inputs':[],'name':'symbol','outputs':[{'internalType':'string','name':'','type':'string'}],'stateMutability':'view','type':'function'},{'inputs':[{'internalType':'uint256','name':'tokenId','type':'uint256'}],'name':'tokenURI','outputs':[{'internalType':'string','name':'','type':'string'}],'stateMutability':'view','type':'function'},{'inputs':[{'internalType':'address','name':'from','type':'address'},{'internalType':'address','name':'to','type':'address'},{'internalType':'uint256','name':'tokenId','type':'uint256'}],'name':'transferFrom','outputs':[],'stateMutability':'nonpayable','type':'function'},{'inputs':[{'internalType':'address','name':'newOwner','type':'address'}],'name':'transferOwnership','outputs':[],'stateMutability':'nonpayable','type':'function'},{'inputs':[],'name':'war','outputs':[],'stateMutability':'nonpayable','type':'function'},{'inputs':[{'internalType':'address','name':'_token','type':'address'},{'internalType':'uint256','name':'_amount','type':'uint256'}],'name':'withdrawToken','outputs':[],'stateMutability':'nonpayable','type':'function'}],
-      erc20ABI: [{'anonymous':false,'inputs':[{'indexed':true,'internalType':'address','name':'owner','type':'address'},{'indexed':true,'internalType':'address','name':'spender','type':'address'},{'indexed':false,'internalType':'uint256','name':'value','type':'uint256'}],'name':'Approval','type':'event'},{'anonymous':false,'inputs':[{'indexed':true,'internalType':'address','name':'from','type':'address'},{'indexed':true,'internalType':'address','name':'to','type':'address'},{'indexed':false,'internalType':'uint256','name':'value','type':'uint256'}],'name':'Transfer','type':'event'},{'inputs':[{'internalType':'address','name':'owner','type':'address'},{'internalType':'address','name':'spender','type':'address'}],'name':'allowance','outputs':[{'internalType':'uint256','name':'','type':'uint256'}],'stateMutability':'view','type':'function'},{'inputs':[{'internalType':'address','name':'spender','type':'address'},{'internalType':'uint256','name':'amount','type':'uint256'}],'name':'approve','outputs':[{'internalType':'bool','name':'','type':'bool'}],'stateMutability':'nonpayable','type':'function'},{'inputs':[{'internalType':'address','name':'account','type':'address'}],'name':'balanceOf','outputs':[{'internalType':'uint256','name':'','type':'uint256'}],'stateMutability':'view','type':'function'},{'inputs':[],'name':'totalSupply','outputs':[{'internalType':'uint256','name':'','type':'uint256'}],'stateMutability':'view','type':'function'},{'inputs':[{'internalType':'address','name':'recipient','type':'address'},{'internalType':'uint256','name':'amount','type':'uint256'}],'name':'transfer','outputs':[{'internalType':'bool','name':'','type':'bool'}],'stateMutability':'nonpayable','type':'function'},{'inputs':[{'internalType':'address','name':'sender','type':'address'},{'internalType':'address','name':'recipient','type':'address'},{'internalType':'uint256','name':'amount','type':'uint256'}],'name':'transferFrom','outputs':[{'internalType':'bool','name':'','type':'bool'}],'stateMutability':'nonpayable','type':'function'}],
-      erc1155ABI: [{'inputs':[],'stateMutability':'nonpayable','type':'constructor'},{'anonymous':false,'inputs':[{'indexed':true,'internalType':'address','name':'_owner','type':'address'},{'indexed':true,'internalType':'address','name':'_operator','type':'address'},{'indexed':false,'internalType':'bool','name':'_approved','type':'bool'}],'name':'ApprovalForAll','type':'event'},{'anonymous':false,'inputs':[{'indexed':true,'internalType':'address','name':'previousOwner','type':'address'},{'indexed':true,'internalType':'address','name':'newOwner','type':'address'}],'name':'OwnershipTransferred','type':'event'},{'anonymous':false,'inputs':[{'indexed':true,'internalType':'address','name':'_operator','type':'address'},{'indexed':true,'internalType':'address','name':'_from','type':'address'},{'indexed':true,'internalType':'address','name':'_to','type':'address'},{'indexed':false,'internalType':'uint256[]','name':'_ids','type':'uint256[]'},{'indexed':false,'internalType':'uint256[]','name':'_amounts','type':'uint256[]'}],'name':'TransferBatch','type':'event'},{'anonymous':false,'inputs':[{'indexed':true,'internalType':'address','name':'_operator','type':'address'},{'indexed':true,'internalType':'address','name':'_from','type':'address'},{'indexed':true,'internalType':'address','name':'_to','type':'address'},{'indexed':false,'internalType':'uint256','name':'_id','type':'uint256'},{'indexed':false,'internalType':'uint256','name':'_amount','type':'uint256'}],'name':'TransferSingle','type':'event'},{'anonymous':false,'inputs':[{'indexed':false,'internalType':'string','name':'_uri','type':'string'},{'indexed':true,'internalType':'uint256','name':'_id','type':'uint256'}],'name':'URI','type':'event'},{'inputs':[{'internalType':'address','name':'pool','type':'address'}],'name':'addLendingPool','outputs':[],'stateMutability':'nonpayable','type':'function'},{'inputs':[{'internalType':'address','name':'_owner','type':'address'},{'internalType':'uint256','name':'_id','type':'uint256'}],'name':'balanceOf','outputs':[{'internalType':'uint256','name':'','type':'uint256'}],'stateMutability':'view','type':'function'},{'inputs':[{'internalType':'address[]','name':'_owners','type':'address[]'},{'internalType':'uint256[]','name':'_ids','type':'uint256[]'}],'name':'balanceOfBatch','outputs':[{'internalType':'uint256[]','name':'','type':'uint256[]'}],'stateMutability':'view','type':'function'},{'inputs':[{'internalType':'address','name':'_from','type':'address'},{'internalType':'uint256','name':'_id','type':'uint256'},{'internalType':'uint256','name':'_amount','type':'uint256'}],'name':'burn','outputs':[],'stateMutability':'nonpayable','type':'function'},{'inputs':[],'name':'contractURI','outputs':[{'internalType':'string','name':'','type':'string'}],'stateMutability':'view','type':'function'},{'inputs':[{'internalType':'uint256','name':'_maxSupply','type':'uint256'},{'internalType':'uint256','name':'_price','type':'uint256'},{'internalType':'uint256','name':'pd','type':'uint256'},{'internalType':'uint256','name':'pk','type':'uint256'},{'internalType':'uint256','name':'ps','type':'uint256'},{'internalType':'uint256','name':'pc','type':'uint256'},{'internalType':'uint256','name':'ph','type':'uint256'}],'name':'create','outputs':[{'internalType':'uint256','name':'tokenId','type':'uint256'}],'stateMutability':'nonpayable','type':'function'},{'inputs':[{'internalType':'uint256','name':'','type':'uint256'}],'name':'creators','outputs':[{'internalType':'address','name':'','type':'address'}],'stateMutability':'view','type':'function'},{'inputs':[{'internalType':'address','name':'pool','type':'address'}],'name':'delLendingPool','outputs':[],'stateMutability':'nonpayable','type':'function'},{'inputs':[],'name':'getOwner','outputs':[{'internalType':'address','name':'','type':'address'}],'stateMutability':'view','type':'function'},{'inputs':[{'internalType':'address','name':'_owner','type':'address'},{'internalType':'address','name':'_operator','type':'address'}],'name':'isApprovedForAll','outputs':[{'internalType':'bool','name':'isOperator','type':'bool'}],'stateMutability':'view','type':'function'},{'inputs':[{'internalType':'uint256','name':'_id','type':'uint256'}],'name':'isExist','outputs':[{'internalType':'bool','name':'','type':'bool'}],'stateMutability':'view','type':'function'},{'inputs':[],'name':'isOwner','outputs':[{'internalType':'bool','name':'','type':'bool'}],'stateMutability':'view','type':'function'},{'inputs':[{'internalType':'address','name':'','type':'address'}],'name':'isPool','outputs':[{'internalType':'bool','name':'','type':'bool'}],'stateMutability':'view','type':'function'},{'inputs':[{'internalType':'uint256','name':'_id','type':'uint256'}],'name':'maxSupply','outputs':[{'internalType':'uint256','name':'','type':'uint256'}],'stateMutability':'view','type':'function'},{'inputs':[{'internalType':'uint256','name':'_tokenId','type':'uint256'}],'name':'mint','outputs':[{'internalType':'uint256','name':'_tokenPrice','type':'uint256'}],'stateMutability':'nonpayable','type':'function'},{'inputs':[{'internalType':'address','name':'_to','type':'address'},{'internalType':'uint256','name':'_tokenId','type':'uint256'}],'name':'mintTo','outputs':[{'internalType':'uint256','name':'_tokenPrice','type':'uint256'}],'stateMutability':'nonpayable','type':'function'},{'inputs':[],'name':'name','outputs':[{'internalType':'string','name':'','type':'string'}],'stateMutability':'view','type':'function'},{'inputs':[],'name':'owner','outputs':[{'internalType':'address','name':'','type':'address'}],'stateMutability':'view','type':'function'},{'inputs':[{'internalType':'address','name':'account','type':'address'}],'name':'powerOf','outputs':[{'internalType':'uint256','name':'','type':'uint256'}],'stateMutability':'view','type':'function'},{'inputs':[{'internalType':'uint256','name':'_id','type':'uint256'}],'name':'price','outputs':[{'internalType':'uint256','name':'','type':'uint256'}],'stateMutability':'view','type':'function'},{'inputs':[],'name':'renounceOwnership','outputs':[],'stateMutability':'nonpayable','type':'function'},{'inputs':[{'internalType':'address','name':'_from','type':'address'},{'internalType':'address','name':'_to','type':'address'},{'internalType':'uint256[]','name':'_ids','type':'uint256[]'},{'internalType':'uint256[]','name':'_amounts','type':'uint256[]'},{'internalType':'bytes','name':'_data','type':'bytes'}],'name':'safeBatchTransferFrom','outputs':[],'stateMutability':'nonpayable','type':'function'},{'inputs':[{'internalType':'address','name':'_from','type':'address'},{'internalType':'address','name':'_to','type':'address'},{'internalType':'uint256','name':'_id','type':'uint256'},{'internalType':'uint256','name':'_amount','type':'uint256'},{'internalType':'bytes','name':'_data','type':'bytes'}],'name':'safeTransferFrom','outputs':[],'stateMutability':'nonpayable','type':'function'},{'inputs':[{'internalType':'address','name':'_operator','type':'address'},{'internalType':'bool','name':'_approved','type':'bool'}],'name':'setApprovalForAll','outputs':[],'stateMutability':'nonpayable','type':'function'},{'inputs':[{'internalType':'string','name':'_newBaseMetadataURI','type':'string'}],'name':'setBaseMetadataURI','outputs':[],'stateMutability':'nonpayable','type':'function'},{'inputs':[{'internalType':'address','name':'_proxyRegistryAddress','type':'address'}],'name':'setProxyRegistryAddress','outputs':[],'stateMutability':'nonpayable','type':'function'},{'inputs':[{'internalType':'uint256','name':'','type':'uint256'}],'name':'settings','outputs':[{'internalType':'uint256','name':'pd','type':'uint256'},{'internalType':'uint256','name':'pk','type':'uint256'},{'internalType':'uint256','name':'ps','type':'uint256'},{'internalType':'uint256','name':'pc','type':'uint256'},{'internalType':'uint256','name':'ph','type':'uint256'},{'internalType':'uint256','name':'pave','type':'uint256'}],'stateMutability':'view','type':'function'},{'inputs':[{'internalType':'bytes4','name':'_interfaceID','type':'bytes4'}],'name':'supportsInterface','outputs':[{'internalType':'bool','name':'','type':'bool'}],'stateMutability':'pure','type':'function'},{'inputs':[],'name':'symbol','outputs':[{'internalType':'string','name':'','type':'string'}],'stateMutability':'view','type':'function'},{'inputs':[{'internalType':'uint256','name':'','type':'uint256'}],'name':'tokenMaxSupply','outputs':[{'internalType':'uint256','name':'','type':'uint256'}],'stateMutability':'view','type':'function'},{'inputs':[{'internalType':'uint256','name':'','type':'uint256'}],'name':'tokenPrice','outputs':[{'internalType':'uint256','name':'','type':'uint256'}],'stateMutability':'view','type':'function'},{'inputs':[{'internalType':'uint256','name':'','type':'uint256'}],'name':'tokenSupply','outputs':[{'internalType':'uint256','name':'','type':'uint256'}],'stateMutability':'view','type':'function'},{'inputs':[{'internalType':'uint256','name':'tokenId','type':'uint256'}],'name':'tokenURI','outputs':[{'internalType':'string','name':'','type':'string'}],'stateMutability':'view','type':'function'},{'inputs':[],'name':'totalExist','outputs':[{'internalType':'uint256','name':'','type':'uint256'}],'stateMutability':'view','type':'function'},{'inputs':[{'internalType':'uint256','name':'_id','type':'uint256'}],'name':'totalSupply','outputs':[{'internalType':'uint256','name':'','type':'uint256'}],'stateMutability':'view','type':'function'},{'inputs':[{'internalType':'address','name':'newOwner','type':'address'}],'name':'transferOwnership','outputs':[],'stateMutability':'nonpayable','type':'function'},{'inputs':[{'internalType':'uint256','name':'_id','type':'uint256'}],'name':'uri','outputs':[{'internalType':'string','name':'','type':'string'}],'stateMutability':'view','type':'function'}],
-      
+      dwarfABI: [{'inputs':[{'internalType':'address','name':'_DWARFToken','type':'address'},{'internalType':'address','name':'_DarthLPToken','type':'address'},{'internalType':'address','name':'_JediLPToken','type':'address'},{'internalType':'address','name':'_DarthNFT','type':'address'},{'internalType':'address','name':'_JediNFT','type':'address'},{'internalType':'address','name':'_JediToken','type':'address'},{'internalType':'address','name':'_DarthToken','type':'address'}],'stateMutability':'nonpayable','type':'constructor'},{'anonymous':false,'inputs':[{'indexed':true,'internalType':'address','name':'owner','type':'address'},{'indexed':true,'internalType':'address','name':'approved','type':'address'},{'indexed':true,'internalType':'uint256','name':'tokenId','type':'uint256'}],'name':'Approval','type':'event'},{'anonymous':false,'inputs':[{'indexed':true,'internalType':'address','name':'owner','type':'address'},{'indexed':true,'internalType':'address','name':'operator','type':'address'},{'indexed':false,'internalType':'bool','name':'approved','type':'bool'}],'name':'ApprovalForAll','type':'event'},{'anonymous':false,'inputs':[{'indexed':true,'internalType':'address','name':'previousOwner','type':'address'},{'indexed':true,'internalType':'address','name':'newOwner','type':'address'}],'name':'OwnershipTransferred','type':'event'},{'anonymous':false,'inputs':[{'indexed':true,'internalType':'address','name':'from','type':'address'},{'indexed':true,'internalType':'address','name':'to','type':'address'},{'indexed':true,'internalType':'uint256','name':'tokenId','type':'uint256'}],'name':'Transfer','type':'event'},{'inputs':[],'name':'DWARFToken','outputs':[{'internalType':'address','name':'','type':'address'}],'stateMutability':'view','type':'function'},{'inputs':[],'name':'DarthLPToken','outputs':[{'internalType':'address','name':'','type':'address'}],'stateMutability':'view','type':'function'},{'inputs':[],'name':'DarthNFT','outputs':[{'internalType':'address','name':'','type':'address'}],'stateMutability':'view','type':'function'},{'inputs':[],'name':'DarthToken','outputs':[{'internalType':'address','name':'','type':'address'}],'stateMutability':'view','type':'function'},{'inputs':[],'name':'JediLPToken','outputs':[{'internalType':'address','name':'','type':'address'}],'stateMutability':'view','type':'function'},{'inputs':[],'name':'JediNFT','outputs':[{'internalType':'address','name':'','type':'address'}],'stateMutability':'view','type':'function'},{'inputs':[],'name':'JediToken','outputs':[{'internalType':'address','name':'','type':'address'}],'stateMutability':'view','type':'function'},{'inputs':[{'internalType':'address','name':'to','type':'address'},{'internalType':'uint256','name':'tokenId','type':'uint256'}],'name':'approve','outputs':[],'stateMutability':'nonpayable','type':'function'},{'inputs':[{'internalType':'address','name':'owner','type':'address'}],'name':'balanceOf','outputs':[{'internalType':'uint256','name':'','type':'uint256'}],'stateMutability':'view','type':'function'},{'inputs':[],'name':'baseTokenURI','outputs':[{'internalType':'string','name':'','type':'string'}],'stateMutability':'view','type':'function'},{'inputs':[],'name':'baseURI','outputs':[{'internalType':'string','name':'','type':'string'}],'stateMutability':'view','type':'function'},{'inputs':[],'name':'burn','outputs':[],'stateMutability':'nonpayable','type':'function'},{'inputs':[{'internalType':'uint256','name':'tokenId','type':'uint256'}],'name':'buydarth','outputs':[],'stateMutability':'nonpayable','type':'function'},{'inputs':[{'internalType':'uint256','name':'tokenId','type':'uint256'}],'name':'buyjedi','outputs':[],'stateMutability':'nonpayable','type':'function'},{'inputs':[{'internalType':'address','name':'a','type':'address'}],'name':'canClaim','outputs':[{'internalType':'bool','name':'','type':'bool'}],'stateMutability':'view','type':'function'},{'inputs':[{'internalType':'uint256','name':'tokenId','type':'uint256'}],'name':'claim','outputs':[],'stateMutability':'nonpayable','type':'function'},{'inputs':[],'name':'closemarket','outputs':[],'stateMutability':'nonpayable','type':'function'},{'inputs':[],'name':'darthPower','outputs':[{'internalType':'uint256','name':'','type':'uint256'}],'stateMutability':'view','type':'function'},{'inputs':[{'internalType':'uint256','name':'tokenId','type':'uint256'}],'name':'exists','outputs':[{'internalType':'bool','name':'','type':'bool'}],'stateMutability':'view','type':'function'},{'inputs':[{'internalType':'address','name':'a','type':'address'}],'name':'expiryDate','outputs':[{'internalType':'uint256','name':'','type':'uint256'}],'stateMutability':'view','type':'function'},{'inputs':[{'internalType':'uint256','name':'tokenId','type':'uint256'}],'name':'getApproved','outputs':[{'internalType':'address','name':'','type':'address'}],'stateMutability':'view','type':'function'},{'inputs':[],'name':'getOwner','outputs':[{'internalType':'address','name':'','type':'address'}],'stateMutability':'view','type':'function'},{'inputs':[],'name':'hodlamount','outputs':[{'internalType':'uint256','name':'','type':'uint256'}],'stateMutability':'view','type':'function'},{'inputs':[{'internalType':'address','name':'owner','type':'address'},{'internalType':'address','name':'operator','type':'address'}],'name':'isApprovedForAll','outputs':[{'internalType':'bool','name':'','type':'bool'}],'stateMutability':'view','type':'function'},{'inputs':[{'internalType':'address','name':'a','type':'address'}],'name':'isInWar','outputs':[{'internalType':'bool','name':'','type':'bool'}],'stateMutability':'view','type':'function'},{'inputs':[{'internalType':'address','name':'a','type':'address'}],'name':'isOpened','outputs':[{'internalType':'bool','name':'','type':'bool'}],'stateMutability':'view','type':'function'},{'inputs':[],'name':'isOwner','outputs':[{'internalType':'bool','name':'','type':'bool'}],'stateMutability':'view','type':'function'},{'inputs':[],'name':'jediPower','outputs':[{'internalType':'uint256','name':'','type':'uint256'}],'stateMutability':'view','type':'function'},{'inputs':[],'name':'mint','outputs':[],'stateMutability':'nonpayable','type':'function'},{'inputs':[],'name':'name','outputs':[{'internalType':'string','name':'','type':'string'}],'stateMutability':'view','type':'function'},{'inputs':[],'name':'openmarket','outputs':[],'stateMutability':'nonpayable','type':'function'},{'inputs':[],'name':'owner','outputs':[{'internalType':'address','name':'','type':'address'}],'stateMutability':'view','type':'function'},{'inputs':[{'internalType':'uint256','name':'tokenId','type':'uint256'}],'name':'ownerOf','outputs':[{'internalType':'address','name':'','type':'address'}],'stateMutability':'view','type':'function'},{'inputs':[],'name':'peace','outputs':[],'stateMutability':'nonpayable','type':'function'},{'inputs':[],'name':'renounceOwnership','outputs':[],'stateMutability':'nonpayable','type':'function'},{'inputs':[{'internalType':'address','name':'a','type':'address'}],'name':'resetExpiryDate','outputs':[],'stateMutability':'nonpayable','type':'function'},{'inputs':[{'internalType':'address','name':'from','type':'address'},{'internalType':'address','name':'to','type':'address'},{'internalType':'uint256','name':'tokenId','type':'uint256'}],'name':'safeTransferFrom','outputs':[],'stateMutability':'nonpayable','type':'function'},{'inputs':[{'internalType':'address','name':'from','type':'address'},{'internalType':'address','name':'to','type':'address'},{'internalType':'uint256','name':'tokenId','type':'uint256'},{'internalType':'bytes','name':'_data','type':'bytes'}],'name':'safeTransferFrom','outputs':[],'stateMutability':'nonpayable','type':'function'},{'inputs':[{'internalType':'address','name':'operator','type':'address'},{'internalType':'bool','name':'approved','type':'bool'}],'name':'setApprovalForAll','outputs':[],'stateMutability':'nonpayable','type':'function'},{'inputs':[{'internalType':'string','name':'baseURI_','type':'string'}],'name':'setBaseURI','outputs':[],'stateMutability':'nonpayable','type':'function'},{'inputs':[{'internalType':'address','name':'_DWARFToken','type':'address'}],'name':'setDWARFToken','outputs':[],'stateMutability':'nonpayable','type':'function'},{'inputs':[{'internalType':'address','name':'_DarthLPToken','type':'address'}],'name':'setDarthLPToken','outputs':[],'stateMutability':'nonpayable','type':'function'},{'inputs':[{'internalType':'address','name':'_DarthNFT','type':'address'}],'name':'setDarthNFT','outputs':[],'stateMutability':'nonpayable','type':'function'},{'inputs':[{'internalType':'address','name':'_JediLPToken','type':'address'}],'name':'setJediLPToken','outputs':[],'stateMutability':'nonpayable','type':'function'},{'inputs':[{'internalType':'address','name':'_JediNFT','type':'address'}],'name':'setJediNFT','outputs':[],'stateMutability':'nonpayable','type':'function'},{'inputs':[{'internalType':'uint256','name':'period','type':'uint256'}],'name':'stakeDarth','outputs':[],'stateMutability':'nonpayable','type':'function'},{'inputs':[{'internalType':'uint256','name':'period','type':'uint256'}],'name':'stakeJedi','outputs':[],'stateMutability':'nonpayable','type':'function'},{'inputs':[{'internalType':'address','name':'a','type':'address'}],'name':'staked','outputs':[{'internalType':'bool','name':'','type':'bool'}],'stateMutability':'view','type':'function'},{'inputs':[{'internalType':'address','name':'a','type':'address'}],'name':'stakedDarth','outputs':[{'internalType':'uint256','name':'','type':'uint256'}],'stateMutability':'view','type':'function'},{'inputs':[{'internalType':'address','name':'a','type':'address'}],'name':'stakedJedi','outputs':[{'internalType':'uint256','name':'','type':'uint256'}],'stateMutability':'view','type':'function'},{'inputs':[{'internalType':'bytes4','name':'interfaceId','type':'bytes4'}],'name':'supportsInterface','outputs':[{'internalType':'bool','name':'','type':'bool'}],'stateMutability':'view','type':'function'},{'inputs':[],'name':'symbol','outputs':[{'internalType':'string','name':'','type':'string'}],'stateMutability':'view','type':'function'},{'inputs':[{'internalType':'uint256','name':'tokenId','type':'uint256'}],'name':'tokenURI','outputs':[{'internalType':'string','name':'','type':'string'}],'stateMutability':'view','type':'function'},{'inputs':[{'internalType':'address','name':'from','type':'address'},{'internalType':'address','name':'to','type':'address'},{'internalType':'uint256','name':'tokenId','type':'uint256'}],'name':'transferFrom','outputs':[],'stateMutability':'nonpayable','type':'function'},{'inputs':[{'internalType':'address','name':'newOwner','type':'address'}],'name':'transferOwnership','outputs':[],'stateMutability':'nonpayable','type':'function'},{'inputs':[],'name':'war','outputs':[],'stateMutability':'nonpayable','type':'function'},{'inputs':[{'internalType':'address','name':'_token','type':'address'},{'internalType':'uint256','name':'_amount','type':'uint256'}],'name':'withdrawToken','outputs':[],'stateMutability':'nonpayable','type':'function'}], 
+      erc20ABI: [{'anonymous':false,'inputs':[{'indexed':true,'internalType':'address','name':'owner','type':'address'},{'indexed':true,'internalType':'address','name':'spender','type':'address'},{'indexed':false,'internalType':'uint256','name':'value','type':'uint256'}],'name':'Approval','type':'event'},{'anonymous':false,'inputs':[{'indexed':true,'internalType':'address','name':'from','type':'address'},{'indexed':true,'internalType':'address','name':'to','type':'address'},{'indexed':false,'internalType':'uint256','name':'value','type':'uint256'}],'name':'Transfer','type':'event'},{'inputs':[{'internalType':'address','name':'owner','type':'address'},{'internalType':'address','name':'spender','type':'address'}],'name':'allowance','outputs':[{'internalType':'uint256','name':'','type':'uint256'}],'stateMutability':'view','type':'function'},{'inputs':[{'internalType':'address','name':'spender','type':'address'},{'internalType':'uint256','name':'amount','type':'uint256'}],'name':'approve','outputs':[{'internalType':'bool','name':'','type':'bool'}],'stateMutability':'nonpayable','type':'function'},{'inputs':[{'internalType':'address','name':'account','type':'address'}],'name':'balanceOf','outputs':[{'internalType':'uint256','name':'','type':'uint256'}],'stateMutability':'view','type':'function'},{'inputs':[],'name':'totalSupply','outputs':[{'internalType':'uint256','name':'','type':'uint256'}],'stateMutability':'view','type':'function'},{'inputs':[{'internalType':'address','name':'recipient','type':'address'},{'internalType':'uint256','name':'amount','type':'uint256'}],'name':'transfer','outputs':[{'internalType':'bool','name':'','type':'bool'}],'stateMutability':'nonpayable','type':'function'},{'inputs':[{'internalType':'address','name':'sender','type':'address'},{'internalType':'address','name':'recipient','type':'address'},{'internalType':'uint256','name':'amount','type':'uint256'}],'name':'transferFrom','outputs':[{'internalType':'bool','name':'','type':'bool'}],'stateMutability':'nonpayable','type':'function'}], 
+      erc1155ABI: [{'inputs':[],'stateMutability':'nonpayable','type':'constructor'},{'anonymous':false,'inputs':[{'indexed':true,'internalType':'address','name':'_owner','type':'address'},{'indexed':true,'internalType':'address','name':'_operator','type':'address'},{'indexed':false,'internalType':'bool','name':'_approved','type':'bool'}],'name':'ApprovalForAll','type':'event'},{'anonymous':false,'inputs':[{'indexed':true,'internalType':'address','name':'previousOwner','type':'address'},{'indexed':true,'internalType':'address','name':'newOwner','type':'address'}],'name':'OwnershipTransferred','type':'event'},{'anonymous':false,'inputs':[{'indexed':true,'internalType':'address','name':'_operator','type':'address'},{'indexed':true,'internalType':'address','name':'_from','type':'address'},{'indexed':true,'internalType':'address','name':'_to','type':'address'},{'indexed':false,'internalType':'uint256[]','name':'_ids','type':'uint256[]'},{'indexed':false,'internalType':'uint256[]','name':'_amounts','type':'uint256[]'}],'name':'TransferBatch','type':'event'},{'anonymous':false,'inputs':[{'indexed':true,'internalType':'address','name':'_operator','type':'address'},{'indexed':true,'internalType':'address','name':'_from','type':'address'},{'indexed':true,'internalType':'address','name':'_to','type':'address'},{'indexed':false,'internalType':'uint256','name':'_id','type':'uint256'},{'indexed':false,'internalType':'uint256','name':'_amount','type':'uint256'}],'name':'TransferSingle','type':'event'},{'anonymous':false,'inputs':[{'indexed':false,'internalType':'string','name':'_uri','type':'string'},{'indexed':true,'internalType':'uint256','name':'_id','type':'uint256'}],'name':'URI','type':'event'},{'inputs':[{'internalType':'address','name':'pool','type':'address'}],'name':'addLendingPool','outputs':[],'stateMutability':'nonpayable','type':'function'},{'inputs':[{'internalType':'address','name':'_owner','type':'address'},{'internalType':'uint256','name':'_id','type':'uint256'}],'name':'balanceOf','outputs':[{'internalType':'uint256','name':'','type':'uint256'}],'stateMutability':'view','type':'function'},{'inputs':[{'internalType':'address[]','name':'_owners','type':'address[]'},{'internalType':'uint256[]','name':'_ids','type':'uint256[]'}],'name':'balanceOfBatch','outputs':[{'internalType':'uint256[]','name':'','type':'uint256[]'}],'stateMutability':'view','type':'function'},{'inputs':[{'internalType':'address','name':'_from','type':'address'},{'internalType':'uint256','name':'_id','type':'uint256'},{'internalType':'uint256','name':'_amount','type':'uint256'}],'name':'burn','outputs':[],'stateMutability':'nonpayable','type':'function'},{'inputs':[],'name':'contractURI','outputs':[{'internalType':'string','name':'','type':'string'}],'stateMutability':'view','type':'function'},{'inputs':[{'internalType':'uint256','name':'_maxSupply','type':'uint256'},{'internalType':'uint256','name':'_price','type':'uint256'},{'internalType':'uint256','name':'pd','type':'uint256'},{'internalType':'uint256','name':'pk','type':'uint256'},{'internalType':'uint256','name':'ps','type':'uint256'},{'internalType':'uint256','name':'pc','type':'uint256'},{'internalType':'uint256','name':'ph','type':'uint256'}],'name':'create','outputs':[{'internalType':'uint256','name':'tokenId','type':'uint256'}],'stateMutability':'nonpayable','type':'function'},{'inputs':[{'internalType':'uint256','name':'','type':'uint256'}],'name':'creators','outputs':[{'internalType':'address','name':'','type':'address'}],'stateMutability':'view','type':'function'},{'inputs':[{'internalType':'address','name':'pool','type':'address'}],'name':'delLendingPool','outputs':[],'stateMutability':'nonpayable','type':'function'},{'inputs':[],'name':'getOwner','outputs':[{'internalType':'address','name':'','type':'address'}],'stateMutability':'view','type':'function'},{'inputs':[{'internalType':'address','name':'_owner','type':'address'},{'internalType':'address','name':'_operator','type':'address'}],'name':'isApprovedForAll','outputs':[{'internalType':'bool','name':'isOperator','type':'bool'}],'stateMutability':'view','type':'function'},{'inputs':[{'internalType':'uint256','name':'_id','type':'uint256'}],'name':'isExist','outputs':[{'internalType':'bool','name':'','type':'bool'}],'stateMutability':'view','type':'function'},{'inputs':[],'name':'isOwner','outputs':[{'internalType':'bool','name':'','type':'bool'}],'stateMutability':'view','type':'function'},{'inputs':[{'internalType':'address','name':'','type':'address'}],'name':'isPool','outputs':[{'internalType':'bool','name':'','type':'bool'}],'stateMutability':'view','type':'function'},{'inputs':[{'internalType':'uint256','name':'_id','type':'uint256'}],'name':'maxSupply','outputs':[{'internalType':'uint256','name':'','type':'uint256'}],'stateMutability':'view','type':'function'},{'inputs':[{'internalType':'uint256','name':'_tokenId','type':'uint256'}],'name':'mint','outputs':[{'internalType':'uint256','name':'_tokenPrice','type':'uint256'}],'stateMutability':'nonpayable','type':'function'},{'inputs':[{'internalType':'address','name':'_to','type':'address'},{'internalType':'uint256','name':'_tokenId','type':'uint256'}],'name':'mintTo','outputs':[{'internalType':'uint256','name':'_tokenPrice','type':'uint256'}],'stateMutability':'nonpayable','type':'function'},{'inputs':[],'name':'name','outputs':[{'internalType':'string','name':'','type':'string'}],'stateMutability':'view','type':'function'},{'inputs':[],'name':'owner','outputs':[{'internalType':'address','name':'','type':'address'}],'stateMutability':'view','type':'function'},{'inputs':[{'internalType':'address','name':'account','type':'address'}],'name':'powerOf','outputs':[{'internalType':'uint256','name':'','type':'uint256'}],'stateMutability':'view','type':'function'},{'inputs':[{'internalType':'uint256','name':'_id','type':'uint256'}],'name':'price','outputs':[{'internalType':'uint256','name':'','type':'uint256'}],'stateMutability':'view','type':'function'},{'inputs':[],'name':'renounceOwnership','outputs':[],'stateMutability':'nonpayable','type':'function'},{'inputs':[{'internalType':'address','name':'_from','type':'address'},{'internalType':'address','name':'_to','type':'address'},{'internalType':'uint256[]','name':'_ids','type':'uint256[]'},{'internalType':'uint256[]','name':'_amounts','type':'uint256[]'},{'internalType':'bytes','name':'_data','type':'bytes'}],'name':'safeBatchTransferFrom','outputs':[],'stateMutability':'nonpayable','type':'function'},{'inputs':[{'internalType':'address','name':'_from','type':'address'},{'internalType':'address','name':'_to','type':'address'},{'internalType':'uint256','name':'_id','type':'uint256'},{'internalType':'uint256','name':'_amount','type':'uint256'},{'internalType':'bytes','name':'_data','type':'bytes'}],'name':'safeTransferFrom','outputs':[],'stateMutability':'nonpayable','type':'function'},{'inputs':[{'internalType':'address','name':'_operator','type':'address'},{'internalType':'bool','name':'_approved','type':'bool'}],'name':'setApprovalForAll','outputs':[],'stateMutability':'nonpayable','type':'function'},{'inputs':[{'internalType':'string','name':'_newBaseMetadataURI','type':'string'}],'name':'setBaseMetadataURI','outputs':[],'stateMutability':'nonpayable','type':'function'},{'inputs':[{'internalType':'address','name':'_proxyRegistryAddress','type':'address'}],'name':'setProxyRegistryAddress','outputs':[],'stateMutability':'nonpayable','type':'function'},{'inputs':[{'internalType':'uint256','name':'','type':'uint256'}],'name':'settings','outputs':[{'internalType':'uint256','name':'pd','type':'uint256'},{'internalType':'uint256','name':'pk','type':'uint256'},{'internalType':'uint256','name':'ps','type':'uint256'},{'internalType':'uint256','name':'pc','type':'uint256'},{'internalType':'uint256','name':'ph','type':'uint256'},{'internalType':'uint256','name':'pave','type':'uint256'}],'stateMutability':'view','type':'function'},{'inputs':[{'internalType':'bytes4','name':'_interfaceID','type':'bytes4'}],'name':'supportsInterface','outputs':[{'internalType':'bool','name':'','type':'bool'}],'stateMutability':'pure','type':'function'},{'inputs':[],'name':'symbol','outputs':[{'internalType':'string','name':'','type':'string'}],'stateMutability':'view','type':'function'},{'inputs':[{'internalType':'uint256','name':'','type':'uint256'}],'name':'tokenMaxSupply','outputs':[{'internalType':'uint256','name':'','type':'uint256'}],'stateMutability':'view','type':'function'},{'inputs':[{'internalType':'uint256','name':'','type':'uint256'}],'name':'tokenPrice','outputs':[{'internalType':'uint256','name':'','type':'uint256'}],'stateMutability':'view','type':'function'},{'inputs':[{'internalType':'uint256','name':'','type':'uint256'}],'name':'tokenSupply','outputs':[{'internalType':'uint256','name':'','type':'uint256'}],'stateMutability':'view','type':'function'},{'inputs':[{'internalType':'uint256','name':'tokenId','type':'uint256'}],'name':'tokenURI','outputs':[{'internalType':'string','name':'','type':'string'}],'stateMutability':'view','type':'function'},{'inputs':[],'name':'totalExist','outputs':[{'internalType':'uint256','name':'','type':'uint256'}],'stateMutability':'view','type':'function'},{'inputs':[{'internalType':'uint256','name':'_id','type':'uint256'}],'name':'totalSupply','outputs':[{'internalType':'uint256','name':'','type':'uint256'}],'stateMutability':'view','type':'function'},{'inputs':[{'internalType':'address','name':'newOwner','type':'address'}],'name':'transferOwnership','outputs':[],'stateMutability':'nonpayable','type':'function'},{'inputs':[{'internalType':'uint256','name':'_id','type':'uint256'}],'name':'uri','outputs':[{'internalType':'string','name':'','type':'string'}],'stateMutability':'view','type':'function'}], 
       NFTs: [
         {
           logo: 'img/YODWARF/YODWARF_iBW(MIAMI).png',
@@ -65,7 +62,7 @@ class Store extends React.Component {
           total: 33,
           suply: 0,
           amount: 0,
-        },
+        }, 
         {
           logo: 'img/YODWARF/YODWARF_iBW(CLASSIC).png',
           title: 'YoDWARF CLASSIC',
@@ -80,7 +77,7 @@ class Store extends React.Component {
           total: 100,
           suply: 0,
           amount: 0,
-        },
+        }, 
         {
           logo: 'img/YODWARF/YODWARF_iBW(GOLD).png',
           title: 'YoDWARF GOLD',
@@ -95,7 +92,7 @@ class Store extends React.Component {
           total: 400,
           suply: 0,
           amount: 0,
-        },
+        }, 
         {
           logo: 'img/YODWARF/YODWARF_iBW(TURQUOISE).png',
           title: 'YoDWARF TURQUOISE',
@@ -110,7 +107,7 @@ class Store extends React.Component {
           total: 400,
           suply: 0,
           amount: 0,
-        },
+        }, 
         {
           logo: 'img/YODWARF/YODWARF_iBW(PINK).png',
           title: 'YoDWARF PINK',
@@ -125,7 +122,7 @@ class Store extends React.Component {
           total: 400,
           suply: 0,
           amount: 0,
-        },
+        }, 
         {
           logo: 'img/YODWARF/YODWARF_iBW(GREEN).png',
           title: 'YoDWARF GREEN',
@@ -140,7 +137,7 @@ class Store extends React.Component {
           total: 400,
           suply: 0,
           amount: 0,
-        },
+        }, 
         {
           logo: 'img/YODWARF/YODWARF_iBW(BLUE).png',
           title: 'YoDWARF BLUE',
@@ -155,7 +152,7 @@ class Store extends React.Component {
           total: 400,
           suply: 0,
           amount: 0,
-        },
+        }, 
         {
           logo: 'img/OBIDWARF/OBI_DWARF_3D(MIAMI).png',
           title: 'Obi-DWARF MIAMI',
@@ -170,7 +167,7 @@ class Store extends React.Component {
           total: 33,
           suply: 0,
           amount: 0,
-        },
+        }, 
         {
           logo: 'img/OBIDWARF/OBI_DWARF_3D(CLASSIC).png',
           title: 'Obi-DWARF CLASSIC',
@@ -185,7 +182,7 @@ class Store extends React.Component {
           total: 100,
           suply: 0,
           amount: 0,
-        },
+        }, 
         {
           logo: 'img/OBIDWARF/OBI_DWARF_3D(GOLD).png',
           title: 'Obi-DWARF GOLD',
@@ -200,7 +197,7 @@ class Store extends React.Component {
           total: 400,
           suply: 0,
           amount: 0,
-        },
+        }, 
         {
           logo: 'img/OBIDWARF/OBI_DWARF_3D(TURQUOISE).png',
           title: 'Obi-DWARF TURQUOISE',
@@ -215,7 +212,7 @@ class Store extends React.Component {
           total: 400,
           suply: 0,
           amount: 0,
-        },
+        }, 
         {
           logo: 'img/OBIDWARF/OBI_DWARF_3D(PINK).png',
           title: 'Obi-DWARF PINK',
@@ -230,7 +227,7 @@ class Store extends React.Component {
           total: 400,
           suply: 0,
           amount: 0,
-        },
+        }, 
         {
           logo: 'img/OBIDWARF/OBI_DWARF_3D(GREEN).png',
           title: 'Obi-DWARF GREEN',
@@ -245,7 +242,7 @@ class Store extends React.Component {
           total: 400,
           suply: 0,
           amount: 0,
-        },
+        }, 
         {
           logo: 'img/OBIDWARF/OBI_DWARF_3D(BLUE).png',
           title: 'Obi-DWARF BLUE',
@@ -260,7 +257,7 @@ class Store extends React.Component {
           total: 400,
           suply: 0,
           amount: 0,
-        },
+        }, 
         {
           logo: 'img/DWARFVADER/DWARFVADER_iBW(MIAMI).png',
           title: 'DWARF Vader MIAMI',
@@ -275,7 +272,7 @@ class Store extends React.Component {
           total: 33,
           suply: 0,
           amount: 0,
-        },
+        }, 
         {
           logo: 'img/DWARFVADER/DWARFVADER_iBW(CLASSIC).png',
           title: 'DWARF Vader CLASSIC',
@@ -290,7 +287,7 @@ class Store extends React.Component {
           total: 100,
           suply: 0,
           amount: 0,
-        },
+        }, 
         {
           logo: 'img/DWARFVADER/DWARFVADER_iBW(RED).png',
           title: 'DWARF Vader RED',
@@ -305,7 +302,7 @@ class Store extends React.Component {
           total: 400,
           suply: 0,
           amount: 0,
-        },
+        }, 
         {
           logo: 'img/DWARFVADER/DWARFVADER_iBW(PURPLE).png',
           title: 'DWARF Vader PURPLE',
@@ -320,7 +317,7 @@ class Store extends React.Component {
           total: 400,
           suply: 0,
           amount: 0,
-        },
+        }, 
         {
           logo: 'img/DWARFVADER/DWARFVADER_iBW(TURQUOISE).png',
           title: 'DWARF Vader TURQUOISE',
@@ -335,7 +332,7 @@ class Store extends React.Component {
           total: 400,
           suply: 0,
           amount: 0,
-        },
+        }, 
         {
           logo: 'img/DWARFVADER/DWARFVADER_iBW(GREEN).png',
           title: 'DWARF Vader GREEN',
@@ -350,7 +347,7 @@ class Store extends React.Component {
           total: 400,
           suply: 0,
           amount: 0,
-        },
+        }, 
         {
           logo: 'img/DWARFVADER/DWARFVADER_iBW(PINK).png',
           title: 'DWARF Vader PINK',
@@ -365,7 +362,7 @@ class Store extends React.Component {
           total: 400,
           suply: 0,
           amount: 0,
-        },
+        }, 
         {
           logo: 'img/DWARFSITH/DWARFSITH_iBW(MIAMI).png',
           title: 'DWARF Sith MIAMI',
@@ -380,7 +377,7 @@ class Store extends React.Component {
           total: 33,
           suply: 0,
           amount: 0,
-        },
+        }, 
         {
           logo: 'img/DWARFSITH/DWARFSITH_iBW(CLASSIC).png',
           title: 'DWARF Sith CLASSIC',
@@ -395,7 +392,7 @@ class Store extends React.Component {
           total: 100,
           suply: 0,
           amount: 0,
-        },
+        }, 
         {
           logo: 'img/DWARFSITH/DWARFSITH_iBW(GREEN).png',
           title: 'DWARF Sith GREEN',
@@ -410,7 +407,7 @@ class Store extends React.Component {
           total: 400,
           suply: 0,
           amount: 0,
-        },
+        }, 
         {
           logo: 'img/DWARFSITH/DWARFSITH_iBW(PINK).png',
           title: 'DWARF Sith PINK',
@@ -425,7 +422,7 @@ class Store extends React.Component {
           total: 400,
           suply: 0,
           amount: 0,
-        },
+        }, 
         {
           logo: 'img/DWARFSITH/DWARFSITH_iBW(TURQUOISE).png',
           title: 'DWARF Sith TURQUOISE',
@@ -440,7 +437,7 @@ class Store extends React.Component {
           total: 400,
           suply: 0,
           amount: 0,
-        },
+        }, 
         {
           logo: 'img/DWARFSITH/DWARFSITH_iBW(GOLD).png',
           title: 'DWARF Sith GOLD',
@@ -455,7 +452,7 @@ class Store extends React.Component {
           total: 400,
           suply: 0,
           amount: 0,
-        },
+        }, 
         {
           logo: 'img/DWARFSITH/DWARFSITH_iBW(BLUE).png',
           title: 'DWARF Sith BLUE',
@@ -470,76 +467,67 @@ class Store extends React.Component {
           total: 400,
           suply: 0,
           amount: 0,
-        },
-      ],
+        }, 
+      ], 
     };
-
     this.checkNFT = this.checkNFT.bind(this);
     this.checkNet = this.checkNet.bind(this);
     this.getBalances = this.getBalances.bind(this);
     this.checkMarket = this.checkMarket.bind(this);
     emitter.on('enabled', this.checkNFT);
     emitter.on('enabled', this.checkMarket);
-    }
+  }
   
   getStore(index) {
     console.log(this.store[index]);
     return(this.store[index]);
-    };
+  }
 
   setStore(obj) {
-    this.store = {...this.store, ...obj}
-    };
+    this.store = {...this.store, ...obj};
+  }
 
   updateState(key) {
     return (value) => {
-      this.setStore({ [key]:value });
-      };
-    }
+      this.setStore({ [key]: value });
+    };
+  }
   
   setReady(inproccess) {
-    this.setStore({ inProcess:inproccess });
+    this.setStore({ inProcess: inproccess });
     emitter.emit('ready', inproccess);
-    };
+  }
 
   setLogin(inproccess) {
-    this.setStore({ loggedin:inproccess });
+    this.setStore({ loggedin: inproccess });
     emitter.emit('loggedin', inproccess);
     emitter.emit('ready', inproccess);
-    };
+  }
 
-  setJWT(JWT) {
-    this.setStore({JWT:JWT});
-    };
+  setJWT(JWT) { this.setStore({ JWT: JWT }); }
 
   async connect() {
     let web3;
     if (window.ethereum) { // Modern dapp browsers...
       web3 = new Web3(window.ethereum);
-      this.setStore({web3:web3});
-      try {
-        // Request account access if needed
+      this.setStore({ web3: web3 });
+      try { // Request account access if needed
         await window.ethereum.enable();
-        web3.eth.getAccounts(
-          getAccountsCallback(
-            this.updateState('accountAddress'),
-            ),
-          );
-        }
-          catch (error) {
-            console.error(error);
-            }
+        web3.eth.getAccounts(getAccountsCallback(this.updateState('accountAddress'), ), );
+      } catch (error) {
+        console.error(error);
       }
-      else if (window.web3) { // Legacy dapp browsers...
-        web3 = new Web3(window.web3.currentProvider);
-        this.setStore({web3:web3});
-        web3.eth.getAccounts(
-          getAccountsCallback(
-            this.updateState('accountAddress'),
-            ),
-          );
-        }
+    } else if (window.web3) { // Legacy dapp browsers...
+      web3 = new Web3(window.web3.currentProvider);
+      this.setStore({ web3: web3 });
+      try { // Request account access if needed
+        await window.web3.currentProvider.enable();
+        web3.eth.getAccounts(getAccountsCallback(this.updateState('accountAddress'), ), );
+      } catch (error) {
+        console.error(error);
+      }
     }
+  }
   
   async mint() {
     if (await this.checkNet()) {
@@ -551,15 +539,18 @@ class Store extends React.Component {
       const dwarfContract = new web3.eth.Contract(dwarfABI, dwarfAddress);
       try {
         var result = await dwarfContract.methods.mint().send({ from: accountAddress, });
-        }
-          catch(error) {
-            this.setReady(false);
-            }
+        console.log(result);
+      } catch (error) {
+        this.setReady(false);
+        console.error(error);
+      }
       console.log(result);
       await this.checkNFT();
-      this.setReady(false);
-      }
+    } else {
+    this.setReady(false);
+    console.log(result);
     }
+  }
 
   async deposit(bnbvalue) {
     console.log('deposit');
@@ -571,18 +562,20 @@ class Store extends React.Component {
       const web3 = this.getStore('web3');
       console.log('web3');
       try {
-        let send = web3.eth.sendTransaction({ from:accountAddress, to:auctionAddress, value:web3.utils.toWei(bnbvalue, 'ether') });
+        let send = web3.eth.sendTransaction({ from: accountAddress, to: auctionAddress, value: web3.utils.toWei(bnbvalue, 'ether') });
         emitter.emit('auction', true);
-        }
-          catch(error) {
-            this.setReady(false);
-            console.log(error);
-            }
+        console.log(send);
+      } catch (error) {
+        this.setReady(false);
+        console.error(error);
       }
+    } else {
       this.setReady(false);
+      console.log('setReady', false);
     }
+  }
   
-  async peace() {
+  async peace() { // User cannot engage in Scheduled Warfares
     if (await this.checkNet()) {
       this.setReady(true);
       const accountAddress = this.getStore('accountAddress');
@@ -591,18 +584,20 @@ class Store extends React.Component {
       const web3 = this.getStore('web3');
       const dwarfContract = new web3.eth.Contract(dwarfABI, dwarfAddress);
       try {
-        var result = await dwarfContract.methods.peace().send({ from:accountAddress, });
-        } 
-        catch(error) {
-          this.setReady(false);
-          }
+        var result = await dwarfContract.methods.peace().send({ from: accountAddress, });
+          console.log(result);
+        await this.checkNFT();
+      } catch (error) {
+        this.setReady(false);
+        console.error(error);
       }
-      console.log(result);
-      await this.checkNFT();
+    } else {
       this.setReady(false);
+      console.log(result);
     }
+  }
     
-  async war() {
+  async war() { // User can engage in Scheduled Warfares
     if (await this.checkNet()) {
       this.setReady(true);
       const accountAddress = this.getStore('accountAddress');
@@ -611,53 +606,63 @@ class Store extends React.Component {
       const web3 = this.getStore('web3');
       const dwarfContract = new web3.eth.Contract(dwarfABI, dwarfAddress);
       try {
-        var result = await dwarfContract.methods.war().send({ from:accountAddress, });
-        }
-          catch(error) {
-            this.setReady(false);
-            }
+        var result = await dwarfContract.methods.war().send({ from: accountAddress, });
+          console.log(result);
+      } catch (error) {
+        this.setReady(false);
+        console.error(error);
       }
-      console.log(result);
-      await this.checkNFT();
+    } else {
       this.setReady(false);
     }
+    console.log(result);
+    await this.checkNFT();
+  }
   
   async checkNet() {
     const web3 = this.getStore('web3');
     const mainNetId = this.getStore('mainNetId');
     var netId = await web3.eth.net.getId();
-    await this.setStore({ netId:netId });
-    emitter.emit('netId', netId);
-    return(mainNetId === netId);
-    }
+      await this.setStore({ netId: netId });
+      emitter.emit('netId', netId);
+      return(mainNetId === netId);
+  }
   
-  async checkNFT() {
-    const accountAddress = this.getStore('accountAddress');
-    const dwarfAddress = this.getStore('dwarfAddress');
-    const dwarfABI = this.getStore('dwarfABI');
-    const web3 = this.getStore('web3');
+  async checkNFT() { // Check for WAR NFT, then check if NFTs are staking
+    const accountAddress =  this.getStore('accountAddress');
+    const dwarfAddress =  this.getStore('dwarfAddress');
+    const dwarfABI =  this.getStore('dwarfABI');
+    const web3 =  this.getStore('web3');
     web3.eth.net.getId().then(netId => {
       console.log(netId);
-      this.setStore({ netId:netId });
+      this.setStore({ netId: netId });
       emitter.emit('netId', netId);
-      });
+    });
     var balance = await web3.eth.getBalance(accountAddress);
       balance = parseFloat(balance)/10**18;
-      this.setStore({ ethbalance:parseFloat(balance) });
+      this.setStore({ ethbalance: parseFloat(balance) });
       console.log(balance);
     const dwarfContract = new web3.eth.Contract(dwarfABI, dwarfAddress);
-    var havenft = await dwarfContract.methods.exists(accountAddress).call({ from:accountAddress, });
-      console.log(havenft);
+    var havenft = await dwarfContract.methods.exists(accountAddress).call({ from: accountAddress, });
       if (havenft) {
-        var isInWar = await dwarfContract.methods.isInWar(accountAddress).call({ from:accountAddress, });
-          await this.setStore({ isInWar:isInWar });
+        console.log(havenft);
+        this.setStore({ haveNFT: havenft });
+        emitter.emit('haveNFT', havenft);
+        try {
+          var isInWar = await dwarfContract.methods.isInWar(accountAddress).call({ from: accountAddress, });
           console.log(isInWar);
+          await this.setStore({ isInWar: isInWar });
           emitter.emit('isInWar', isInWar);
+        } catch (error) {
+          this.setReady(false);
+          console.error(error);
         }
-          await this.setStore({ haveNFT:havenft });
-          emitter.emit('haveNFT', havenft);
-          this.getBalances();
-    }
+      } else {
+      await this.setStore({ haveNFT: havenft });
+      this.getBalances();
+      console.log(balance);
+      }
+  }
 
   async getBalances() {
     const accountAddress = this.getStore('accountAddress');
@@ -666,28 +671,24 @@ class Store extends React.Component {
     const lpJediAddress = this.getStore('lpJediAddress');
     const lpDarthAddress = this.getStore('lpDarthAddress');
     const dwarf20Address = this.getStore('dwarf20Address');
-
     let jediContract = new web3.eth.Contract(erc20ABI, lpJediAddress);
-    var balance = await jediContract.methods.balanceOf(accountAddress).call({ from:accountAddress, });
+    var balance = await jediContract.methods.balanceOf(accountAddress).call({ from: accountAddress, });
       balance = parseFloat(balance)/10**18;
-      await this.setStore({jediLP:balance});
+      await this.setStore({ jediLP: balance });
       console.log(balance);
-
     let darthContract = new web3.eth.Contract(erc20ABI, lpDarthAddress);
     var balance = await darthContract.methods.balanceOf(accountAddress).call({ from:accountAddress, });
       balance = parseFloat(balance)/10**18;
-      await this.setStore({darthLP:balance});
+      await this.setStore({ darthLP: balance });
       console.log(balance);
-    
     let dwarf20Contract = new web3.eth.Contract(erc20ABI, dwarf20Address);
-    var balance = await dwarf20Contract.methods.balanceOf(accountAddress).call({ from:accountAddress, });
+    var balance = await dwarf20Contract.methods.balanceOf(accountAddress).call({ from: accountAddress, });
       balance = parseFloat(balance)/10**18;
-      await this.setStore({dwarf:balance});
+      await this.setStore({ dwarf: balance });
       console.log(balance);
-
     emitter.emit('balances', '');
     this.getNFTBalances();
-    }
+  }
 
   async getNFTBalances() {
     const accountAddress = this.getStore('accountAddress');
@@ -696,28 +697,24 @@ class Store extends React.Component {
     const NFTJediAddress = this.getStore('NFTJediAddress');
     const NFTDarthAddress = this.getStore('NFTDarthAddress');
     const NFTs = this.getStore('NFTs');
-
     let jediContract = new web3.eth.Contract(erc1155ABI, NFTJediAddress);
     let darthContract = new web3.eth.Contract(erc1155ABI, NFTDarthAddress);
-    
-    NFTs.map(async(NFT) => {
-      if(NFT.side === 'jedi') {
-          NFT.suply = await jediContract.methods.totalSupply(NFT.id).call({ from:accountAddress, });
-          NFT.amount = await jediContract.methods.balanceOf(accountAddress, NFT.id).call({ from:accountAddress, });
-        } 
-          else {
-          NFT.suply = await darthContract.methods.totalSupply(NFT.id).call({ from:accountAddress, });
-          NFT.amount = await darthContract.methods.balanceOf(accountAddress, NFT.id).call({ from:accountAddress, });
-            }
-      });
-    
-    await this.setStore({ NFTs:NFTs });
+    NFTs.map(async (NFT) => { // Spelling must be improved ('suply' -> 'supply')
+      if (NFT.side === 'jedi') {
+        NFT.suply = await jediContract.methods.totalSupply(NFT.id).call({ from: accountAddress, });
+        NFT.amount = await jediContract.methods.balanceOf(accountAddress, NFT.id).call({ from: accountAddress, });
+      } else {
+        NFT.suply = await darthContract.methods.totalSupply(NFT.id).call({ from: accountAddress, });
+        NFT.amount = await darthContract.methods.balanceOf(accountAddress, NFT.id).call({ from: accountAddress, });
+      }
+    });
+    await this.setStore({ NFTs: NFTs });
     console.log('NFTs saved');
     emitter.emit('nbalances', '');
     console.log('nbalances');
-    }
+  }
 
-  async checkMarket() {
+  async checkMarket() { // 3,000 $DWARF staking
     this.setReady(true);
     try {
       const accountAddress = this.getStore('accountAddress');
@@ -725,35 +722,35 @@ class Store extends React.Component {
       const dwarfAddress = this.getStore('dwarfAddress');
       const dwarfABI = this.getStore('dwarfABI');
       const dwarfContract = new web3.eth.Contract(dwarfABI, dwarfAddress);
-      
-      var opened = await dwarfContract.methods.isOpened(accountAddress).call({ from:accountAddress, });
+      var opened = await dwarfContract.methods.isOpened(accountAddress).call({ from: accountAddress, });
         if (opened) {
           console.log(opened);
-          }
-          await this.setStore({ opened:opened });
           emitter.emit('opened', opened);
-      
-      var staked = await dwarfContract.methods.staked(accountAddress).call({ from:accountAddress, });
+        } else {
+          await this.setStore({ opened: opened });
+        }
+      var staked = await dwarfContract.methods.staked(accountAddress).call({ from: accountAddress, });
         if (staked) {
           console.log(staked);
-          var stakedJedi = await dwarfContract.methods.stakedJedi(accountAddress).call({ from:accountAddress, });
-          stakedJedi = parseFloat(stakedJedi)/10**18;
-          await this.setStore({ stakedJedi:stakedJedi });
-          var stakedDarth = await dwarfContract.methods.stakedDarth(accountAddress).call({ from:accountAddress, });
-          stakedDarth = parseFloat(stakedDarth)/10**18;
-          await this.setStore({ stakedDarth:stakedDarth });
+          emitter.emit('staked', staked);
+          var stakedJedi = await dwarfContract.methods.stakedJedi(accountAddress).call({ from: accountAddress, });
+            stakedJedi = parseFloat(stakedJedi)/10**18;
+            await this.setStore({ stakedJedi: stakedJedi });
+          var stakedDarth = await dwarfContract.methods.stakedDarth(accountAddress).call({ from: accountAddress, });
+            stakedDarth = parseFloat(stakedDarth)/10**18;
+            await this.setStore({ stakedDarth: stakedDarth });
           var canClaim = await dwarfContract.methods.canClaim(accountAddress).call({ from:accountAddress, });
-          }
-          await this.setStore({ canClaim:canClaim });
-      
-      await this.setStore({ staked:staked });
-      emitter.emit('staked', staked);
-      }
-      catch(error) {
-        this.setReady(false);
+            await this.setStore({ canClaim: canClaim });
+            console.log(canClaim);
+        } else {
+          await this.setStore({ staked: staked });
         }
+    } catch (error) {
+      this.setReady(false);
+      console.error(error);
     }
   }
+}
 
 var store = new Store();
 
