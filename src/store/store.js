@@ -508,19 +508,19 @@ class Store extends React.Component {
 
   async connect() {
     let web3;
-    if (window.ethereum) { // Modern dapp browsers...
+    if (window.ethereum) { /* Modern dapp browsers... */
       web3 = new Web3(window.ethereum);
       this.setStore({ web3: web3 });
-      try { // Request account access if needed
+      try { /* Request account access if needed */
         await window.ethereum.enable();
         web3.eth.getAccounts(getAccountsCallback(this.updateState('accountAddress'), ), );
       } catch (error) {
         console.error(error);
       }
-    } else if (window.web3) { // Legacy dapp browsers...
+    } else if (window.web3) { /* Legacy dapp browsers... */
       web3 = new Web3(window.web3.currentProvider);
       this.setStore({ web3: web3 });
-      try { // Request account access if needed
+      try { /* Request account access if needed */
         await window.web3.currentProvider.enable();
         web3.eth.getAccounts(getAccountsCallback(this.updateState('accountAddress'), ), );
       } catch (error) {
@@ -575,7 +575,7 @@ class Store extends React.Component {
     }
   }
   
-  async peace() { // User cannot engage in Scheduled Warfares
+  async peace() { /** User cannot engage in Scheduled Warfares */
     if (await this.checkNet()) {
       this.setReady(true);
       const accountAddress = this.getStore('accountAddress');
@@ -597,7 +597,7 @@ class Store extends React.Component {
     }
   }
     
-  async war() { // User can engage in Scheduled Warfares
+  async war() { /** User can engage in Scheduled Warfares **/
     if (await this.checkNet()) {
       this.setReady(true);
       const accountAddress = this.getStore('accountAddress');
@@ -628,7 +628,7 @@ class Store extends React.Component {
       return(mainNetId === netId);
   }
   
-  async checkNFT() { // Check for WAR NFT, then check if NFTs are staking
+  async checkNFT() { /* Check for WAR NFT, then check if NFTs are staking */
     const accountAddress =  this.getStore('accountAddress');
     const dwarfAddress =  this.getStore('dwarfAddress');
     const dwarfABI =  this.getStore('dwarfABI');
@@ -699,7 +699,7 @@ class Store extends React.Component {
     const NFTs = this.getStore('NFTs');
     let jediContract = new web3.eth.Contract(erc1155ABI, NFTJediAddress);
     let darthContract = new web3.eth.Contract(erc1155ABI, NFTDarthAddress);
-    NFTs.map(async (NFT) => { // Spelling must be improved ('suply' -> 'supply')
+    NFTs.map(async (NFT) => { /* Spelling must be improved ('suply' -> 'supply') */
       if (NFT.side === 'jedi') {
         NFT.suply = await jediContract.methods.totalSupply(NFT.id).call({ from: accountAddress, });
         NFT.amount = await jediContract.methods.balanceOf(accountAddress, NFT.id).call({ from: accountAddress, });
@@ -714,7 +714,7 @@ class Store extends React.Component {
     console.log('nbalances');
   }
 
-  async checkMarket() { // 3,000 $DWARF staking
+  async checkMarket() { /* 3,000 $DWARF staking */
     this.setReady(true);
     try {
       const accountAddress = this.getStore('accountAddress');
@@ -758,4 +758,4 @@ var store = new Store();
 export default {
   store: store,
   emitter: emitter,
-  };
+};
