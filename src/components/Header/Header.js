@@ -140,7 +140,8 @@ class Header extends React.Component {
   }
   
   render() {
-    var connectButton = 'CONNECT <br />WALLET';
+    var connectButton = 'Connect<br />Wallet';
+
     var menuitems = '';
     const {
       accountAddress,
