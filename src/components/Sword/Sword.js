@@ -55,7 +55,8 @@ class Sword extends React.Component {
   
   render() {
     const { showSword, accountAddress } = this.state;
-    var connectButton = "CONNECT <br /> WALLET";
+    var connectButton = "Connect<br /> Wallet";
+
     var address = "";
     if (accountAddress) {
       address = accountAddress.substring(0,6)+'...'+accountAddress.substring(accountAddress.length-4,accountAddress.length)
