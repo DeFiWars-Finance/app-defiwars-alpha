@@ -6,7 +6,7 @@ import Header from '../Header/Header';
 import Store from '../../store/store';
 
 const store = Store.store;
-const emitter = Store.emitter
+const emitter = Store.emitter;
 
 class Market extends React.Component {
   constructor(props) {
@@ -17,16 +17,14 @@ class Market extends React.Component {
     const dwarf = store.getStore('dwarf');
     const opened = store.getStore('opened');
     const NFTs = store.getStore('NFTs');
-
     this.state = {
       accountAddress: accountAddress,
-      haveNFT:haveNFT,
-      isInWar:isInWar,
-      dwarf:dwarf,
-      opened:opened,
-      NFTs:NFTs,
-    };
-
+      haveNFT: haveNFT,
+      isInWar: isInWar,
+      dwarf: dwarf,
+      opened: opened,
+      NFTs: NFTs,
+    }
     this.balances = this.balances.bind(this);
     this.nbalances = this.nbalances.bind(this);
     this.openclose = this.openclose.bind(this);
@@ -39,7 +37,6 @@ class Market extends React.Component {
     const dwarf = store.getStore('dwarf');
     const opened = store.getStore('opened');
     const NFTs = store.getStore('NFTs');
-
     this.setState({
         accountAddress: accountAddress,
         haveNFT: haveNFT,
@@ -47,74 +44,66 @@ class Market extends React.Component {
         dwarf: dwarf,
         opened: opened,
         NFTs: NFTs,
-    })
-    console.log('got new balances')
+    });
+    console.log('got new balances');
   }
   
   async nbalances() {
     await new Promise(resolve => setTimeout(resolve, 1000));
     const NFTs = store.getStore('NFTs');
     await this.setState({
-        NFTs:NFTs,
-    })
-    console.log('got new NFT balances')
+      NFTs: NFTs,
+    });
+    console.log('got new NFT balances');
   }
   
   async stakeDwarf() {
     store.setReady(true);
-    const accountAddress =  store.getStore('accountAddress');
-    const dwarfAddress =  store.getStore('dwarfAddress');
-    const dwarfABI =  store.getStore('dwarfABI');
-    const web3 =  store.getStore('web3');
+    const accountAddress = store.getStore('accountAddress');
+    const dwarfAddress = store.getStore('dwarfAddress');
+    const dwarfABI = store.getStore('dwarfABI');
+    const web3 = store.getStore('web3');
     const dwarfContract = new web3.eth.Contract(dwarfABI, dwarfAddress);
-
-    const erc20ABI =  store.getStore('erc20ABI');
-    const dwarf20Address =  store.getStore('dwarf20Address');
-
-    let dwarf20Contract = new web3.eth.Contract(erc20ABI, dwarf20Address)
-
-    var allowance = await dwarf20Contract.methods.allowance(accountAddress, dwarfAddress).call({ from: accountAddress, })
+    const erc20ABI = store.getStore('erc20ABI');
+    const dwarf20Address = store.getStore('dwarf20Address');
+    let dwarf20Contract = new web3.eth.Contract(erc20ABI, dwarf20Address);
+    var allowance = await dwarf20Contract.methods.allowance(accountAddress, dwarfAddress).call({ from: accountAddress, });
     const ethAllowance = parseFloat(allowance)/10**18;
     if(parseFloat(ethAllowance) < 3000) {
-        await dwarf20Contract.methods.approve(dwarfAddress, web3.utils.toWei('999999999999999', 'ether')).send({ from: accountAddress, })
+      await dwarf20Contract.methods.approve(dwarfAddress, web3.utils.toWei('999999999999999', 'ether')).send({ from: accountAddress, })
     }
-
-    try {
-      var result = await dwarfContract.methods.openmarket().send({ from: accountAddress, });
-    } catch(error) {
-      store.setReady(false);
-    }
-
+      try {
+        var result = await dwarfContract.methods.openmarket().send({ from: accountAddress, });
+      } catch(error) {
+        store.setReady(false);
+      }
     store.checkMarket();
     store.setReady(false);
   }
 
   async claimDwarf() {
     store.setReady(true);
-    const accountAddress =  store.getStore('accountAddress');
-    const dwarfAddress =  store.getStore('dwarfAddress');
-    const dwarfABI =  store.getStore('dwarfABI');
-    const web3 =  store.getStore('web3');
+    const accountAddress = store.getStore('accountAddress');
+    const dwarfAddress = store.getStore('dwarfAddress');
+    const dwarfABI = store.getStore('dwarfABI');
+    const web3 = store.getStore('web3');
     const dwarfContract = new web3.eth.Contract(dwarfABI, dwarfAddress);
-
     try {
       var result = await dwarfContract.methods.closemarket().send({ from: accountAddress, });
     } catch(error) {
       store.setReady(false);
     }
-
     store.checkMarket();
     store.setReady(false);
   }
   
   async buyJediNFT(id) {
     store.setReady(true);
-    const accountAddress =  store.getStore('accountAddress');
-    const dwarfAddress =  store.getStore('dwarfAddress');
-    const dwarfABI =  store.getStore('dwarfABI');
-    const web3 =  store.getStore('web3');
+    const accountAddress = store.getStore('accountAddress');
+    const dwarfAddress = store.getStore('dwarfAddress');
+    const dwarfABI = store.getStore('dwarfABI');
+    const web3 = store.getStore('web3');
     const dwarfContract = new web3.eth.Contract(dwarfABI, dwarfAddress);
-
     try {
       var result = await dwarfContract.methods.buyjedi(id).send({ from: accountAddress, });
       console.log(result);
@@ -122,26 +111,25 @@ class Market extends React.Component {
       store.setReady(false);
       console.log(error);
     }
-
     store.setReady(false);
     store.getBalances();
   }
 
   async buyDarthNFT(id) {
     store.setReady(true);
-    const accountAddress =  store.getStore('accountAddress');
-    const dwarfAddress =  store.getStore('dwarfAddress');
-    const dwarfABI =  store.getStore('dwarfABI');
-    const web3 =  store.getStore('web3');
+    const accountAddress = store.getStore('accountAddress');
+    const dwarfAddress = store.getStore('dwarfAddress');
+    const dwarfABI = store.getStore('dwarfABI');
+    const web3 = store.getStore('web3');
     const dwarfContract = new web3.eth.Contract(dwarfABI, dwarfAddress);
     try {
       await dwarfContract.methods.buydarth(id).send({ from: accountAddress, })
-        .on('confirmation', function(confirmationNumber, receipt){
-          console.log(confirmationNumber, receipt);
-          if(confirmationNumber == 1) {
+      .on('confirmation', function(confirmationNumber, receipt){
+        console.log(confirmationNumber, receipt);
+          if(confirmationNumber === 1) {
             store.getBalances();
           }
-        })
+      })
       console.log('done');
     } catch(error) {
       store.setReady(false);
@@ -194,8 +182,7 @@ class Market extends React.Component {
   }
 
   renderNFT = (NFT) => {
-    var goto =  () => this.buyJediNFT(NFT.id);
-
+    var goto = () => this.buyJediNFT(NFT.id);
     if(NFT.side === 'darth') {
       goto = () => this.buyDarthNFT(NFT.id);
     }
@@ -210,11 +197,9 @@ class Market extends React.Component {
           <span>Healing: {NFT.ph}</span>
           <span>{NFT.suply}/{NFT.total}</span>
         </div>
-
         <div className={appStyle.nfblockMine}>
           <span>{NFT.amount}</span>
         </div>
-
         <img src={NFT.logo} alt='' />
         <p>{NFT.title}</p>
         <p className={NFT.side}>{NFT.price} <br />DWARF</p>
@@ -238,45 +223,42 @@ class Market extends React.Component {
                 <div className={appStyle.flexcol}>
                   <div className={appStyle.flexrow}>
                     <div className={style.text}>
-                    {
-                      this.renderJediNFTs(NFTs)
-                    }
+                      {
+                        this.renderJediNFTs(NFTs)
+                      }
                     </div>
-
                     <div className={style.text}>
-                    {
-                      this.renderDarthNFTs(NFTs)
-                    }
+                      {
+                        this.renderDarthNFTs(NFTs)
+                      }
                     </div>
                   </div>
-
                   <div className={style.textcenter}>
                     <div className={appStyle.nfblock}>
                       <img src='img/market.png' alt='NFT Marketplace' />
                       <p>{dwarf} <br />DWARF</p>
-
-                      <button onClick={this.claimDwarf}>Close NFT Marketplace</button>
+                      <button onClick={this.claimDwarf}>Leave Warzone <br />Marketplace</button>
                     </div>
                   </div>
                 </div>
               )
-            }
-            return (
-              <div className={style.textcenter}>
-                <div className={appStyle.nfblock}>
-                  <img src='img/market.png' alt='NFT Marketplace' />
-                  <p>{dwarf} <br />DWARF</p>
-
-                  <button disabled={dwarf==0} onClick={this.stakeDwarf}>Open NFT Marketplace</button>
+            } else {
+              return (
+                <div className={style.textcenter}>
+                  <div className={appStyle.nfblock}>
+                    <img src='img/market.png' alt='NFT Marketplace' />
+                    <p>{dwarf} <br />DWARF</p>
+                    <button disabled={dwarf === 0} onClick={this.stakeDwarf}>Enter Warzone <br />Marketplace</button>
+                  </div>
                 </div>
-              </div>
-            )
+              )
+            }
           })()}
         </div>
 
         <Footer />
       </div>
-    );
+    )
   }
 }
 

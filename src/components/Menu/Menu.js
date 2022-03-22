@@ -1,64 +1,63 @@
-import React from "react";
-import { Collapse } from "react-collapse";
-import { NavLink } from "react-router-dom";
-import { slide as MenuMobile } from "react-burger-menu";
-import style from "./Menu.module.css";
+import React from 'react';
+import style from './Menu.module.css';
+import { Collapse } from 'react-collapse';
+import { NavLink } from 'react-router-dom';
+import { slide as MenuMobile } from 'react-burger-menu';
 
 let styles = {
   bmBurgerButton: {
-    position: "fixed",
-    width: "36px",
-    height: "30px",
-    right: "36px",
-    top: "60px",
+    position: 'fixed',
+    width: '36px',
+    height: '30px',
+    right: '36px',
+    top: '60px',
   },
-
   bmBurgerBars: {
-    background: "#fff",
-    height: "3px",
+    background: '#fff',
+    height: '3px',
   },
   bmBurgerBarsLastChild: {
-    display: "none",
+    display: 'none',
   },
   bmBurgerBarsHover: {
-    background: "#a90000",
+    background: '#a90000',
   },
   bmCrossButton: {
-    height: "24px",
-    width: "24px",
+    height: '24px',
+    width: '24px',
   },
   bmCross: {
-    background: "#bdc3c7",
+    background: '#bdc3c7',
   },
   bmMenuWrap: {
-    position: "fixed",
-    height: "100%",
+    position: 'fixed',
+    height: '100%',
     top: 0,
   },
   bmMenu: {
-    background: "#373a47",
-    padding: "2.5em 1.5em 0",
-    fontSize: "1.15em",
-    position: "relative",
+    background: '#e910ff',
+    padding: '2.5em 1.5em 0',
+    fontSize: '1.15em',
+    position: 'relative',
   },
   bmMorphShape: {
-    fill: "#373a47",
+    fill: '#373a47',
   },
   bmItemList: {
-    color: "#b8b7ad",
-    padding: "0.8em",
-    display: "flex",
-    flexDirection: "column",
+    color: '#b8b7ad',
+    padding: '0.8em',
+    display: 'flex',
+    flexDirection: 'column',
   },
   bmItem: {
-    display: "inline-block",
-    color: "#fff",
-    fontSize: "24px",
-    fontFamily: "Roboto",
-    padding: "5px 0",
+    display: 'inline-block',
+    color: '#f2ff00',
+    fontSize: '24px',
+    fontFamily: 'Roboto',
+    padding: '5px 0',
   },
   bmOverlay: {
-    background: "rgba(0, 0, 0, 0.3)",
+    background: 'rgba(50, 50, 150, 0.3)',
     top: 0,
   },
 };
@@ -67,8 +66,8 @@ class Menu extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      showDefi: false,
-      width: window.innerWidth,
+        showDefi: false,
+        width: window.innerWidth,
     };
     this.showHideDefi = this.showHideDefi.bind(this);
     this.onResize = this.onResize.bind(this);
@@ -76,11 +75,11 @@ class Menu extends React.Component {
 
   showHideDefi = (value) => {
     this.setState({ showDefi: value });
-  };
+  }
 
   onResize() {
     this.setState({
-      width: window.innerWidth,
+        width: window.innerWidth,
     });
   }
 
@@ -89,83 +88,66 @@ class Menu extends React.Component {
   }
 
   componentDidMount() {
-    window.addEventListener("resize", this.onResize);
+    window.addEventListener('resize', this.onResize);
   }
 
   componentWillUnmount() {
-    window.removeEventListener("resize", this.onResize);
+    window.removeEventListener('resize', this.onResize);
   }
 
   render() {
     return (
-      <React.Fragment>
-        {this.state.width < 768 ? (
-          <MenuMobile styles={styles} right pageWrapId="root">
-            <NavLink exact to="/What_is_DWARF">What is $DWARF?</NavLink>
-
-            <a onClick={() => this.showHideDefi(!this.state.showDefi)}>
-              DeFi Products
-            </a>
-            <Collapse isOpened={this.state.showDefi}>
-              <div
-                onMouseLeave={() => this.showHideDefi(false)}
-                className={
-                  this.state.showDefi
-                    ? style.submenuMobile + " " + style.submenuActive
-                    : style.submenuMobile
-                }
-              >
-                <a href="/swap/#/pool">Polarized Liquidity Pools</a>
-                <a href="/swap">DWARFSwap</a>
-                <NavLink exact to="/NFA_Market">NFT Marketplace</NavLink>
-                <NavLink exact to="/The_Army">My NFTs</NavLink>
-              </div>
-            </Collapse>
-
-            <NavLink exact to="/NFA_Collections">Claim NFT</NavLink>
-
-            <NavLink exact to="/About_the_Team">The Team</NavLink>
-
-            <NavLink exact to="/Make_Contact">Make Contact</NavLink>
-          </MenuMobile>
-        ) : null}
-        <div className={style.Menu}>
-          <ul className={style.mainMenu}>
+      <React.Fragment> {
+        this.state.width < 768 ? (
+          <MenuMobile styles = { styles } right pageWrapId = { 'root' }>
+            <NavLink exact to = '/What_is_DWARF'>What is DeFiWars?</ NavLink>
+            <a onClick = { () => this.showHideDefi(!this.state.showDefi) }>
+              DWARFSwap & Warzone
+            </ a>
+            <Collapse isOpened = { this.state.showDefi }>
+              <div onMouseLeave = { () => this.showHideDefi(false) } className = { this.state.showDefi ? style.submenuMobile + ' ' + style.submenuActive : style.submenuMobile }>
+                <a href='/swap'>DWARFSwap</ a>
+                <a href='/swap/#/pool'>PoLPs</ a>
+                <NavLink exact to='/NFA_Market'>Warzone Marketplace</ NavLink>
+                <NavLink exact to='/The_Army'>My Power</ NavLink>
+              </ div>
+            </ Collapse>
+            <NavLink exact to='/NFA_Collections'>Scheduled Warfare</ NavLink>
+            <NavLink exact to='/About_the_Team'>The Team</ NavLink>
+            <NavLink exact to='/Make_Contact'>Make Contact</ NavLink>
+          </ MenuMobile>
+        ) : null
+      }
+        <div className = { style.Menu }>
+          <ul className = { style.mainMenu }>
             <li>
-              <NavLink exact to="/What_is_DWARF">What is $DWARF?</NavLink>
-            </li>
-            <li onMouseEnter={() => this.showHideDefi(true)}>
-              {" "}
-              <a>DeFi Products</a>
-              <Collapse isOpened={this.state.showDefi}>
-                <div
-                  onMouseLeave={() => this.showHideDefi(false)}
-                  className={
-                    this.state.showDefi
-                      ? style.submenu + " " + style.submenuActive
-                      : style.submenu
-                  }
-                >
-                  <a href="/swap/#/pool">Polarized Liquidity Pools</a>
-                  <a href="/swap">DWARFSwap</a>
-                  <NavLink exact to="/NFA_Market">NFT Marketplace</NavLink>
-                  <NavLink exact to="/The_Army">My NFTs</NavLink>
+              <NavLink exact to='/What_is_DWARF'>What is DeFiWars?</ NavLink>
+            </ li>
+            <li onMouseEnter = { () => this.showHideDefi(true) }>
+              {' '}
+              <a>DWARFSwap & Warzone</a>
+              <Collapse isOpened = { this.state.showDefi }>
+                <div onMouseLeave = { () => this.showHideDefi(false) } className = { this.state.showDefi ? style.submenu + ' ' + style.submenuActive : style.submenu }>
+                  <a href = '/swap'>DWARFSwap</a>
+                  <a href = '/swap/#/pool'>PoLPs</a>
+                  <NavLink exact to = '/NFA_Market'>Warzone Marketplace</ NavLink>
+                  <NavLink exact to = '/The_Army'>My Power</ NavLink>
                 </div>
-              </Collapse>
-            </li>
+              </ Collapse>
+            </ li>
             <li>
-              {" "}
-              <NavLink exact to="/NFA_Collections">Claim NFT</NavLink>
-            </li>
+              {' '}
+              <NavLink exact to = '/NFA_Collections'>Scheduled Warfare</NavLink>
+            </ li>
             <li>
-              <NavLink exact to="/About_the_Team">The Team</NavLink>
-            </li>
+              <NavLink exact to = '/About_the_Team'>The Team</NavLink>
+            </ li>
             <li>
-              <NavLink exact to="/Make_Contact">Make Contact</NavLink>
-            </li>
-          </ul>
-        </div>
-      </React.Fragment>
+              <NavLink exact to = '/Make_Contact'>Make Contact</NavLink>
+            </ li>
+          </ ul>
+        </ div>
+      </ React.Fragment>
     );
   }
 }
