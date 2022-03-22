@@ -134,7 +134,8 @@ class Header extends React.Component {
     emitter.removeListener('netId', this.addAddress);
     emitter.removeListener('enabled', this.checkNFTs);
     emitter.removeListener('haveNFT', this.checkNFTs);
-    emitter.removeListener('isInWar', this.checknetId);
+    emitter.removeListener('isInWar', this.checkNFTs);
+
     emitter.removeListener('ready', this.checkReady);
   }
   
