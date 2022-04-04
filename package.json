@@ -159,5 +159,8 @@
     "presets": [
       "react-app"
     ]
+  },
+  "devDependencies": {
+    "webpack-dev-server": "3.11.1"
   }
 }
