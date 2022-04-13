@@ -77,13 +77,13 @@ class Oracle extends React.Component {
       ph: 0,
     };
 
-    await NFTs.filter((NFT) => {
+    NFTs.filter((NFT) => {
       if (NFT.side === 'jedi' && parseFloat(NFT.amount) > 0) {
         return true
       } else {
         return false
       }
-    }).map((NFT) => {
+    }).forEach((NFT) => {
       console.log(NFT);
       tempJediPower.pd = Math.floor((tempJediPower.pd + parseFloat(NFT.amount) * NFT.pd) / (parseFloat(NFT.amount) + 1));
       tempJediPower.pk = Math.floor((tempJediPower.pk + parseFloat(NFT.amount) * NFT.pk) / (parseFloat(NFT.amount) + 1));
@@ -99,13 +99,13 @@ class Oracle extends React.Component {
       ph: 0,
     };
 
-    await NFTs.filter((NFT) => {
+    NFTs.filter((NFT) => {
       if (NFT.side === 'darth' && parseFloat(NFT.amount) > 0) {
         return true
       } else {
         return false
       }
-    }).map((NFT) => {
+    }).forEach((NFT) => {
       console.log(NFT);
       tempDarthPower.pd = Math.floor((tempDarthPower.pd + parseFloat(NFT.amount) * NFT.pd) / (parseFloat(NFT.amount) + 1));
       tempDarthPower.pk = Math.floor((tempDarthPower.pk + parseFloat(NFT.amount) * NFT.pk) / (parseFloat(NFT.amount) + 1));
@@ -114,7 +114,7 @@ class Oracle extends React.Component {
       tempDarthPower.ph = Math.floor((tempDarthPower.ph + parseFloat(NFT.amount) * NFT.ph) / (parseFloat(NFT.amount) + 1));
     });
 
-    await this.setState({
+    this.setState({
       JediPower: tempJediPower,
       DarthPower: tempDarthPower,
     });
@@ -127,29 +127,25 @@ class Oracle extends React.Component {
   renderJediNFTs = () => {
     const { NFTs } = this.state
 
-    return NFTs.filter((NFT) => {
-      if (NFT.side === 'jedi' && parseFloat(NFT.amount) > 0) {
+    return NFTs.filter(nft => {
+      if (nft.side === 'jedi' && parseFloat(nft.amount) > 0) {
         return true
       } else {
         return false
       }
-    }).map((NFT) => {
-      return this.renderNFT(NFT)
-    })
+    }).map((nft) => this.renderNFT(nft))
   }
 
   renderDarthNFTs = () => {
     const { NFTs } = this.state
 
-    return NFTs.filter((NFT) => {
-      if (NFT.side === 'darth' && parseFloat(NFT.amount) > 0) {
+    return NFTs.filter((nft) => {
+      if (nft.side === 'darth' && parseFloat(nft.amount) > 0) {
         return true
       } else {
         return false
       }
-    }).map((NFT) => {
-      return this.renderNFT(NFT)
-    })
+    }).map((nft) => this.renderNFT(nft))
   }
 
   componentWillMount() {
@@ -162,23 +158,23 @@ class Oracle extends React.Component {
     emitter.on('nbalances', this.balances);
   }
 
-  renderNFT = (NFT) => {
+  renderNFT = (nft) => {
     return (
       <div className={appStyle.nfblock}>
         <div className={appStyle.nfblockPower}>
-          <span>Damage: {NFT.pd}</span>
-          <span>Kinetics: {NFT.pk}</span>
-          <span>Speed: {NFT.ps}</span>
-          <span>Conversion: {NFT.pc}</span>
-          <span>Healing: {NFT.ph}</span>
-          <span>{NFT.suply}/{NFT.total}</span>
+          <span>Damage: {nft.pd}</span>
+          <span>Kinetics: {nft.pk}</span>
+          <span>Speed: {nft.ps}</span>
+          <span>Conversion: {nft.pc}</span>
+          <span>Healing: {nft.ph}</span>
+          <span>{nft.suply}/{nft.total}</span>
         </div>
         <div className={appStyle.nfblockMine}>
-          <span>{NFT.amount}</span>
+          <span>{nft.amount}</span>
         </div>
-        <img src={NFT.logo} alt="" />
-        <p>{NFT.title}</p>
-        <p className={NFT.side}>{NFT.price} <br />DWARF</p>
+        <img src={nft.logo} alt="" />
+        <p>{nft.title}</p>
+        <p className={nft.side}>{nft.price} <br />DWARF</p>
 
       </div>
     )
