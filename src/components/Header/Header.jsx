@@ -101,7 +101,6 @@ const Header = () => {
         <Link to='/'><img src='img/sword-logo.png' alt='Home' /></Link>
         <div className={style.connectWallet}>
           <a onClick={changeStatus}>
-            {`inProcess: ${inProcess}`}
             {Parser(connectButton)}
           </a>
 
