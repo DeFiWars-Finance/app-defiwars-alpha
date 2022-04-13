@@ -1,6 +1,6 @@
 import "./App.css";
 import "./fonts/Roboto/stylesheet.css";
-import { Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Sword from "./components/Sword/Sword";
 import Contact from "./components/Contact/Contact";
 import Home from "./components/Home/Home";
@@ -14,17 +14,21 @@ import Auction from "./components/Auction/Auction";
 function App() {
   return (
     <div className="App">
-      <Route path="/" exact component={Sword} />
-      <Route path="/What_is_DWARF" exact component={Home} />
-      <Route path="/Liquidity_Pools" exact component={Sword} />
-      <Route path="/DWARFSwap" exact component={Sword} />
-      <Route path="/NFA_Market" exact component={Market} />
-      <Route path="/The_Army" exact component={Oracle} />
-      <Route path="/NFA_Collections" exact component={Collections} />
-      <Route path="/About_the_Team" exact component={About} />
-      <Route path="/Make_Contact" exact component={Contact} />
-      <Route path="/login" exact component={Login} />
-      <Route path="/auction" exact component={Auction} />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Sword/>} />
+          <Route path="/What_is_DWARF" element={<Home/>} />
+          <Route path="/Liquidity_Pools" element={<Sword/>} />
+          <Route path="/DWARFSwap" element={<Sword/>} />
+          <Route path="/NFA_Market" element={<Market/>} />
+          <Route path="/The_Army" element={<Oracle/>} />
+          <Route path="/NFA_Collections" element={<Collections/>} />
+          <Route path="/About_the_Team" element={<About/>} />
+          <Route path="/Make_Contact" element={<Contact/>} />
+          <Route path="/login" element={<Login/>} />
+          <Route path="/auction" element={<Auction/>} />
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }

@@ -2,7 +2,7 @@
 import React from 'react';
 import style from './Header.css';
 import appStyle from '../../App.module.css';
-import { NavLink, withRouter } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Menu from '../Menu/Menu';
 import Store from '../../store/store';
 import Parser from 'html-react-parser';
@@ -36,7 +36,7 @@ class Header extends React.Component {
     this.checknetId = this.checknetId.bind(this);
     this.checkReady = this.checkReady.bind(this);
     }
-  
+
   addAddress() {
     var address = store.getStore('accountAddress');
     this.setState({
@@ -55,7 +55,7 @@ class Header extends React.Component {
         netId:netId,
       })
     }
-  
+
   checknetId() {
     var netId = store.getStore('netId');
     this.setState({
@@ -63,7 +63,7 @@ class Header extends React.Component {
     })
   }
 
-  
+
   checkReady() {
     var inProcess = store.getStore('inProcess');
     var loggedin = store.getStore('loggedin');
@@ -131,7 +131,7 @@ class Header extends React.Component {
     emitter.on('isInWar', this.checkNFTs);
     emitter.on('ready', this.checkReady);
   }
-  
+
   componentWillUnmount() {
     emitter.removeListener('netId', this.addAddress);
     emitter.removeListener('enabled', this.checkNFTs);
@@ -140,7 +140,7 @@ class Header extends React.Component {
 
     emitter.removeListener('ready', this.checkReady);
   }
-  
+
   render() {
     var connectButton = 'Connect<br />Wallet';
 
@@ -185,7 +185,7 @@ class Header extends React.Component {
     return (
       <header  className={appStyle.flexauto}>
         <div className={style.logo}>
-          <NavLink exact to='/'><img src='img/sword-logo.png' alt='Home' /></NavLink>
+          <Link to='/'><img src='img/sword-logo.png' alt='Home' /></Link>
           <div className={style.connectWallet}>
             <a onClick={this.changeStatus}>
               {Parser(connectButton)}
@@ -291,4 +291,4 @@ class Header extends React.Component {
   }
 }
 
-export default withRouter(Header);
+export default Header;
