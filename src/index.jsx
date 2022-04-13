@@ -6,11 +6,14 @@ import App from "./App";
 import "./fonts/audiowide-cufonfonts-webfont/style.css";
 import "./fonts/Roboto/stylesheet.css";
 import "./fonts/fontawesome/css/all.css";
+import { StoreProvider } from "./sharedContexts/store";
 
 ReactDOM.render(
-    <React.StrictMode>
+  <React.StrictMode>
+    <StoreProvider>
       <App />
-    </React.StrictMode>,
+    </StoreProvider>
+  </React.StrictMode>,
   document.getElementById("root")
 );
 
