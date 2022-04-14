@@ -3,17 +3,17 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
 import App from "./App";
-import { BrowserRouter } from "react-router-dom";
 import "./fonts/audiowide-cufonfonts-webfont/style.css";
 import "./fonts/Roboto/stylesheet.css";
 import "./fonts/fontawesome/css/all.css";
+import { StoreProvider } from "./sharedContexts/store";
 
 ReactDOM.render(
-  <BrowserRouter>
-    <React.StrictMode>
+  <React.StrictMode>
+    <StoreProvider>
       <App />
-    </React.StrictMode>
-  </BrowserRouter>,
+    </StoreProvider>
+  </React.StrictMode>,
   document.getElementById("root")
 );
 
