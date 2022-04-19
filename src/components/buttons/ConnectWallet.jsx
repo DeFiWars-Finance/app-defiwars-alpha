@@ -1,5 +1,5 @@
-import React from "react";
 import { useNavigate } from "react-router-dom";
+import React from "react";
 import { useWeb3ReactManager } from '../Web3ReactManager';
 import useSound from "use-sound";
 import bladeSound from "../../swap.mp3";
@@ -66,6 +66,9 @@ const ConnectWallet = ({ sound }) => {
         else {
           return navigate('/login', { navigate: true });
         }
+      } else {
+        navigate('/', { replace: true });
+        return disconnect();
       }
 
     navigate('/', { replace: true });

@@ -11,6 +11,7 @@ import Collections from "./pages/Collections/Collections";
 import Market from "./pages/Market/Market";
 import Login from "./pages/Login/Login";
 import Auction from "./pages/Auction/Auction";
+import Swap from "./pages/Swap/Swap";
 import DefiWarsLayout from "./layouts/DefiWarsLayout";
 
 function App() {
@@ -31,6 +32,7 @@ function App() {
               <Route path="/Make_Contact" element={<Contact />} />
               <Route path="/login" element={<Login />} />
               <Route path="/auction" element={<Auction />} />
+              <Route path='/swap' component={Swap} />
             </Route>
           </Routes>
         </BrowserRouter>

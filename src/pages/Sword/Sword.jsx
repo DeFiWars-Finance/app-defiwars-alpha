@@ -15,10 +15,10 @@ const Sword = () => {
   const accountAddress = useSelector(
     state => state.user.accountAddress
   );
-
+  debugger;
   const connect = () => {}
-
-  const showSword = useMemo(() => accountAddress != null, [accountAddress]);
+  console.log(accountAddress);
+  const showSword = useMemo(() => accountAddress !== null, [accountAddress]);
 
   let connectButton = "Connect<br /> Wallet";
 

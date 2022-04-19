@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import style from "./Sword.module.css";
 import appStyle from "../../App.module.css";
 {/* import Parser from 'html-react-parser'; */}
@@ -8,15 +8,13 @@ import { useSelector } from "react-redux";
 
 const Sword  = () => {
 
-  const accountAddress = useSelector(state => {
-    debugger;
-   return  state.user.accountAddress
-  }
+  const accountAddress = useSelector(
+    state => state.user.accountAddress
   );
-  console.log('------------------------------', accountAddress);
 
   const showSword = useMemo(
-    () => accountAddress != undefined, [accountAddress]
+    () => accountAddress !== null
+    , [accountAddress]
   );
 
   const swap = () => {
