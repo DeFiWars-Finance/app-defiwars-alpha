@@ -12,7 +12,10 @@ import Market from "./pages/Market/Market";
 import Login from "./pages/Login/Login";
 import Auction from "./pages/Auction/Auction";
 import Swap from "./pages/Swap/Swap";
+import Pool from "./pages/Pool";
+import AddLiquidity from './pages/AddLiquidity';
 import DefiWarsLayout from "./layouts/DefiWarsLayout";
+import { RedirectDuplicateTokenIds, RedirectOldAddLiquidityPathStructure } from './pages/AddLiquidity/redirects';
 
 function App() {
   return (
@@ -32,7 +35,12 @@ function App() {
               <Route path="/Make_Contact" element={<Contact />} />
               <Route path="/login" element={<Login />} />
               <Route path="/auction" element={<Auction />} />
-              <Route path='/swap' component={Swap} />
+              <Route path='/swap' element={<Swap />} />
+              <Route path='/pool' element={<Pool />} />
+              <Route path='/add' element={<AddLiquidity />} />
+
+              <Route path='/add/:currencyIdA' element={<RedirectOldAddLiquidityPathStructure/>} />
+              <Route path='/add/:currencyIdA/:currencyIdB' element={<RedirectDuplicateTokenIds/>} />
             </Route>
           </Routes>
         </BrowserRouter>

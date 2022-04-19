@@ -37,7 +37,7 @@ class Footer extends React.Component {
               name='DeFiWars Twitter'
               onClick={this.openLinkTab}
             >
-              <img src='img/twitter.png' alt='Twitter' />
+              <img src='/img/twitter.png' alt='Twitter' />
             </a>
             <a
               href='https://www.t.me/defiwarsfinance'
@@ -55,7 +55,7 @@ class Footer extends React.Component {
               name='DeFiWars Discord'
               onClick={this.openLinkTab}
             >
-              <img src='img/discord.png' alt='Discord' />
+              <img src='/img/discord.png' alt='Discord' />
             </a>
             <a
               href='https://www.reddit.com/r/DeFiWars_Finance'
@@ -64,7 +64,7 @@ class Footer extends React.Component {
               name='DeFiWars Reddit'
               onClick={this.openLinkTab}
             >
-              <img src='img/reddit.png' alt='Reddit' />
+              <img src='/img/reddit.png' alt='Reddit' />
             </a>
           </div>
         </div>

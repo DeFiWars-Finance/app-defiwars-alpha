@@ -7,7 +7,7 @@
     "patch": 0
   },
   "tags": {},
-  "logoURI": "https://app.defiwars.finance/swap/images/pancakeswap.png",
+  "logoURI": "https://app.defiwars.finance/images/pancakeswap.png",
   "keywords": ["pancake", "default"],
   "tokens": [
     {
@@ -16,7 +16,7 @@
       "address": "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
       "chainId": 56,
       "decimals": 18,
-      "logoURI": "https://app.defiwars.finance/swap/images/coins/bnb.png"
+      "logoURI": "https://app.defiwars.finance/images/coins/bnb.png"
     },
     {
       "name": "JEDI Side",
@@ -24,7 +24,7 @@
       "address": "0xbdC019383A099260caA876c35f4d3975e4e78708",
       "chainId": 56,
       "decimals": 18,
-      "logoURI": "https://app.defiwars.finance/swap/images/coins/0xbdC019383A099260caA876c35f4d3975e4e78708.png"
+      "logoURI": "https://app.defiwars.finance/images/coins/0xbdC019383A099260caA876c35f4d3975e4e78708.png"
     },
     {
       "name": "DARTH Side",
@@ -32,7 +32,7 @@
       "address": "0x2C3619C393Bb4718C3De9eA1760db9721f61B22e",
       "chainId": 56,
       "decimals": 18,
-      "logoURI": "https://app.defiwars.finance/swap/images/coins/0x2C3619C393Bb4718C3De9eA1760db9721f61B22e.png"
+      "logoURI": "https://app.defiwars.finance/images/coins/0x2C3619C393Bb4718C3De9eA1760db9721f61B22e.png"
     },
     {
       "name": "DeFiWars Finance",
@@ -40,7 +40,7 @@
       "address": "0x33C29af05cA9aE21D8e1bf01Ad5adeFE7b2EE5Ff",
       "chainId": 56,
       "decimals": 18,
-      "logoURI": "https://app.defiwars.finance/swap/images/coins/0x33C29af05cA9aE21D8e1bf01Ad5adeFE7b2EE5Ff.png"
+      "logoURI": "https://app.defiwars.finance/images/coins/0x33C29af05cA9aE21D8e1bf01Ad5adeFE7b2EE5Ff.png"
     }
   ]
 }

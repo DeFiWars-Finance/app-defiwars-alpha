@@ -14,7 +14,7 @@ const Header = () => {
     <header className={appStyle.flexauto}>
       <div className={style.logo}>
         <Link to='/'>
-          <img src='img/sword-logo.png' alt='Home' />
+          <img src='/img/sword-logo.png' alt='Home' />
         </Link>
         <ConnectWallet sound />
       </div>
