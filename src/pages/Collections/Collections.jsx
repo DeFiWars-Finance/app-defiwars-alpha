@@ -1,8 +1,6 @@
 import React from 'react';
 import style from './Collections.css';
 import appStyle from '../../App.module.css';
-import Footer from '../Footer/Footer';
-import Header from '../Header/Header';
 import Store from '../../store/store';
 import Select from 'react-styled-select'
 
@@ -253,8 +251,6 @@ class Collections extends React.Component {
       { label: '360-day', value: 360 },
     ]
     return (
-      <div className={style.Sword}>
-        <Header />
         <div className={appStyle.container}>
           {(() => {
             if (staked && stakedDarth > 0) {
@@ -317,8 +313,6 @@ class Collections extends React.Component {
             }
           })()}
         </ div>
-        <Footer />
-      </ div>
     )
   }
 }

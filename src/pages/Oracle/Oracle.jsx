@@ -1,8 +1,6 @@
 import React from "react";
 import style from "./Oracle.css";
 import appStyle from "../../App.module.css";
-import Footer from "../Footer/Footer";
-import Header from "../Header/Header";
 import Store from "../../store/store";
 
 const store = Store.store;
@@ -183,51 +181,47 @@ class Oracle extends React.Component {
   render() {
     const { accountAddress, jediLP, darthLP, JediPower, DarthPower } = this.state;
     return (
-      <div className={style.Sword}>
-        <Header />
-        <div className={appStyle.container}>
-          <div className={appStyle.flexrow}>
-            <div className={appStyle.flexcol}>
-              <div className={style.textcenter}>
-                <div className={appStyle.nfblock}>
-                  <img src="img/jedi.png" alt="JEDI" />
-                  <p>{jediLP} <br /> JEDI/DWARF LP</p>
-                  <table>
-                    <tr><td>Damage</td><td>{JediPower.pd}</td></tr>
-                    <tr><td>Kinetics</td><td>{JediPower.pk}</td></tr>
-                    <tr><td>Speed</td><td>{JediPower.ps}</td></tr>
-                    <tr><td>Conversion</td><td>{JediPower.pc}</td></tr>
-                    <tr><td>Healing</td><td>{JediPower.ph}</td></tr>
-                  </table>
-                </div>
+      <div className={appStyle.container}>
+        <div className={appStyle.flexrow}>
+          <div className={appStyle.flexcol}>
+            <div className={style.textcenter}>
+              <div className={appStyle.nfblock}>
+                <img src="img/jedi.png" alt="JEDI" />
+                <p>{jediLP} <br /> JEDI/DWARF LP</p>
+                <table>
+                  <tr><td>Damage</td><td>{JediPower.pd}</td></tr>
+                  <tr><td>Kinetics</td><td>{JediPower.pk}</td></tr>
+                  <tr><td>Speed</td><td>{JediPower.ps}</td></tr>
+                  <tr><td>Conversion</td><td>{JediPower.pc}</td></tr>
+                  <tr><td>Healing</td><td>{JediPower.ph}</td></tr>
+                </table>
               </div>
-
-              {
-                this.renderJediNFTs()
-              }
             </div>
-            <div className={appStyle.flexcol}>
-              <div className={style.textcenter}>
-                <div className={appStyle.nfblock}>
-                  <img src="img/dart.png" alt="DARTH" />
-                  <p>{darthLP} <br /> DARTH/DWARF LP</p>
-                  <table>
-                    <tr><td>Damage</td><td>{DarthPower.pd}</td></tr>
-                    <tr><td>Kinetics</td><td>{DarthPower.pk}</td></tr>
-                    <tr><td>Speed</td><td>{DarthPower.ps}</td></tr>
-                    <tr><td>Conversion</td><td>{DarthPower.pc}</td></tr>
-                    <tr><td>Healing</td><td>{DarthPower.ph}</td></tr>
-                  </table>
 
-                </div>
+            {
+              this.renderJediNFTs()
+            }
+          </div>
+          <div className={appStyle.flexcol}>
+            <div className={style.textcenter}>
+              <div className={appStyle.nfblock}>
+                <img src="img/dart.png" alt="DARTH" />
+                <p>{darthLP} <br /> DARTH/DWARF LP</p>
+                <table>
+                  <tr><td>Damage</td><td>{DarthPower.pd}</td></tr>
+                  <tr><td>Kinetics</td><td>{DarthPower.pk}</td></tr>
+                  <tr><td>Speed</td><td>{DarthPower.ps}</td></tr>
+                  <tr><td>Conversion</td><td>{DarthPower.pc}</td></tr>
+                  <tr><td>Healing</td><td>{DarthPower.ph}</td></tr>
+                </table>
+
               </div>
-              {
-                this.renderDarthNFTs()
-              }
             </div>
+            {
+              this.renderDarthNFTs()
+            }
           </div>
         </div>
-        <Footer />
       </div>
     );
   }

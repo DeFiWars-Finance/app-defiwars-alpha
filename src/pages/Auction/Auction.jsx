@@ -1,8 +1,6 @@
 import React from "react";
 import style from "./Auction.css";
 import appStyle from "../../App.module.css";
-import Footer from "../Footer/Footer";
-import Header from "../Header/Header";
 import Store from "../../store/store";
 import { getCurrentTime } from "../../utils/dateFunctions";
 
@@ -138,8 +136,6 @@ class Auction extends React.Component {
   render() {
     const { accountAddress, timeNow, timeEnd, capprocent, currentAuctionPrice, currentCAP, currentDeposit, totalDwarf } = this.state;
     return (
-      <div className={style.Sword}>
-        <Header />
         <div className={appStyle.container}>
           <div className={style.text}>
             <h3>
@@ -184,8 +180,6 @@ class Auction extends React.Component {
           </div>
           <p className={appStyle.pblock}>$DWARF allocated for the Liquidity Auction <b>{totalDwarf}</b></p>
         </div>
-        <Footer />
-      </div>
     );
   }
 }

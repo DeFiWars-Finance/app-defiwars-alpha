@@ -1,60 +1,47 @@
 import React from "react";
 import style from "./Sword.module.css";
 import appStyle from "../../App.module.css";
-import Menu from "../Menu/Menu";
-import Footer from "../Footer/Footer";
-import Header from "../Header/Header";
-import Parser from 'html-react-parser';
-import Store from "../../store/store";
+{/* import Parser from 'html-react-parser'; */}
+{/* import Store from "../../store/store"; */}
 
-const store = Store.store;
-const emitter = Store.emitter
+import { useSelector } from "react-redux";
 
-class Sword extends React.Component {
-  constructor(props) {
-    super(props);
-    const accountAddress = store.getStore("accountAddress");
+const Sword  = () => {
 
-    this.state = {
-      showSword: false,
-      showMobileSword: false,
-      accountAddress: accountAddress,
-    };
-    this.activateSword = this.activateSword.bind(this);
-    this.addAddress = this.addAddress.bind(this);
-    this.swap = this.swap.bind(this);
+  const accountAddress = useSelector(state => {
+    debugger;
+   return  state.user.accountAddress
   }
+  );
+  console.log('------------------------------', accountAddress);
 
-  swap() {
+  const showSword = useMemo(
+    () => accountAddress != undefined, [accountAddress]
+  );
+
+  const swap = () => {
     const { accountAddress } = this.state;
-    var address = store.getStore("accountAddress");
-    const web3 = store.getStore("web3");
+    return null;
+    {/* var address = store.getStore("accountAddress"); */}
+    {/* const web3 = store.getStore("web3"); */}
     if (!web3) {
-      store.connect();
+      {/* store.connect(); */}
     }
   }
-  activateSword() {
-    this.setState({ showSword: true, showMobileSword: true });
+  const activateSword = () => {
+    {/* this.setState({ showSword: true, showMobileSword: true }); */}
   }
 
-  addAddress() {
-    var address = store.getStore("accountAddress");
-    this.setState({
-      accountAddress: address,
-    })
-    this.activateSword();
+  const addAddress = () => {
+    {/* var address = store.getStore("accountAddress"); */}
+    {/* this.setState({ */}
+    {/*   accountAddress: address, */}
+    {/* }) */}
+    {/* this.activateSword(); */}
   }
 
-  componentWillMount() {
-    emitter.on('enabled', this.addAddress);
-  }
 
-  componentWillUnmount() {
-    emitter.removeListener('enabled', this.addAddress);
-  }
-
-  render() {
-    const { showSword, accountAddress } = this.state;
+    {/* const { showSword, accountAddress } = this.state; */}
     var connectButton = "Connect<br /> Wallet";
 
     var address = "";
@@ -68,30 +55,14 @@ class Sword extends React.Component {
       this.activateSword();
     }
     return (
-      <div className={style.Sword}>
-        <Header />
-        <div className={appStyle.flexauto}>
+      <div>
           <div className={appStyle.container}>
-            {/* <div className={style.text}>
-              <p>
-                DeFiWars Finance is an NFT(Non-Fungible Token)-based GameFi
-                ecosystem comprised of multiple digital assets, including
-                diverse NFTs (Non-Fungible Tokens), where users can accrue
-                value via impermanent-loss-free PoLPs (Polarized Liquidity
-                Pools), as well as be able to stake, swap, and claim/buy
-                tokens to increase their individual APY, using proprietary
-                consensus algorithm ‘PoLP’ (Proof-of-Liquidity Provision).
-                DeFiWars Finance works with at least 3 different fungible
-                tokens: $DWARF (native and governance),	$DARTH, and $JEDI
-                (these latter, a polarized pair of utilities).
-              </p>
-            </div>*/}
             <div className={style.mobileSword}>
               <div className={style.mobileSwordWrapper}>
                 <img
                   src="img/blade-mobile.png"
                   className={
-                    this.state.showSword
+                    showSword
                       ? style.mobileSwordBladeActive
                       : style.mobileSwordBlade
                   }
@@ -113,7 +84,7 @@ class Sword extends React.Component {
                 src="img/handle.png"
                 alt="Light Saber Handle" />
               <img
-                className={this.state.showSword ? style.activeSword : style.blade}
+                className={showSword ? style.activeSword : style.blade}
                 src="img/blade.png"
                 alt="Light Saber" />
             </div>
@@ -264,11 +235,8 @@ class Sword extends React.Component {
               </div>
             </div>
           </div>
-        </div>
-        <Footer />
-      </div>
+  </div>
     );
-  }
 }
 
 export default Sword;

@@ -1,15 +1,3 @@
-.Sword {
-    background: url('../../img/sword-bg.png') no-repeat center;
-    min-height: 100vh;
-    width: 100vw;
-    background-size: cover;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-
-
 .logo{
     padding-top: 30px;
     display: flex;
@@ -40,7 +28,7 @@
     left: 0;
     z-index: 1;
 }
-  
+
 .blade{
     position: absolute;
     top: -107px;
@@ -131,7 +119,7 @@
         position: relative;
         height: 170px;
     }
-    
+
     .handle{
         position: absolute;
         top:0;
@@ -181,7 +169,7 @@
         margin:  0 5px;
         transition: 0.5s;
     }
-    
+
     .headerLink a:hover{
         margin:  0 5px;
         transition: 0.5s;

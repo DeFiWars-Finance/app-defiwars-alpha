@@ -2,8 +2,6 @@ import React from 'react';
 import axios from 'axios';
 import style from './Contact.css';
 import appStyle from '../../App.module.css';
-import Footer from '../Footer/Footer';
-import Header from '../Header/Header';
 
 class Contact extends React.Component {
   constructor(props) {
@@ -59,54 +57,50 @@ class Contact extends React.Component {
 
   render() {
     return (
-      <div className={style.Sword}>
-        <Header />
 
-        <div className={appStyle.container}>
-          <div className='main-form'>
-            <div className='left-form'>
-              {this.state.errorMessage && (
-                <p className={style.error}> {this.state.errorMessage} </p>
-              )}
-            </div>
+      <div className={appStyle.container}>
+        <div className='main-form'>
+          <div className='left-form'>
+            {this.state.errorMessage && (
+              <p className={style.error}> {this.state.errorMessage} </p>
+            )}
+          </div>
 
-            <div className='right-form'>
-              <form onSubmit={this.handleSubmit}>
-                <div className={style.form}>
-                  <input
-                    name='name'
-                    id='name'
-                    placeholder='Name'
-                    value={this.state.name}
-                    onChange={this.onChange}
-                  ></input>
+          <div className='right-form'>
+            <form onSubmit={this.handleSubmit}>
+              <div className={style.form}>
+                <input
+                  name='name'
+                  id='name'
+                  placeholder='Name'
+                  value={this.state.name}
+                  onChange={this.onChange}
+                ></input>
 
-                  <input
-                    name='email'
-                    id='email'
-                    placeholder='E-mail'
-                    value={this.state.email}
-                    onChange={this.onChange}
-                  ></input>
+                <input
+                  name='email'
+                  id='email'
+                  placeholder='E-mail'
+                  value={this.state.email}
+                  onChange={this.onChange}
+                ></input>
 
-                  <textarea
-                    value={this.state.message}
-                    onChange={this.onChange}
-                    name='message'
-                    id='message'
-                    rows='6'
-                    placeholder='Message'
-                  ></textarea>
+                <textarea
+                  value={this.state.message}
+                  onChange={this.onChange}
+                  name='message'
+                  id='message'
+                  rows='6'
+                  placeholder='Message'
+                ></textarea>
 
-                  <button type='submit'>Submit</button>
-                </div>
-              </form>
-            </div>
+                <button type='submit'>Submit</button>
+              </div>
+            </form>
           </div>
         </div>
-
-        <Footer />
       </div>
+
     );
   }
 }

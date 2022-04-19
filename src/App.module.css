@@ -83,7 +83,7 @@ select {
 
 .container {
   margin-top: 5rem;
-  padding: 0 15px; 
+  padding: 0 15px;
 }
 
 .flexauto {
@@ -217,9 +217,24 @@ select {
   flex-direction: column;
   color: #ffd700;
 }
-  
+
 .pblock{
   text-align: center;
   color: white;
   padding: 8px;
+}
+
+.Sword {
+    background: url('./img/sword-bg.png') no-repeat center;
+    min-height: 100vh;
+    width: 100vw;
+    background-size: cover;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+iframe {
+  display: none;
 }
