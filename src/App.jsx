@@ -47,7 +47,7 @@ function App() {
               <Route path="/login" element={<Login />} />
               <Route path="/auction" element={
                 <ProtectedRoute>
-                <Auction />
+                  <Auction />
                 </ProtectedRoute>
               } />
               <Route path='/swap' element={

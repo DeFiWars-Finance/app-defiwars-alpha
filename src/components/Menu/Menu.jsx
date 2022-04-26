@@ -71,7 +71,7 @@ const Menu = () => {
   });
 
   const showHideDefi = (value) => {
-    setState({...state, showDefi: value });
+    setState({ ...state, showDefi: value });
   };
 
   const onResize = () => setState({
@@ -93,7 +93,7 @@ const Menu = () => {
     <>
       {state.width < 768 ? (
         <MenuMobile styles={styles} right pageWrapId="root">
-          <Link exact to="/What_is_DWARF">What is $DWARF?</Link>
+          <Link to="/What_is_DWARF">What is $DWARF?</Link>
 
           <a onClick={() => showHideDefi(!state.showDefi)}>
             DeFi Products
@@ -102,7 +102,7 @@ const Menu = () => {
             <div
               onMouseLeave={() => showHideDefi(false)}
               className={classNames(
-                style.submenuMobile, {[style.submenuActive]: state.showDefi })
+                style.submenuMobile, { [style.submenuActive]: state.showDefi })
               }
             >
               <Link to="/pool">Polarized Liquidity Pools</Link>
@@ -116,34 +116,34 @@ const Menu = () => {
 
           <Link exact to="/Make_Contact">Make Contact</Link>
         </MenuMobile>
-  ) : null
-}
-<div className={style.Menu}>
-  <ul className={style.mainMenu}>
-    <li>
-      <Link exact to="/What_is_DWARF">What is $DWARF?</Link>
-    </li>
-    <li onMouseEnter={() => showHideDefi(true)}>
-      <a href="">DeFi Products</a>
-      <Collapse isOpened={state.showDefi}>
-        <div
-          onMouseLeave={() => showHideDefi(false)}
-          className={ classNames(style.submenu, { [style.submenuActive]: state.showDefi}) } >
-          <Link to="/pool">Polarized Liquidity Pools</Link>
-          <Link to="/swap">DWARFSwap</Link>
-          <Link exact to="/NFA_Market">NFT Marketplace</Link>
-          <Link exact to="/The_Army">My NFTs</Link>
-        </div>
-      </Collapse>
-    </li>
-    <li>
-      <Link exact to="/About_the_Team">The Team</Link>
-    </li>
-    <li>
-      <Link exact to="/Make_Contact">Make Contact</Link>
-    </li>
-  </ul>
-</div>
+      ) : null
+      }
+      <div className={style.Menu}>
+        <ul className={style.mainMenu}>
+          <li>
+            <Link exact to="/What_is_DWARF">What is $DWARF?</Link>
+          </li>
+          <li onMouseEnter={() => showHideDefi(true)}
+            onMouseLeave={() => showHideDefi(false)}>
+            <a href="#!">DeFi Products</a>
+            <Collapse isOpened={state.showDefi}>
+              <div
+                className={classNames(style.submenu, { [style.submenuActive]: state.showDefi })} >
+                <Link to="/pool">Polarized Liquidity Pools</Link>
+                <Link to="/swap">DWARFSwap</Link>
+                <Link to="/NFA_Market">NFT Marketplace</Link>
+                <Link to="/The_Army">My NFTs</Link>
+              </div>
+            </Collapse>
+          </li>
+          <li>
+            <Link exact to="/About_the_Team">The Team</Link>
+          </li>
+          <li>
+            <Link exact to="/Make_Contact">Make Contact</Link>
+          </li>
+        </ul>
+      </div>
     </>
   );
 };
