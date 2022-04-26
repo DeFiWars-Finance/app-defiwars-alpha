@@ -36,8 +36,8 @@ const Menu = ({ showMenu }) => {
             DWARFSwap & Warzone
           <Collapse isOpened={showDefi}>
             <div onMouseLeave={() => this.showHideDefi(false)} className={showDefi ? style.submenuMobile + ' ' + style.submenuActive : style.submenuMobile}>
-              <a href='/swap'>DWARFSwap</ a>
-              <a href='/swap/#/pool'>PoLPs</ a>
+              <Link to='/swap'>DWARFSwap</ Link>
+              <Link to='/pool'>PoLPs</Link>
               <Link exact to='/NFA_Market'>Warzone Marketplace</ Link>
               <Link exact to='/The_Army'>My Power</ Link>
             </ div>
@@ -58,7 +58,7 @@ const Menu = ({ showMenu }) => {
             <Collapse isOpened={showDefi}>
               <div onMouseLeave={() => showHideDefi(false)} className={showDefi ? style.submenu + ' ' + style.submenuActive : style.submenu}>
                 <Link to='/swap'>DWARFSwap</Link>
-                <Link to='/swap/pool'>PoLPs</Link>
+                <Link to='/pool'>PoLPs</Link>
                 <Link to='/NFA_Market'>Warzone Marketplace</Link>
                 <Link to='/The_Army'>My Power</Link>
               </div>

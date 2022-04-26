@@ -8,17 +8,16 @@ import SwordIcon from "../../components/icons/sword";
 import { useDispatch, useSelector  } from "react-redux";
 import { setAccountAddress } from "../../state/user/actions";
 
+import { useActiveWeb3React } from 'hooks'
+
 const Sword = () => {
 
   const dispatch = useDispatch();
 
-  const accountAddress = useSelector(
-    state => state.user.accountAddress
-  );
-  debugger;
+  const { active, account: accountAddress } = useActiveWeb3React()
+
   const connect = () => {}
-  console.log(accountAddress);
-  const showSword = useMemo(() => accountAddress !== null, [accountAddress]);
+
 
   let connectButton = "Connect<br /> Wallet";
 
@@ -37,7 +36,7 @@ const Sword = () => {
             <img
               src="img/blade-mobile.png"
               className={
-                showSword
+                accountAddress
                   ? style.mobileSwordBladeActive
                   : style.mobileSwordBlade
               }
@@ -57,7 +56,7 @@ const Sword = () => {
             src="img/handle.png"
             alt="Light Saber Handle" />
           <img
-            className={showSword ? style.activeSword : style.blade}
+            className={accountAddress ? style.activeSword : style.blade}
             src="img/blade.png"
             alt="Light Saber" />
         </div>
@@ -69,6 +68,7 @@ const Sword = () => {
               <a onClick={connect}>
                 {Parser(connectButton)}
               </a>
+                {accountAddress}
               <ConnectIcon width={260} height={91}/>
             </div>
           </div>

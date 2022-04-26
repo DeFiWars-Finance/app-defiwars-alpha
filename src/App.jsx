@@ -1,7 +1,7 @@
 import "./App.css";
 import "./fonts/Roboto/stylesheet.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Web3ReactManager } from "./components/Web3ReactManager";
+import Web3ReactManager from "./components/Web3ReactManager";
 import Sword from "./pages/Sword/Sword";
 import Contact from "./pages/Contact/Contact";
 import Home from "./pages/Home/Home";
@@ -16,6 +16,7 @@ import Pool from "./pages/Pool";
 import AddLiquidity from './pages/AddLiquidity';
 import DefiWarsLayout from "./layouts/DefiWarsLayout";
 import { RedirectDuplicateTokenIds, RedirectOldAddLiquidityPathStructure } from './pages/AddLiquidity/redirects';
+import ProtectedRoute from './Auth/ProtectedRoute';
 
 function App() {
   return (
@@ -35,12 +36,34 @@ function App() {
               <Route path="/Make_Contact" element={<Contact />} />
               <Route path="/login" element={<Login />} />
               <Route path="/auction" element={<Auction />} />
-              <Route path='/swap' element={<Swap />} />
-              <Route path='/pool' element={<Pool />} />
-              <Route path='/add' element={<AddLiquidity />} />
+              <Route path='/swap' element={
+                <ProtectedRoute>
+                  <Swap />
+                </ProtectedRoute>
+              } />
 
-              <Route path='/add/:currencyIdA' element={<RedirectOldAddLiquidityPathStructure/>} />
-              <Route path='/add/:currencyIdA/:currencyIdB' element={<RedirectDuplicateTokenIds/>} />
+              <Route path='/pool' element={
+                <ProtectedRoute>
+                  <Pool />
+                </ProtectedRoute>
+              } />
+
+              <Route path='/add' element={
+                <ProtectedRoute>
+                  <AddLiquidity />
+                </ProtectedRoute>
+              } />
+
+              <Route path='/add/:currencyIdA' element={
+                <ProtectedRoute>
+                  <RedirectOldAddLiquidityPathStructure />
+                </ProtectedRoute>
+              } />
+              <Route path='/add/:currencyIdA/:currencyIdB' element={
+                <ProtectedRoute>
+                  <RedirectDuplicateTokenIds />
+                </ProtectedRoute>
+              } />
             </Route>
           </Routes>
         </BrowserRouter>

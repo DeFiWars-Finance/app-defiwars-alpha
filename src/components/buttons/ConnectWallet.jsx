@@ -1,85 +1,62 @@
-import { useNavigate } from "react-router-dom";
-import React from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import React, { useEffect } from "react";
 import { useWeb3ReactManager } from '../Web3ReactManager';
+import { useWeb3React } from '@web3-react/core'
+
+import { useActiveWeb3React } from 'hooks'
+import { network } from '../../connectors';
+
+import { NetworkContextName } from '../../constants';
 import useSound from "use-sound";
 import bladeSound from "../../swap.mp3";
 import Parser from 'html-react-parser';
+import { useWalletModal } from '@pancakeswap-libs/uikit'
 import ConnectIcon from "../icons/connect";
 import style from './ConnectWallet.css';
 import { useSelector } from "react-redux";
 
+import ConnectWalletButton from "../ConnectWalletButton";
+
+
+import useAuth from '../../hooks/useAuth'
+
 const ConnectWallet = ({ sound }) => {
+
+  const { login, logout } = useAuth();
+  const { onPresentConnectModal , onPresentAccountModal } = useWalletModal(login, logout)
 
   const [playSound] = useSound(bladeSound);
 
   const navigate = useNavigate();
+  const location = useLocation();
 
-  const state = useSelector( state => state.user)
+  const state = useSelector(state => state.user)
 
   const {
-    accountAddress,
     haveNFT,
-    inProcess,
-    isInWar,
-    loggedIn,
+    inProcess = false,
+    isInWar = false,
+    loggedIn = false,
     mainNetId,
-    netId,
   } = state;
 
-  const {
-    active,
-    connect,
-    disconnect,
-    mint,
-    peace,
-    war,
-  } = useWeb3ReactManager();
 
-  const changeStatus = () => {
-    if(!active) {
-      if (sound)
-        playSound();
-      return connect();
+  const { active, account, chainId } = useActiveWeb3React();
+
+  const from = location.state?.from?.pathname || "/";
+
+  useEffect(() => {
+    active && playSound()
+    if (active && from !== "/") {
+      return navigate(from, { replace: true });
     }
-
-      if (accountAddress && netId === mainNetId) {
-        if (loggedIn) {
-          //This is the actual Key to access DeFiWars Finance
-          if (haveNFT) {
-            if (isInWar) {
-              //This means to unstake $DWARF
-              peace();
-              navigate('/NFA_Market', { replace: true });
-            }
-            else {
-              //This means to stake $DWARF
-              war();
-
-              navigate('/NFA_Collections', { replace: true });
-            }
-          }
-          else {
-            mint();
-            navigate('/Liquidity_Pools', { navigate: true });
-          }
-        }
-        else {
-          return navigate('/login', { navigate: true });
-        }
-      } else {
-        navigate('/', { replace: true });
-        return disconnect();
-      }
-
-    navigate('/', { replace: true });
-    return disconnect();
-  }
+  }, [active]);
 
   const getButtonText = () => {
-    if (!accountAddress)
+    if (!account)
       return 'Connect<br />Wallet';
 
-    if (netId !== mainNetId)
+    if (chainId !== mainNetId)
       return 'Connect to <br /> BSC Mainnet';
 
     if (inProcess) {
@@ -103,7 +80,7 @@ const ConnectWallet = ({ sound }) => {
 
   return (
     <div className={style.connectWallet}>
-      <a onClick={changeStatus}>
+      <a onClick={active ? onPresentAccountModal : onPresentConnectModal}>
         {Parser(getButtonText())}
       </a>
       <ConnectIcon width={100} height={32} />

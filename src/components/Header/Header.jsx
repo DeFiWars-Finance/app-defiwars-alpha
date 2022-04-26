@@ -4,11 +4,11 @@ import appStyle from '../../App.module.css';
 import { Link } from 'react-router-dom';
 import Menu from '../Menu/Menu';
 import ConnectWallet from "../buttons/ConnectWallet";
-import { useWeb3ReactManager } from '../Web3ReactManager';
+import { useActiveWeb3React } from 'hooks'
 
 const Header = () => {
 
-  const { active } = useWeb3ReactManager();
+  const { active } = useActiveWeb3React();
 
   return (
     <header className={appStyle.flexauto}>

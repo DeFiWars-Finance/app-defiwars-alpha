@@ -2,6 +2,7 @@ import React from 'react'
 import { Button, ButtonProps, useWalletModal} from '@pancakeswap-libs/uikit'
 import useI18n from 'hooks/useI18n'
 import useAuth from 'hooks/useAuth'
+import i18n from "../../i18n";
 
 const UnlockButton: React.FC<ButtonProps> = (props) => {
   const TranslateString = useI18n()
@@ -10,7 +11,7 @@ const UnlockButton: React.FC<ButtonProps> = (props) => {
 
   return (
     <Button onClick={onPresentConnectModal} {...props}>
-      {TranslateString(292, 'Unlock Wallet')}
+      {i18n.t('connectWallet', 'Connect Wallet')}
     </Button>
   )
 }
