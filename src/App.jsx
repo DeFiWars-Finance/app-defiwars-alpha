@@ -27,15 +27,29 @@ function App() {
             <Route path="/" element={<DefiWarsLayout />}>
               <Route index element={<Sword />} />
               <Route path="/What_is_DWARF" element={<Home />} />
-              <Route path="/Liquidity_Pools" element={<Sword />} />
-              <Route path="/DWARFSwap" element={<Sword />} />
-              <Route path="/NFA_Market" element={<Market />} />
-              <Route path="/The_Army" element={<Oracle />} />
-              <Route path="/NFA_Collections" element={<Collections />} />
+              <Route path="/NFA_Market" element={
+                <ProtectedRoute>
+                  <Market />
+                </ProtectedRoute>
+              } />
+              <Route path="/The_Army" element={
+                <ProtectedRoute>
+                  <Oracle />
+                </ProtectedRoute>
+              } />
+              <Route path="/NFA_Collections" element={
+                <ProtectedRoute>
+                  <Collections />
+                </ProtectedRoute>
+              } />
               <Route path="/About_the_Team" element={<About />} />
               <Route path="/Make_Contact" element={<Contact />} />
               <Route path="/login" element={<Login />} />
-              <Route path="/auction" element={<Auction />} />
+              <Route path="/auction" element={
+                <ProtectedRoute>
+                <Auction />
+                </ProtectedRoute>
+              } />
               <Route path='/swap' element={
                 <ProtectedRoute>
                   <Swap />
