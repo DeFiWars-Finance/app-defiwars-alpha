@@ -1,5 +1,4 @@
 import React from "react";
-import style from "./About.css";
 import appStyle from "../../App.module.css";
 
 const About = () => (

@@ -1,5 +1,5 @@
 import { ChainId, JSBI, Percent, Token, WETH } from '@pancakeswap-libs/sdk'
-
+export const DEFIWARS_CONECTION="defiwars::connection"
 export const ROUTER_ADDRESS = '0x0F2E86E751F44a42bAbB30125d72e47D37cB9DEc'
 
 // a list of tokens by chain

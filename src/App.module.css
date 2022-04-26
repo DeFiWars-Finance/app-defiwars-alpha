@@ -238,3 +238,27 @@ select {
 iframe {
   display: none;
 }
+
+.darkTheme {
+  --styled-select-placeholder__color: #171717;
+  --styled-select__color: white;
+  --styled-select__background-color: transparent;
+  --styled-select__border-color: black;
+  --styled-select__border-width: 1px;
+  --styled-select__border-radius: 5px;
+
+  --styled-select-menu-outer__margin: 10px 0 0 0;
+  --styled-select-menu-outer__padding: 0;
+  --styled-select-menu-outer__background-color: #2e3235;
+  --styled-select-menu-outer__border-color: black;
+  --styled-select-menu-outer__border-style: solid;
+  --styled-select-menu-outer__border-width: 3px;
+
+  --styled-select-option__background-color: #2b2c35;
+
+  --styled-select-option__color--focused: #eee;
+  --styled-select-option__background-color--focused: #000;
+
+  --styled-select-option__color--selected: #eee;
+  --styled-select-option__background-color--selected: #000;
+}

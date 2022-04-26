@@ -1,5 +1,4 @@
 import React from 'react';
-import style from './Collections.css';
 import appStyle from '../../App.module.css';
 import Store from '../../store/store';
 import Select from 'react-styled-select'
@@ -287,7 +286,7 @@ class Collections extends React.Component {
                     <p>{jediLP} <br /> JEDI/DWARF PoLP</ p>
                     <label>Select a Scheduled Warfare
                       <Select
-                        className={style.darkTheme}
+                        className={appStyle.darkTheme}
                         options={options}
                         value={this.state.jedivalue}
                         onChange={this.jedihandleChange} />
@@ -300,7 +299,7 @@ class Collections extends React.Component {
                     <p>{darthLP} <br />DARTH/DWARF PoLP</ p>
                     <label>Select a Scheduled Warfare
                       <Select
-                        className={style.darkTheme}
+                        className={appStyle.darkTheme}
                         options={options}
                         value={this.state.darthvalue}
                         onChange={this.darthhandleChange} />

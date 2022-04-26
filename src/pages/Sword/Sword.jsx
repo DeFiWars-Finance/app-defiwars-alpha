@@ -4,6 +4,8 @@ import appStyle from "../../App.module.css";
 import Parser from 'html-react-parser';
 import ConnectIcon from "../../components/icons/connect";
 import SwordIcon from "../../components/icons/sword";
+import MobileSword from "../../components/Sword/MobileSword";
+import DesktopSword from "../../components/Sword/DesktopSword";
 
 import { useDispatch, useSelector  } from "react-redux";
 import { setAccountAddress } from "../../state/user/actions";
@@ -14,7 +16,7 @@ const Sword = () => {
 
   const dispatch = useDispatch();
 
-  const { active, account: accountAddress } = useActiveWeb3React()
+  const { account: accountAddress } = useActiveWeb3React()
 
   const connect = () => {}
 
@@ -31,35 +33,8 @@ const Sword = () => {
 
   return (
     <>
-        <div className={style.mobileSword}>
-          <div className={style.mobileSwordWrapper}>
-            <img
-              src="img/blade-mobile.png"
-              className={
-                accountAddress
-                  ? style.mobileSwordBladeActive
-                  : style.mobileSwordBlade
-              }
-              alt="Light Saber"
-            />
-            <img
-              src="img/handle-mobile.png"
-              className={style.mobileSwordHandle}
-              alt="Light Saber Handle"
-            />
-          </div>
-        </div>
-
-        <div className={style.mainSword}>
-          <img
-            className={style.handle}
-            src="img/handle.png"
-            alt="Light Saber Handle" />
-          <img
-            className={accountAddress ? style.activeSword : style.blade}
-            src="img/blade.png"
-            alt="Light Saber" />
-        </div>
+    <MobileSword />
+    <DesktopSword />
 
       <div className={appStyle.container}>
         <div className={style.mainConnectWallet}>
@@ -68,7 +43,6 @@ const Sword = () => {
               <a onClick={connect}>
                 {Parser(connectButton)}
               </a>
-                {accountAddress}
               <ConnectIcon width={260} height={91}/>
             </div>
           </div>
