@@ -35,9 +35,9 @@ const getRemainingTime = (epoch: number) => {
   const minute = Math.floor(diff / 60);
   diff %= 60;
   const second = Math.floor(diff);
-  return (pad(day) + 'd ') + 
-        (pad(hour) + 'h ') + 
-        (pad(minute) + 'm ') + 
+  return (pad(day) + 'd ') +
+        (pad(hour) + 'h ') +
+        (pad(minute) + 'm ') +
         (pad(second) + 's');
 }
 
@@ -56,12 +56,12 @@ class Auction extends React.Component {
     const isInWar = store.getStore("isInWar");
     const dwarf = store.getStore("dwarf");
     const auctionAddress = store.getStore("auctionAddress");
-    
+
     var timeNow = getCurrentTime(new Date());
     var dateEnd = new Date();
     dateEnd.setHours(dateEnd.getHours() + 24)
     var timeEnd = getCurrentTime(dateEnd);
-    
+
     this.state = {
       accountAddress: accountAddress,
       totalCap:2000 * 10**18,
@@ -74,8 +74,8 @@ class Auction extends React.Component {
       timeNow:timeNow,
       currentAuctionPrice:0,
       currentDeposit:0,
-      currentCAP:0,        
-      capprocent:0, 
+      currentCAP:0,
+      capprocent:0,
       totalDwarf:0,
     };
     this.balances = this.balances.bind(this);
@@ -83,8 +83,8 @@ class Auction extends React.Component {
     this.checkTotal = this.checkTotal.bind(this);
     //this.checkAuction();
   }
-  
-    
+
+
   async balances() {
     const accountAddress = store.getStore("accountAddress");
     const haveNFT = store.getStore("haveNFT");
@@ -99,7 +99,7 @@ class Auction extends React.Component {
     this.checkAuction();
 
   }
-  
+
   async checkAuction() {
     const { totalCap } = this.state;
       const accountAddress =  store.getStore("accountAddress");
@@ -113,14 +113,14 @@ class Auction extends React.Component {
       console.log(currentDeposit);
       currentDeposit = parseFloat(currentDeposit)/10**18;
 console.log(currentDeposit);
-      
+
       var currentAuctionPrice = await auctionContract.methods.getCurrentAuctionPrice().call({ from: accountAddress, });
       currentAuctionPrice = parseFloat(currentAuctionPrice)/10**18;
 console.log(currentAuctionPrice);
       var currentCAP = await auctionContract.methods.getCurrentCap().call({ from: accountAddress, });
       currentCAP = parseFloat(currentCAP)/10**18;
 console.log(currentCAP);
-      
+
       var capprocent = Math.round(parseFloat(currentCAP)/totalCap * 100)
       await this.setState({
         currentAuctionPrice:currentAuctionPrice,
@@ -128,7 +128,7 @@ console.log(currentCAP);
         currentCAP:currentCAP,
         capprocent:capprocent,
       });
-      
+
       const dwarf20Address =  store.getStore("dwarf20Address");
       const erc20ABI =  store.getStore("erc20ABI");
       let dwarfContract = new web3.eth.Contract(erc20ABI, dwarf20Address)
@@ -138,7 +138,7 @@ console.log(currentCAP);
 console.log(totalDwarf);
 
   }
-  
+
  async checkTotal() {
     const { totalCap } = this.state;
       const accountAddress =  store.getStore("accountAddress");
@@ -166,7 +166,7 @@ console.log(totalDwarf);
       emitter.on('nbalances', this.balances);
       emitter.on('auction', this.checkAuction);
   }
-  
+
   componentWillUnmount() {
       emitter.on('balances', this.balances);
       emitter.on('nbalances', this.balances);
@@ -214,15 +214,15 @@ console.log(totalDwarf);
             </div>
 
           </div>
-          
+
           <div className={appStyle.nfblock} style={{ margin: 'auto' }}>
-              
+
                 <input
                   name="depositeth"
                   id={ 'depositeth' }
                   placeholder="BNB Value"
                   value={this.state.depositeth}
-                  onChange={this.onChange} 
+                  onChange={this.onChange}
                 ></input>
                 <button type="submit" onClick={ () => store.deposit(this.state.depositeth) }>Deposit BNB</button>
           </div>

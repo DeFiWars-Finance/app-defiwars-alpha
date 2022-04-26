@@ -5,7 +5,8 @@
 
 .connectWallet{
   position: relative;
-  a{
+}
+.connectWallet a{
     font-family: Audiowide;
     font-style: normal;
     font-weight: normal;
@@ -18,13 +19,12 @@
     transition: 0.5s;
   }
 
-  a:hover{
+.connectWallet a:hover{
     transition: 0.5s;
     text-shadow: 0px 0px 13px #B0FFFF;
     transform: scale(1.1);
   }
 
-}
 .info{
   margin-top: -30px;
   font-family: Roboto;

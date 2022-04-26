@@ -67,74 +67,6 @@
     z-index: 1;
 }
 
-.bmBurgerButton {
-  position: fixed;
-  width: 36px;
-  height: 30px;
-  right: 36px;
-  top: 60px;
-}
-
-.bmBurgerBars {
-  background: #fff;
-  height: 3px;
-}
-
-.bmBurgerBarsLastChild {
-  display: none,
-}
-
-.bmBurgerBarsHover {
-  background: #a90000;
-}
-
-.bmCrossButton {
-  height: 24px;
-  width: 24px;
-}
-
-.bmCross {
-  background: #bdc3c7;
-}
-
-.bmMenuWrap {
-  position: fixed;
-  height: 100%;
-  top: 0;
-}
-
-.bmMenu {
-  background: #e910ff;
-  padding: 2.5em 1.5em 0;
-  font-size: 1.15em;
-  position: relative;
-}
-
-.bmMorphShape {
-  fill: #373a47;
-}
-
-.bmItemList {
-  color: #b8b7ad;
-  padding: 0.8em;
-  display: flex;
-  flex-direction: column;
-}
-
-.bmItem {
-  display: inline-block;
-  color: #f2ff00;
-  font-size: 24px;
-  font-family: Roboto;
-  padding: 5px 0;
-}
-
-.bmOverlay {
-  background: rgba(50, 50, 150, 0.3);
-  top: 0;
-}
-
-
 @media (max-width: 991.98px) {
     .mainMenu a{
         font-size: 16px;
@@ -147,5 +79,13 @@
        display: none;
     }
 
+}
 
+
+.menu .submenu {
+  display: block;
+}
+
+.menu:hover .submenu {
+  display: block
 }
