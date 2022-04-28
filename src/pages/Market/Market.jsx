@@ -72,6 +72,7 @@ class Market extends React.Component {
     }
     try {
       var result = await dwarfContract.methods.openmarket().send({ from: accountAddress, });
+      console.log(result);
     } catch (error) {
       store.setReady(false);
     }
@@ -88,6 +89,7 @@ class Market extends React.Component {
     const dwarfContract = new web3.eth.Contract(dwarfABI, dwarfAddress);
     try {
       var result = await dwarfContract.methods.closemarket().send({ from: accountAddress, });
+      console.log(result);
     } catch (error) {
       store.setReady(false);
     }
@@ -208,10 +210,14 @@ class Market extends React.Component {
   }
 
   render() {
-    const { accountAddress, opened, dwarf, NFTs } = this.state;
+    const {
+      accountAddress,
+      opened,
+      dwarf,
+      NFTs
+    } = this.state;
 
     return (
-
       <div className={appStyle.container}>
         {(() => {
           if (opened) {

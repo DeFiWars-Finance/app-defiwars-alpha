@@ -6,16 +6,16 @@ var emitter = new EventEmitter();
 
 const getAccountsCallback = (
   updateAccountAddress, 
-  ) => (error, accounts) => {
+) => (error, accounts) => {
   if (error) {
     const message = 'Cannot retrieve account data.';
-    } else {
-      const accountAddress = accounts.length === 0 ? null: accounts[0];
-      updateAccountAddress(accountAddress);
-      emitter.emit('enabled', accountAddress);
-      console.log('enabled');
-    }
-  };
+  } else {
+    const accountAddress = accounts.length === 0 ? null: accounts[0];
+    updateAccountAddress(accountAddress);
+    emitter.emit('enabled', accountAddress);
+    console.log('enabled');
+  }
+};
 
 class Store extends React.Component {
   constructor(props) {
@@ -677,12 +677,12 @@ class Store extends React.Component {
       await this.setStore({ jediLP: balance });
       console.log(balance);
     let darthContract = new web3.eth.Contract(erc20ABI, lpDarthAddress);
-    var balance = await darthContract.methods.balanceOf(accountAddress).call({ from:accountAddress, });
+    balance = await darthContract.methods.balanceOf(accountAddress).call({ from:accountAddress, });
       balance = parseFloat(balance)/10**18;
       await this.setStore({ darthLP: balance });
       console.log(balance);
     let dwarf20Contract = new web3.eth.Contract(erc20ABI, dwarf20Address);
-    var balance = await dwarf20Contract.methods.balanceOf(accountAddress).call({ from: accountAddress, });
+    balance = await dwarf20Contract.methods.balanceOf(accountAddress).call({ from: accountAddress, });
       balance = parseFloat(balance)/10**18;
       await this.setStore({ dwarf: balance });
       console.log(balance);

@@ -107,6 +107,7 @@ class Collections extends React.Component {
     console.log(this.state.darthvalue);
     try {
       var result = await dwarfContract.methods.stakeDarth(this.state.darthvalue).send({ from: accountAddress, });
+      console.log(result);
     }
     catch (error) {
       store.setReady(false);
@@ -240,7 +241,16 @@ class Collections extends React.Component {
   }
 
   render() {
-    const { accountAddress, jediLP, darthLP, staked, stakedDarth, stakedJedi, canClaim } = this.state;
+    const {
+      accountAddress,
+      jediLP,
+      darthLP,
+      staked,
+      stakedDarth,
+      stakedJedi,
+      canClaim
+    } = this.state;
+
     const options = [
       { label: '1-day', value: 1 },
       { label: '7-day', value: 7 },

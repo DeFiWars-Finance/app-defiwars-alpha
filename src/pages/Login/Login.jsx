@@ -22,7 +22,6 @@ const Login = () => {
     errorMessage: null,
   });
 
-
   const trylogin = (signature) => {
     const accountAddress = store.getStore('accountAddress');
     console.log(signature);
@@ -163,6 +162,5 @@ const Login = () => {
     </div>
   );
 }
-
 
 export default Login;
