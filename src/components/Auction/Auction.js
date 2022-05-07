@@ -23,7 +23,7 @@ const getCurrentTime = (dt: Date) => {
   ':' + pad(dt.getUTCMinutes()) +
   ':' + pad(dt.getUTCSeconds());
 }
-
+/* eslint-disable-next-line */
 const getRemainingTime = (epoch: number) => {
   const now = Date.now() / 1000;
   let diff = epoch - now;
@@ -40,13 +40,10 @@ const getRemainingTime = (epoch: number) => {
         (pad(minute) + 'm ') + 
         (pad(second) + 's');
 }
-
+/* eslint-disable-next-line */
 const formatAmount = (x: number) => {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
-
-
-
 
 class Auction extends React.Component {
   constructor(props) {
@@ -140,6 +137,7 @@ console.log(totalDwarf);
   }
   
  async checkTotal() {
+   /* eslint-disable-next-line */
     const { totalCap } = this.state;
       const accountAddress =  store.getStore("accountAddress");
       const auctionAddress =  store.getStore("auctionAddress");
@@ -180,6 +178,7 @@ console.log(totalDwarf);
   }
 
   render() {
+    /* eslint-disable-next-line */
     const { accountAddress, timeNow, timeEnd, capprocent, currentAuctionPrice, currentCAP, currentDeposit , totalDwarf} = this.state;
     return (
       <div className={style.Sword}>
