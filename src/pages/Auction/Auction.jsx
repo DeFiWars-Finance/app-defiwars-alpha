@@ -94,7 +94,6 @@ class Auction extends React.Component {
     totalDwarf = parseFloat(totalDwarf) / 10 ** 18;
     await this.setState({ totalDwarf: totalDwarf });
     console.log(totalDwarf);
-
   }
 
   async checkTotal() {
@@ -134,7 +133,17 @@ class Auction extends React.Component {
   }
 
   render() {
-    const { accountAddress, timeNow, timeEnd, capprocent, currentAuctionPrice, currentCAP, currentDeposit, totalDwarf } = this.state;
+    const {
+      accountAddress,
+      timeNow,
+      timeEnd,
+      capprocent,
+      currentAuctionPrice,
+      currentCAP,
+      currentDeposit,
+      totalDwarf
+    } = this.state;
+
     return (
         <div className={appStyle.container}>
           <div className={style.text}>

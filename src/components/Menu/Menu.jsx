@@ -85,7 +85,6 @@ const Menu = () => {
     return (() => {
       window.removeEventListener("resize", onResize);
     });
-
   }, [])
 
 
@@ -93,11 +92,16 @@ const Menu = () => {
     <>
       {state.width < 768 ? (
         <MenuMobile styles={styles} right pageWrapId="root">
-          <Link to="/What_is_DWARF">What is $DWARF?</Link>
+          <Link to="/What_is_DWARF">
+            What is $DWARF?
+          </Link>
 
-          <a onClick={() => showHideDefi(!state.showDefi)}>
+          <a
+            onClick={() => showHideDefi(!state.showDefi)}
+          >
             DeFi Products
           </a>
+
           <Collapse isOpened={state.showDefi}>
             <div
               onMouseLeave={() => showHideDefi(false)}

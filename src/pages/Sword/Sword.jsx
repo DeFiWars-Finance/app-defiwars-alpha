@@ -6,20 +6,14 @@ import ConnectIcon from "../../components/icons/connect";
 import SwordIcon from "../../components/icons/sword";
 import MobileSword from "../../components/Sword/MobileSword";
 import DesktopSword from "../../components/Sword/DesktopSword";
-
 import { useDispatch, useSelector  } from "react-redux";
 import { setAccountAddress } from "../../state/user/actions";
-
 import { useActiveWeb3React } from 'hooks'
 
 const Sword = () => {
-
   const dispatch = useDispatch();
-
   const { account: accountAddress } = useActiveWeb3React()
-
   const connect = () => {}
-
 
   let connectButton = "Connect<br /> Wallet";
 
@@ -40,7 +34,9 @@ const Sword = () => {
         <div className={style.mainConnectWallet}>
           <div>
             <div className={style.connectWallet}>
-              <a onClick={connect}>
+              <a
+                onClick={connect}
+              >
                 {Parser(connectButton)}
               </a>
               <ConnectIcon width={260} height={91}/>
