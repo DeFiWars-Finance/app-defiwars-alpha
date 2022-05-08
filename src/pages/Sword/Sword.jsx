@@ -45,13 +45,16 @@ const Sword = () => {
           <div>
             <div className={style.info}>
               <p>
-                Every PoLP official NFT can be staked within DeFiWars Finance
-                ecosystem, traded in any open NFT market, and acquired by other
-                users and digital art collectors. Genesis Edition is inspired
-                by a cult movie saga from 1970s; there will be 4 lead characters
-                (YoDWARF, ObiDWARF, DWARF Vader and DWARF Sith), and 3 general
-                tiers: MIAMI, CLASSIC, and COMMON; COMMON category includes 5
-                different classes (for example: GOLDEN, PINK, RED, GREEN, BLUE).
+                  Every PoLP official NFT can be staked within DeFiWars Finance
+                  ecosystem, traded in any open NFT market, and acquired by other
+                  users and digital art collectors. Genesis Edition is inspired
+                  by a cult movie saga from 1970s; there will be 4 lead characters
+                  (YoDWARF, ObiDWARF, DWARF Vader and DWARF Sith), and 3 general
+                  tiers: MIAMI, CLASSIC, and COMMON; COMMON category includes 5
+                  different classes (for example: GOLDEN, PINK, RED, GREEN, BLUE).
+              </p>
+              <p>
+                  May the $DWARF be with you.
               </p>
               <SwordIcon />
             </div>
