@@ -59,11 +59,11 @@ export default function Pool() {
       <CardNav activeIndex={1} />
       <AppBody>
         <PageHeader
-          title={TranslateString(262, 'Liquidity')}
-          description={TranslateString(1168, 'Add liquidity to receive LP tokens')}
+          title={TranslateString(262, 'Liquidity Provisioning')}
+          description={TranslateString(1168, 'Add liquidity to receive LP/PoLP tokens')}
         >
           <Button id="join-pool-button" as={Link} to="/add/BNB">
-            {TranslateString(168, 'Add Liquidity')}
+            {TranslateString(168, 'Provide Liquidity')}
           </Button>
         </PageHeader>
         <AutoColumn gap="lg" justify="center">
@@ -74,7 +74,7 @@ export default function Pool() {
                 <Question
                   text={TranslateString(
                     1170,
-                    'When you add liquidity, you are given pool tokens that represent your share. If you don’t see a pool you joined in this list, try importing a pool below.'
+                    'When you add liquidity, you are given pool/PoLP tokens that represent your share. If you don’t see a pool/PoLP you’ve joined in this list, try importing a pool/PoLP below.'
                   )}
                 />
               </RowBetween>
@@ -82,7 +82,7 @@ export default function Pool() {
               {!account ? (
                 <LightCard padding="40px">
                   <Text color="textDisabled" textAlign="center">
-                    {TranslateString(156, 'Connect to a wallet to view your liquidity.')}
+                    {TranslateString(156, 'Connect to your wallet to view current liquidity provisioning.')}
                   </Text>
                 </LightCard>
               ) : v2IsLoading ? (
@@ -100,20 +100,20 @@ export default function Pool() {
               ) : (
                 <LightCard padding="40px">
                   <Text color="textDisabled" textAlign="center">
-                    {TranslateString(104, 'No liquidity found.')}
+                    {TranslateString(104, 'No liquidity provisioning has been found.')}
                   </Text>
                 </LightCard>
               )}
 
               <div>
                 <Text fontSize="14px" style={{ padding: '.5rem 0 .5rem 0' }}>
-                  {TranslateString(106, "Don't see a pool you joined?")}{' '}
+                  {TranslateString(106, "Don’t see a pool/PoLP you’ve joined?")}{' '}
                   <StyledInternalLink id="import-pool-link" to="/find">
                     {TranslateString(108, 'Import it.')}
                   </StyledInternalLink>
                 </Text>
                 <Text fontSize="14px" style={{ padding: '.5rem 0 .5rem 0' }}>
-                  {TranslateString(1172, 'Or, if you staked your LP tokens in a farm, unstake them to see them here.')}
+                  {TranslateString(1172, 'Or, if you’ve staked your LP/PoLP tokens in a liquidity program or Scheduled Warfare, wait for its period to fully end and/or unstake them, to see them here.')}
                 </Text>
               </div>
             </AutoColumn>
