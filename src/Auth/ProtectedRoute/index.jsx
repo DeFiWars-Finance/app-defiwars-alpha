@@ -1,16 +1,10 @@
 import React, { useEffect } from "react"
-
 import { useWeb3React } from "@web3-react/core";
-
 import { NetworkContextName } from '../../constants'
-
 import { network } from '../../connectors'
-
 import { Navigate, useLocation } from "react-router-dom";
-
-import { useActiveWeb3React } from 'hooks'
-
-import { useEagerConnect, useInactiveListener } from '../../hooks'
+import { useActiveWeb3React } from 'hooks';
+import { useEagerConnect, useInactiveListener } from '../../hooks';
 
 const ProtectedRoute = ({ children }) => {
   const { active, account } = useActiveWeb3React();

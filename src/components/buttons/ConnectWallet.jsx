@@ -13,17 +13,13 @@ import { useSelector } from "react-redux";
 import useAuth from '../../hooks/useAuth'
 
 const ConnectWallet = ({ sound }) => {
-
   const { login, logout } = useAuth();
   const { onPresentConnectModal, onPresentAccountModal } = useWalletModal(login, logout)
 
   const [playSound] = useSound(bladeSound);
-
   const navigate = useNavigate();
   const location = useLocation();
-
   const state = useSelector(state => state.user)
-
   const {
     haveNFT,
     inProcess = false,
@@ -33,7 +29,6 @@ const ConnectWallet = ({ sound }) => {
   } = state;
 
   const { active, account, chainId } = useActiveWeb3React();
-
   const from = location.state?.from?.pathname || "/";
 
   useEffect(() => {
