@@ -16,6 +16,8 @@ import Pool from "./pages/Pool";
 import AddLiquidity from './pages/AddLiquidity';
 import DefiWarsLayout from "./layouts/DefiWarsLayout";
 import { RedirectDuplicateTokenIds, RedirectOldAddLiquidityPathStructure } from './pages/AddLiquidity/redirects';
+
+import { RedirectOldRemoveLiquidityPathStructure } from './pages/RemoveLiquidity/redirects';
 import ProtectedRoute from './Auth/ProtectedRoute';
 
 function App() {
@@ -78,6 +80,8 @@ function App() {
                   <RedirectDuplicateTokenIds />
                 </ProtectedRoute>
               } />
+
+                <Route path='/remove/:tokens' element={<RedirectOldRemoveLiquidityPathStructure/>} />
             </Route>
           </Routes>
         </BrowserRouter>

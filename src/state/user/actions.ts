@@ -1,4 +1,5 @@
 import { createAction } from '@reduxjs/toolkit'
+import { NFT } from './reducer';
 
 export interface SerializedToken {
   chainId: number
@@ -35,4 +36,35 @@ export const setAccountAddress = createAction<{accounAddress: string}>(
 
 export const setNetId = createAction<{netId: number | null }>(
   'defiwars/setNetId'
+);
+
+export const setHaveNFT = createAction<{haveNFT: boolean }>(
+  'defiwars/setHaveNFT'
+);
+
+export const setIsInWar = createAction<{isInWar: boolean }>(
+  'defiwars/setIsInWar'
+);
+
+export const setIsReady = createAction<{isReady: boolean }>(
+  'defiwars/setIsReady'
+);
+
+export const setJediLPBalance = createAction<{jediLP: number }>(
+  'defiwars/setJediLPBalance'
+);
+
+export const setDarthLPBalance = createAction<{darthLP: number }>(
+  'defiwars/setDarthLPBalance'
+);
+export const setDwarfBalance = createAction<{dwarf: number }>(
+  'defiwars/setDwarfBalance'
+);
+
+export const setEthBalance = createAction<{ethbalance: number }>(
+  'defiwars/setEthBalance'
+);
+
+export const setNFTs = createAction<{NFTs: NFT[] }>(
+  'defiwars/setNFTs'
 );

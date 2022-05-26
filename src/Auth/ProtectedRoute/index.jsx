@@ -13,7 +13,7 @@ import { useActiveWeb3React } from 'hooks'
 import { useEagerConnect, useInactiveListener } from '../../hooks'
 
 const ProtectedRoute = ({ children }) => {
-  const { active } = useActiveWeb3React();
+  const { active, account } = useActiveWeb3React();
   const location = useLocation();
 
   const { activate: activateNetwork } = useWeb3React(
@@ -29,7 +29,7 @@ const ProtectedRoute = ({ children }) => {
   }, [triedEager]);
 
 
-  if (!active)
+  if (!account)
     return <Navigate to="/" state={{ from: location }} />
 
   return children;
