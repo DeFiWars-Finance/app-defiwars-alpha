@@ -5,19 +5,22 @@ import { Link } from 'react-router-dom';
 import Menu from '../Menu/Menu';
 import ConnectWallet from "../buttons/ConnectWallet";
 import { useActiveWeb3React } from 'hooks'
-import { useDefiwarsMin } from "hooks/useNFT";
-import { useSelector } from 'react-redux';
+import { useDefiwars } from "hooks/useDefiWars";
+import { useDispatch, useSelector } from 'react-redux';
+import { setHaveNFT, setInProcess, setIsInWar } from "state/user/actions";
 
 const Header = () => {
-
-  const { active } = useActiveWeb3React();
-
-  const { onMint, checkNFT} = useDefiwarsMin();
+  const { onMint, checkNFT} = useDefiwars();
   const isInWar = useSelector( state => state.user.isInWar);
   const ethBalance = useSelector( state => state.user.ethbalance);
   const jediLP = useSelector( state => state.user.jediLP);
   const darthLP = useSelector( state => state.user.darthLP);
   const dwarf = useSelector( state => state.user.dwarf);
+  const inProcess = useSelector( state => state.user.inProcess);
+  const haveNFT = useSelector( state => state.user.haveNFT);
+  const dispatch = useDispatch();
+
+
 
   return (
     <header className={appStyle.flexauto}>
@@ -37,12 +40,38 @@ const Header = () => {
     <br />
     <span style={{color: 'white' }}>{`dwarfBalance: ${dwarf}`}</span>
     <br />
+
+    <span style={{color: 'white' }}>{`isInWar: ${isInWar}`}</span>
+    <br />
+
+    <span style={{color: 'white' }}>{`haveNFT: ${haveNFT}`}</span>
+    <br />
+
+    <span style={{color: 'white' }}>{`isProcess: ${inProcess}`}</span>
+    <br />
     <button onClick={checkNFT}>
     checkNFT
     </button>
 
+    <button onClick={() => dispatch(setHaveNFT({
+      haveNFT: true
+    })) }>
+    setHaveNFT
+    </button>
+
+    <button onClick={() => dispatch(setInProcess({ inProcess: true }))}>
+    setInProcess
+    </button>
+
+    <button onClick={() => dispatch(setIsInWar({
+      isInWar: true ,
+      inProcess: false
+    }))}>
+    setIsInWar
+    </button>
+
       <div className={appStyle.container}>
-        <Menu showMenu={active} />
+        <Menu />
       </div>
     </header>
   );

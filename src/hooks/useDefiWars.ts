@@ -2,15 +2,18 @@ import { useActiveWeb3React } from "hooks";
 import { useCallback, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  setIsReady, setHaveNFT, setIsInWar,
+  setIsReady,
+  setHaveNFT,
+  setIsInWar,
   setEthBalance,
   setJediLPBalance,
   setDarthLPBalance,
   setDwarfBalance,
   setNFTs,
+  setInProcess,
 } from "state/user/actions";
 
-import { AbiItem } from 'web3-utils'
+// import { AbiItem } from 'web3-utils'
 
 import { NFT } from '../state/user/reducer';
 
@@ -19,7 +22,7 @@ import { provider } from 'web3-core';
 import Web3 from 'web3';
 import { AppState } from 'state'
 
-export const useDefiwarsMin = () => {
+export const useDefiwars = () => {
   const { account, library, chainId } = useActiveWeb3React();
 
   const dispatch = useDispatch();
@@ -167,10 +170,16 @@ export const useDefiwarsMin = () => {
   const onMint = useCallback(async () => {
     if (!dwarfContract) return null;
 
-    const mint = await dwarfContract.methods?.mint()?.send({ from: account, });
-
-    console.log('Mint result', mint);
-    return mint;
+    // set status in inProcess
+    dispatch(setInProcess({ inProcess: true }))
+    try {
+      const mint = await dwarfContract.methods.mint().send({ from: account, });
+      console.log('Mint result', mint);
+      return mint;
+    } catch (error) {
+      console.log('Mint error', error);
+      dispatch(setInProcess({ inProcess: false }))
+    }
   }, [dwarfContract, account]);
 
   const checkHaveNFT = useCallback(async () => {
@@ -209,12 +218,13 @@ export const useDefiwarsMin = () => {
     const isInWar = await checkIsInWar();
 
     dispatch(setIsInWar({
-      isInWar
+      isInWar,
+      inProcess: false
     }));
 
     // If the user is not in war it means is not ready
     dispatch(setIsReady({
-      isReady: isInWar
+      isReady: isInWar,
     }));
 
     // get Balances
@@ -250,7 +260,7 @@ export const useDefiwarsMin = () => {
 
     // Get NFT balances
     //
-    const getNftBalances = async (nft:NFT): Promise<NFT> => {
+    const getNftBalances = async (nft: NFT): Promise<NFT> => {
       let balance = {};
       if (nft.side === 'jedi') {
         balance = await getNftJediBalance(nft.id)
@@ -288,8 +298,49 @@ export const useDefiwarsMin = () => {
     getNftJediBalance
   ])
 
+  const onWar = useCallback(async () => {
+    if (!dwarfContract) return;
+
+    try {
+      const result = await dwarfContract.methods.war().send({
+        from: account
+      });
+      dispatch(setIsInWar({
+        isInWar: true,
+        inProcess: false
+      }));
+      checkNFT();
+    } catch (error) {
+      dispatch(setIsInWar({
+        isInWar: false,
+        inProcess: false
+      }));
+    }
+  }, [dwarfContract]);
+
+  const onPeace = useCallback(async () => {
+    if (!dwarfContract) return;
+
+    try {
+      const result = await dwarfContract.methods.peace().send({
+        from: account
+      });
+      dispatch(setIsInWar({
+        isInWar: false,
+        inProcess: false
+      }));
+      console.log(result);
+      checkNFT();
+    } catch (error) {
+      console.log(error);
+    }
+  }, [dwarfContract]);
+
+
   return {
     onMint,
-    checkNFT
+    checkNFT,
+    onWar,
+    onPeace
   };
 }

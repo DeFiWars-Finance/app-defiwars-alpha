@@ -5,10 +5,13 @@ import { network } from '../../connectors'
 import { Navigate, useLocation } from "react-router-dom";
 import { useActiveWeb3React } from 'hooks';
 import { useEagerConnect, useInactiveListener } from '../../hooks';
+import { useSelector } from "react-redux";
 
 const ProtectedRoute = ({ children }) => {
-  const { active, account } = useActiveWeb3React();
+  const { account } = useActiveWeb3React();
   const location = useLocation();
+
+  const isInWar = useSelector(state => state.user.isInWar);
 
   const { activate: activateNetwork } = useWeb3React(
     NetworkContextName
@@ -23,7 +26,7 @@ const ProtectedRoute = ({ children }) => {
   }, [triedEager]);
 
 
-  if (!account)
+  if (!account || !isInWar)
     return <Navigate to="/" state={{ from: location }} />
 
   return children;

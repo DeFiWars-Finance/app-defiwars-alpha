@@ -24,7 +24,8 @@ import {
   setJediLPBalance,
   setDarthLPBalance,
   setDwarfBalance,
-  setNFTs
+  setNFTs,
+  setInProcess
 } from './actions'
 
 const currentTimestamp = () => new Date().getTime()
@@ -120,9 +121,10 @@ export interface UserState {
   nftJediAddress: string
   accountAddress: string | null
   netId: number | null
-  haveNFT: boolean
-  isInWar: boolean
   isReady: boolean
+  haveNFT: boolean
+  inProcess: boolean
+  isInWar: boolean
   jediLP: number
   darthLP: number
   dwarf: number
@@ -155,6 +157,7 @@ export const initialState: UserState = {
   netId: null,
   haveNFT: false,
   isInWar: false,
+  inProcess: false,
   isReady: false,
   jediLP: 0,
   darthLP: 0,
@@ -675,8 +678,9 @@ export default createReducer(initialState, builder =>
     .addCase(setHaveNFT, (state, { payload: { haveNFT } }) => {
       state.haveNFT = haveNFT;
     })
-    .addCase(setIsInWar, (state, { payload: { isInWar } }) => {
+    .addCase(setIsInWar, (state, { payload: { isInWar, inProcess } }) => {
       state.isInWar = isInWar;
+      state.inProcess= inProcess;
     })
     .addCase(setIsReady, (state, { payload: { isReady } }) => {
       state.isReady = isReady;
@@ -696,5 +700,9 @@ export default createReducer(initialState, builder =>
 
     .addCase(setNFTs, (state, { payload: { NFTs } }) => {
       state.NFTs = NFTs;
+    })
+
+    .addCase(setInProcess, (state, { payload: { inProcess } }) => {
+      state.inProcess = inProcess;
     })
 )

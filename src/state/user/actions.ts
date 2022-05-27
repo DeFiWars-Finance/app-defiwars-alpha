@@ -42,7 +42,7 @@ export const setHaveNFT = createAction<{haveNFT: boolean }>(
   'defiwars/setHaveNFT'
 );
 
-export const setIsInWar = createAction<{isInWar: boolean }>(
+export const setIsInWar = createAction<{isInWar: boolean, inProcess: boolean }>(
   'defiwars/setIsInWar'
 );
 
@@ -67,4 +67,8 @@ export const setEthBalance = createAction<{ethbalance: number }>(
 
 export const setNFTs = createAction<{NFTs: NFT[] }>(
   'defiwars/setNFTs'
+);
+
+export const setInProcess = createAction<{inProcess: boolean }>(
+  'defiwars/setInProcess'
 );

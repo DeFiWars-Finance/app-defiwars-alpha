@@ -4,6 +4,7 @@ import { Collapse } from 'react-collapse';
 import { slide as MenuMobile } from 'react-burger-menu';
 import style from './Menu.module.css';
 import classNames from "classnames";
+import { useSelector } from 'react-redux';
 
 let styles = {
   bmBurgerButton: {
@@ -65,6 +66,8 @@ let styles = {
 };
 
 const Menu = () => {
+  const isInWar = useSelector(state => state.user.isInWar);
+
   const [state, setState] = useState({
     showDefi: false,
     width: window.innerWidth,
@@ -87,8 +90,7 @@ const Menu = () => {
     });
   }, [])
 
-
-  return (
+  return ( isInWar ?
     <>
       {state.width < 768 ? (
         <MenuMobile styles={styles} right pageWrapId="root">
@@ -148,7 +150,7 @@ const Menu = () => {
           </li>
         </ul>
       </div>
-    </>
+    </> : null
   );
 };
 

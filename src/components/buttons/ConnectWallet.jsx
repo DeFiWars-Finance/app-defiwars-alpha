@@ -1,5 +1,5 @@
 import { useLocation, useNavigate } from "react-router-dom";
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo, useCallback } from "react";
 import { useActiveWeb3React } from 'hooks'
 
 import useSound from "use-sound";
@@ -12,63 +12,109 @@ import { useSelector } from "react-redux";
 
 import useAuth from '../../hooks/useAuth'
 
-const ConnectWallet = ({ sound }) => {
+import { useDefiwars } from "hooks/useDefiWars";
+
+const ActionLink = ({ onClick, text }) => {
+  return (
+    <a onClick={onClick}>
+      {Parser(text)}
+    </a>
+  );
+}
+const RenderActionLink = () => {
   const { login, logout } = useAuth();
   const { onPresentConnectModal, onPresentAccountModal } = useWalletModal(login, logout)
-
-  const [playSound] = useSound(bladeSound);
+  const { account, chainId } = useActiveWeb3React();
+  const userState = useSelector(state => state.user)
   const navigate = useNavigate();
-  const location = useLocation();
-  const state = useSelector(state => state.user)
   const {
     haveNFT,
-    inProcess = false,
-    isInWar = false,
-    loggedIn = false,
+    inProcess,
+    isInWar,
+    loggedIn,
     mainNetId,
-  } = state;
+  } = userState;
 
-  const { active, account, chainId } = useActiveWeb3React();
-  const from = location.state?.from?.pathname || "/";
+  const { onMint, onWar, onPeace } = useDefiwars();
 
-  useEffect(() => {
-    active && sound && playSound()
-    if (active && from !== "/") {
-      return navigate(from, { replace: true });
-    }
-  }, [active, sound]);
+  if (account && chainId !== mainNetId)
+    return (
+      <ActionLink text='Connect to <br /> BSC Mainnet'
+        onClick={onPresentConnectModal}
+      />
+    );
 
-  const getButtonText = () => {
-    if (!account)
-      return 'Connect<br />Wallet';
+  if (account && haveNFT && isInWar)
+    return (
+      <ActionLink text='MINT my PEACE <br />ngNFT'
+        onClick={onPeace}
+      />
+    );
 
-    if (chainId !== mainNetId)
-      return 'Connect to <br /> BSC Mainnet';
+  if (account && haveNFT && !isInWar)
+    return (
+      <ActionLink text='Select PoLP <br />& Stake'
+        onClick={() => {
+          onWar();
+          navigate('/pool', { replace: true });
+        }}
+      />
+    )
 
-    if (inProcess) {
-      return 'processing <br /> ...';
-    }
+  if (account && inProcess)
+    return (
+      <ActionLink text='processing <br /> ...'
+        onClick={() => { }}
+      />
+    );
 
-    if (!isInWar)
-      return 'MINT my WAR <br />ngNFT';
+  if (account && !isInWar && !haveNFT)
+    return (
+      <ActionLink text='MINT my WAR <br />ngNFT'
+        onClick={() => {
+          onMint();
+          navigate('/pool', { replace: true });
+        }
+        } />
+    );
 
-    if (haveNFT && !isInWar)
-      return 'Select PoLP <br />& Stake';
-
-    if (haveNFT && isInWar)
-      return 'MINT my PEACE <br />ngNFT';
-
-    if (!haveNFT && !loggedIn && isInWar) {
-      return 'LOGIN';
-    }
-
+  if (account && !haveNFT && !loggedIn && isInWar) {
+    return (
+      <ActionLink text='LOGIN'
+        onClick={() => {
+          navigate('/login', { replace: true });
+        }}
+      />
+    );
   }
 
   return (
+    <ActionLink
+      text='Connect<br />Wallet'
+      onClick={onPresentConnectModal}
+    />
+  )
+
+}
+const ConnectWallet = ({ sound }) => {
+  const [playSound] = useSound(bladeSound);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { account } = useActiveWeb3React();
+  const from = location.state?.from?.pathname || "/";
+
+  useEffect(() => {
+    account && sound && playSound()
+
+    if (account && from !== "/") {
+      return navigate(from, { replace: true });
+    }
+  }, [account, sound]);
+
+
+  return (
     <div className={style.connectWallet}>
-      <a onClick={account ? onPresentAccountModal : onPresentConnectModal}>
-        {Parser(getButtonText())}
-      </a>
+      <RenderActionLink />
       <ConnectIcon width={100} height={32} />
     </div>
   )
