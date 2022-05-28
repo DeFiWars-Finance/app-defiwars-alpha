@@ -30,45 +30,65 @@ export const removeSerializedPair = createAction<{ chainId: number; tokenAAddres
 export const muteAudio = createAction<void>('user/muteAudio')
 export const unmuteAudio = createAction<void>('user/unmuteAudio')
 
-export const setAccountAddress = createAction<{accounAddress: string}>(
+export const setAccountAddress = createAction<{ accounAddress: string }>(
   'defiwars/setAccountAddress'
 );
 
-export const setNetId = createAction<{netId: number | null }>(
+export const setNetId = createAction<{ netId: number | null }>(
   'defiwars/setNetId'
 );
 
-export const setHaveNFT = createAction<{haveNFT: boolean }>(
+export const setHaveNFT = createAction<{ haveNFT: boolean }>(
   'defiwars/setHaveNFT'
 );
 
-export const setIsInWar = createAction<{isInWar: boolean, inProcess: boolean }>(
+export const setIsInWar = createAction<{ isInWar: boolean, inProcess: boolean }>(
   'defiwars/setIsInWar'
 );
 
-export const setIsReady = createAction<{isReady: boolean }>(
+export const setIsReady = createAction<{ isReady: boolean }>(
   'defiwars/setIsReady'
 );
 
-export const setJediLPBalance = createAction<{jediLP: number }>(
+export const setJediLPBalance = createAction<{ jediLP: number }>(
   'defiwars/setJediLPBalance'
 );
 
-export const setDarthLPBalance = createAction<{darthLP: number }>(
+export const setDarthLPBalance = createAction<{ darthLP: number }>(
   'defiwars/setDarthLPBalance'
 );
-export const setDwarfBalance = createAction<{dwarf: number }>(
+export const setDwarfBalance = createAction<{ dwarf: number }>(
   'defiwars/setDwarfBalance'
 );
 
-export const setEthBalance = createAction<{ethbalance: number }>(
+export const setEthBalance = createAction<{ ethbalance: number }>(
   'defiwars/setEthBalance'
 );
 
-export const setNFTs = createAction<{NFTs: NFT[] }>(
+export const setNFTs = createAction<{ NFTs: NFT[] }>(
   'defiwars/setNFTs'
 );
 
-export const setInProcess = createAction<{inProcess: boolean }>(
+export const setInProcess = createAction<{ inProcess: boolean }>(
   'defiwars/setInProcess'
+);
+
+export const setAuctionSuccess = createAction<{ auctionSuccess: boolean }>(
+  'defiwars/setAuctionSuccess'
+);
+
+export const setIsOpened = createAction<{ isOpened: boolean }>(
+  'defiwars/setIsOpened'
+);
+
+export const setIsStaked = createAction<{
+  isStaked: boolean,
+  stakedJedi: number | null,
+  stakedDarth: number | null
+}>(
+  'defiwars/setIsStaked'
+);
+
+export const setCanClaim = createAction<{ canClaim: boolean }>(
+  'defiwars/setCanClaim'
 );

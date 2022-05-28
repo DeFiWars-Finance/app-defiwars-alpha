@@ -11,6 +11,10 @@ import {
   setDwarfBalance,
   setNFTs,
   setInProcess,
+  setAuctionSuccess,
+  setIsOpened,
+  setIsStaked,
+  setCanClaim,
 } from "state/user/actions";
 
 // import { AbiItem } from 'web3-utils'
@@ -26,16 +30,21 @@ export const useDefiwars = () => {
   const { account, library, chainId } = useActiveWeb3React();
 
   const dispatch = useDispatch();
-  const dwarfABI = useSelector((state: AppState) => state.user.dwarfABI);
-  const mainNetId = useSelector((state: AppState) => state.user.mainNetId);
-  const dwarfAddress = useSelector((state: AppState) => state.user.dwarfAddress);
-  const lpjeiAddress = useSelector((state: AppState) => state.user.lpJediAddress);
-  const lpDarthAddress = useSelector((state: AppState) => state.user.lpDarthAddress)
-  const nftJediAddress = useSelector((state: AppState) => state.user.nftJediAddress)
-  const nftDarthAddress = useSelector((state: AppState) => state.user.nftDarthAddress)
-  const erc20ABI = useSelector((state: AppState) => state.user.erc20ABI);
-  const erc1155ABI = useSelector((state: AppState) => state.user.erc1155ABI);
-  const NFTs = useSelector((state: AppState) => state.user.NFTs)
+
+  const userState = useSelector((state: AppState) => state.user);
+  const {
+    dwarfABI,
+    dwarfAddress,
+    dwarf20Address,
+    lpDarthAddress,
+    lpJediAddress,
+    nftJediAddress,
+    nftDarthAddress,
+    erc1155ABI,
+    erc20ABI,
+    NFTs,
+    auctionAddress,
+  } = userState;
 
   const web3 = useMemo(() => {
     if (library || window.ethereum)
@@ -54,15 +63,25 @@ export const useDefiwars = () => {
     return null;
   }, [dwarfABI, dwarfAddress, web3])
 
-  const jediContract = useMemo(() => {
-    if (erc20ABI && lpjeiAddress && web3) {
+  const dwarf20Contract = useMemo(() => {
+    if (erc20ABI && dwarf20Address && web3) {
       return new web3.eth.Contract(
         JSON.parse(JSON.stringify(erc20ABI)),
-        lpjeiAddress
+        dwarf20Address
       )
     }
     return null;
-  }, [erc20ABI, lpjeiAddress, web3])
+  }, [erc20ABI, dwarf20Address, web3])
+
+  const jediContract = useMemo(() => {
+    if (erc20ABI && lpJediAddress && web3) {
+      return new web3.eth.Contract(
+        JSON.parse(JSON.stringify(erc20ABI)),
+        lpJediAddress
+      )
+    }
+    return null;
+  }, [erc20ABI, lpJediAddress, web3])
 
   const darthContract = useMemo(() => {
     if (erc20ABI && lpDarthAddress && web3) {
@@ -227,7 +246,7 @@ export const useDefiwars = () => {
       isReady: isInWar,
     }));
 
-    // get Balances
+    // get/update Balances
     // ETH balance
     const ethbalance = await getEthBalance() || 0;
     console.log(ethbalance);
@@ -336,11 +355,164 @@ export const useDefiwars = () => {
     }
   }, [dwarfContract]);
 
+  const onDeposit = useCallback(async (bnbValue) => {
+    if (!web3) return console.log('no web3 client connected');
+
+    const isInWar = await checkIsInWar();
+
+    if (!isInWar) return console.log('is not in war');
+
+    if (!account) return console.log('no account active');
+
+    try {
+      const send = web3.eth.sendTransaction({
+        from: account, to: auctionAddress
+      });
+
+      console.log('sendTransaction response', send)
+      dispatch(
+        setAuctionSuccess({
+          auctionSuccess: true
+        })
+      );
+    } catch (error) {
+      console.log(error);
+    }
+
+  }, [web3, account, auctionAddress])
+
+  const checkMarket = useCallback(async () => {
+    if (!dwarfContract || !account) return console.log(
+      'No account or Contract found'
+    );
+
+    try {
+      const opened = await dwarfContract.methods.isOpened(account)
+        .call({ from: account });
+
+      if (opened) {
+        dispatch(setIsOpened({
+          isOpened: true
+        }));
+      }
+
+      const staked = await dwarfContract.methods.staked(account)
+        .call({ from: account });
+
+      console.log('is staked:', staked);
+
+      const stakedJediResponse = await dwarfContract.methods
+        .stakeJedi(account).call({ from: account });
+
+      const stakedJedi = parseFloat(stakedJediResponse) / 10 ** 18;
+
+      const stakedDarthResposne = await dwarfContract.methods
+        .stakedDarth(account).call({ from: account });
+
+      const stakedDarth = parseFloat(stakedDarthResposne) / 10 ** 18;
+
+      dispatch(setIsStaked({
+        isStaked: true,
+        stakedJedi,
+        stakedDarth,
+      }));
+
+      const canClaim = await dwarfContract.methods.canClaim(account)
+        .call({ from: account });
+
+      dispatch(setCanClaim({
+        canClaim,
+      }));
+    } catch (error) {
+      console.log('checkMarket Error: ', error);
+    }
+  }, [dwarfContract, account,]);
+
+  const buyJediNFT = useCallback(async (id) => {
+    if (!dwarfContract) return console.log('no account active');
+    try {
+      const result = await dwarfContract.methods.buyjedi(id).send({
+        from: account
+      });
+
+      console.log(`Jedi NFT with ${id} has been buyed successfully`);
+
+      // update balances
+      checkHaveNFT();
+
+    } catch (error) {
+      console.log(`Error buying a jedi NFT ${id}`, error);
+    }
+  }, [dwarfContract, account])
+
+  const buyDarthNFT = useCallback(async(id) => {
+    if (!dwarfContract) return console.log('no account active');
+
+    try {
+      const result  = await dwarfContract.methods.buydarth(id)
+      .send({ from: account})
+        .on('confirmation', (confirmationNumber, receipt) => {
+          if (confirmationNumber === 1) {
+            checkHaveNFT();
+            console.log(`Darth NFT with ${id} has been buyed successfully`);
+          }
+        });
+    } catch (error) {
+      console.log(`Error buying a Dwarf NFT ${id}`, error);
+    }
+  }, [dwarfContract, account])
+
+  const stakeDwarf = useCallback(async() => {
+    if (!dwarfContract || !dwarf20Contract || !web3) return console.log('no account active');
+
+    const allowance = await dwarf20Contract.methods.allowance(
+      dwarfAddress
+    ).call({ from: account })
+
+    const ethAllowance = parseFloat(allowance) / 10 ** 18;
+
+    if (ethAllowance < 3000) {
+      await dwarf20Contract.methods.approve(
+        dwarfAddress,
+        web3.utils.toWei('999999999999999', 'ether')
+      ).send({ from: account })
+    }
+
+    try {
+      const result = await dwarfContract.methods.openmarket()
+      .send({ from: account });
+
+      checkMarket();
+    } catch(error) {
+      console.log('Error stakeDwarf', error);
+    }
+
+  },[dwarfContract, dwarf20Contract, dwarfAddress, account, web3]);
+
+  const claimDwarf = useCallback(async() => {
+    if (!dwarfContract) return console.log('no account active');
+
+  try {
+    const result = await dwarfContract.methods.closemarket()
+    .send({ from: account });
+
+    // update status by calling checkMarket method
+    checkMarket();
+    console.log('claimDwarf', result);
+  } catch (error) {
+    //QUESTION: should we mark the isReady as false?
+    console.error('claimDwarf', error);
+  }
+  }, [dwarfContract, account]);
 
   return {
     onMint,
     checkNFT,
     onWar,
-    onPeace
+    onPeace,
+    onDeposit,
+    checkMarket,
+    buyJediNFT,
+    stakeDwarf
   };
 }
