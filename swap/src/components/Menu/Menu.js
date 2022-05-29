@@ -1,5 +1,5 @@
 import React, { Suspense, useEffect, useState } from 'react';
-import { HashRouter, Route, Switch, NavLink, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Collapse } from 'react-collapse';
 import { slide as MenuMobile } from 'react-burger-menu';
 import style from './Menu.module.css';
@@ -101,7 +101,7 @@ class Menu extends React.Component {
       <React.Fragment>
         {this.state.width < 768 ? (
           <MenuMobile styles={styles} right pageWrapId="root">
-            <NavLink exact to="/What_is_DWARF">What is $DWARF?</NavLink>
+            <Link exact to="/What_is_DWARF">What is $DWARF?</Link>
 
             <a onClick={() => this.showHideDefi(!this.state.showDefi)}>
               DeFi Products
@@ -115,22 +115,22 @@ class Menu extends React.Component {
                     : style.submenuMobile
                 }
               >
-                <a href="/swap/#/pool">Polarized Liquidity Pools</a>
-                <a href="/swap">DWARFSwap</a>
-                <NavLink exact to="/NFA_Market">NFT Marketplace</NavLink>
-                <NavLink exact to="/The_Army">My NFTs</NavLink>
+                <Link to="/pool">Polarized Liquidity Pools</Link>
+                <Link to="/swap">DWARFSwap</Link
+                <Link exact to="/NFA_Market">NFT Marketplace</Link>
+                <Link exact to="/The_Army">My NFTs</Link>
               </div>
             </Collapse>
 
-            <NavLink exact to="/About_the_Team">The Team</NavLink>
+            <Link exact to="/About_the_Team">The Team</Link>
 
-            <NavLink exact to="/Make_Contact">Make Contact</NavLink>
+            <Link exact to="/Make_Contact">Make Contact</Link>
           </MenuMobile>
         ) : null}
         <div className={style.Menu}>
           <ul className={style.mainMenu}>
             <li>
-              <NavLink exact to="/What_is_DWARF">What is $DWARF?</NavLink>
+              <Link exact to="/What_is_DWARF">What is $DWARF?</Link>
             </li>
             <li onMouseEnter={() => this.showHideDefi(true)}>
               {" "}
@@ -144,18 +144,18 @@ class Menu extends React.Component {
                       : style.submenu
                   }
                 >
-                  <a href="/swap/#/pool">Polarized Liquidity Pools</a>
-                  <a href="/swap">DWARFSwap</a>
-                  <NavLink exact to="/NFA_Market">NFT Marketplace</NavLink>
-                  <NavLink exact to="/The_Army">My NFTs</NavLink>
+                  <Link to="/pool">Polarized Liquidity Pools</Link>
+                  <Link to="/swap">DWARFSwap</Link>
+                  <Link exact to="/NFA_Market">NFT Marketplace</Link>
+                  <Link exact to="/The_Army">My NFTs</Link>
                 </div>
               </Collapse>
             </li>
             <li>
-              <NavLink exact to="/About_the_Team">The Team</NavLink>
+              <Link exact to="/About_the_Team">The Team</Link>
             </li>
             <li>
-              <NavLink exact to="/Make_Contact">Make Contact</NavLink>
+              <Link exact to="/Make_Contact">Make Contact</Link>
             </li>
           </ul>
         </div>

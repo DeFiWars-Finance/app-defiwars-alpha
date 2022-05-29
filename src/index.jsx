@@ -3,16 +3,31 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
 import App from "./App";
+import ApplicationUpdater from './state/application/updater'
+import MulticallUpdater from './state/multicall/updater'
+import TransactionUpdater from './state/transactions/updater'
+import ToastListener from './components/ToastListener'
+import ListsUpdater from './state/lists/updater'
+import './i18n';
+import 'inter-ui'
 import "./fonts/audiowide-cufonfonts-webfont/style.css";
 import "./fonts/Roboto/stylesheet.css";
 import "./fonts/fontawesome/css/all.css";
-import { StoreProvider } from "./sharedContexts/store";
+
+import Providers from './Providers'
 
 ReactDOM.render(
   <React.StrictMode>
-    <StoreProvider>
+    <Providers>
+      <>
+        <ListsUpdater />
+        <ApplicationUpdater />
+        <TransactionUpdater />
+        <MulticallUpdater />
+        <ToastListener />
+      </>
       <App />
-    </StoreProvider>
+    </Providers>
   </React.StrictMode>,
   document.getElementById("root")
 );
