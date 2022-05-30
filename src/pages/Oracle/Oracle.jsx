@@ -23,7 +23,7 @@ const setInitialState = (initialValues = {}) => {
     dwarf: dwarf,
     jediLP: jediLP,
     darthLP: darthLP,
-    NFTs: NFTS,
+    NFTs: NFTs,
     JediPower: {
       pd: 0,
       pk: 0,
@@ -51,7 +51,7 @@ const { account } = useActiveWeb3React();
   const { haveNFT, NFTs, JediPower, jediLP, darthLP, DarthPower } = state;
 
   const calcPowers = () => {
-    const { NFTs  } = state
+    const { NFTs } = state
     var tempJediPower = {
       pd: 0,
       pk: 0,
