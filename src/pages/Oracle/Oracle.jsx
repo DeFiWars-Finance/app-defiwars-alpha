@@ -23,7 +23,7 @@ const setInitialState = (initialValues = {}) => {
     dwarf: dwarf,
     jediLP: jediLP,
     darthLP: darthLP,
-    NFTs: NFTs,
+    NFTs: NFTS,
     JediPower: {
       pd: 0,
       pk: 0,
