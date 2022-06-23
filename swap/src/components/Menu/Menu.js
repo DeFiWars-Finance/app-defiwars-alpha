@@ -116,7 +116,7 @@ class Menu extends React.Component {
                 }
               >
                 <Link to="/pool">Polarized Liquidity Pools</Link>
-                <Link to="/swap">DWARFSwap</Link
+                <Link to="/swap">DWARFSwap</Link>
                 <Link exact to="/NFA_Market">NFT Marketplace</Link>
                 <Link exact to="/The_Army">My NFTs</Link>
               </div>
