@@ -8,14 +8,14 @@ import Store from "../../store/store";
 const store = Store.store;
 const emitter = Store.emitter
 
-const pad = (number: number) => {
+const pad = (number) => {
   if (number < 10) {
     return '0' + number;
   }
   return number;
 }
 
-const getCurrentTime = (dt: Date) => {
+const getCurrentTime = (dt) => {
   return dt.getUTCFullYear() +
   '-' + pad(dt.getUTCMonth() + 1) +
   '-' + pad(dt.getUTCDate()) +
@@ -24,7 +24,7 @@ const getCurrentTime = (dt: Date) => {
   ':' + pad(dt.getUTCSeconds());
 }
 
-const getRemainingTime = (epoch: number) => {
+const getRemainingTime = (epoch) => {
   const now = Date.now() / 1000;
   let diff = epoch - now;
   if (now >= epoch) diff = 0;
@@ -41,7 +41,7 @@ const getRemainingTime = (epoch: number) => {
         (pad(second) + 's');
 }
 
-const formatAmount = (x: number) => {
+const formatAmount = (x) => {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
