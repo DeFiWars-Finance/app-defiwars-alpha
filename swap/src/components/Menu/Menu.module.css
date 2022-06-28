@@ -1,0 +1,88 @@
+.Menu {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 30px 0 40px;
+}
+
+.mainMenu {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.mainMenu a {
+  font-family:'Roboto';
+  font-style: normal;
+  font-weight: bold;
+  font-size: 20px;
+  line-height: 150.19%;
+  text-align: center;
+  color: #FFFFFF;
+  transition: 0.5s;
+}
+
+.mainMenu a:hover  {
+  transition: 0.5s;
+  color:#EBC92E;
+}
+
+.submenu {
+  background:#2D2D2E;
+  display: flex;
+  flex-direction: column;
+  height: 0 !important;
+  overflow: hidden;
+  position: absolute;
+  padding: 0;
+  text-align: left;
+  margin-left: -10px;
+  z-index: 999999;
+}
+
+.submenuMobile {
+  background:#2D2D2E;
+  display: flex;
+  flex-direction: column;
+  height: 0 !important;
+  overflow: hidden;
+  text-align: left;
+}
+
+.submenuMobile a {
+  padding: 5px 0;
+}
+
+.submenuActive {
+  height: auto !important;
+  padding: 10px;
+}
+
+.submenu a {
+  text-align: left;
+  padding: 3px 0;
+  z-index: 1;
+}
+
+p {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 26px;
+  text-align: center;
+  color: #FFFFFF;
+  margin-top: 50px;
+}
+
+@media (max-width: 991.98px) {
+  .mainMenu a  {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .mainMenu , .Menu   {
+     display: none;
+  }
+}
