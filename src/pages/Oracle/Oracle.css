@@ -1,4 +1,14 @@
-table{
+table {
   color: white;
   width: 100%;
+}
+
+.genesis {
+  align-self: center;
+  text-align: center;
+  color: white;
+  padding: 8px 16px;
+  box-shadow: inset -12.446px -12.446px 31.1151px #353c46, inset 12.446px 12.446px 31.1151px #22262a;
+  border-radius: 5px;
+  cursor: pointer;
 }
