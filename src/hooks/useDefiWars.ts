@@ -192,6 +192,7 @@ export const useDefiwars = () => {
     // set status in inProcess
     dispatch(setInProcess({ inProcess: true }))
     try {
+      console.log("@@@@dwarf nft contract@@@", dwarfContract);
       const mint = await dwarfContract.methods.mint().send({ from: account, });
       console.log('Mint result', mint);
       return mint;
