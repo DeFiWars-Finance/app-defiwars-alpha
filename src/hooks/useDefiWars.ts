@@ -188,19 +188,29 @@ export const useDefiwars = () => {
   // onMint function
   const onMint = useCallback(async () => {
     if (!dwarfContract) return null;
+    if (!dwarf20Contract) return null;
+    if (!web3) return null;
 
     // set status in inProcess
     dispatch(setInProcess({ inProcess: true }))
     try {
-      console.log("@@@@dwarf nft contract@@@", dwarfContract);
-      const mint = await dwarfContract.methods.mint().send({ from: account, });
+      console.log("@@@address@@@", dwarfContract);
+      let allowance = await dwarf20Contract.methods.allowance(account, dwarfAddress).call({ from: account, })
+      const ethAllowance = parseFloat(allowance)/10**18;
+      if(ethAllowance < 3000) {
+        await dwarf20Contract.methods.approve(dwarfAddress, web3.utils.toWei('999999999999999', 'ether')).send({ from: account, })
+      }
+      const mint = await dwarfContract.methods.openMarket().send({ from: account, });
       console.log('Mint result', mint);
+      await checkNFT();
+      await checkMarket();
+      dispatch(setInProcess({ inProcess: false }))
       return mint;
     } catch (error) {
       console.log('Mint error', error);
       dispatch(setInProcess({ inProcess: false }))
     }
-  }, [dwarfContract, account]);
+  }, [dwarfContract, account, dwarf20Contract, web3]);
 
   const checkHaveNFT = useCallback(async () => {
     if (!dwarfContract) return false;
@@ -480,7 +490,7 @@ export const useDefiwars = () => {
     }
 
     try {
-      const result = await dwarfContract.methods.openmarket()
+      const result = await dwarfContract.methods.openMarket()
       .send({ from: account });
 
       checkMarket();

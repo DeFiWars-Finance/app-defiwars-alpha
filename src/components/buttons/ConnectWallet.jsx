@@ -58,7 +58,6 @@ const RenderActionLink = () => {
           await onMint();
           console.log("@@@@ isInWar @@@@", isInWar);
           console.log("@@@@ haveNFT @@@@", haveNFT);
-          alert();
           navigate("/pool", { replace: true });
         }}
       />
@@ -83,6 +82,12 @@ const ConnectWallet = ({ sound }) => {
   const location = useLocation();
   const { account } = useActiveWeb3React();
   const from = location.state?.from?.pathname || "/";
+  const { checkNFT } = useDefiwars();
+
+  useEffect(() => {
+    checkNFT();
+  },[account]);
+  // checkNFT();
 
   useEffect(() => {
     account && sound && playSound();

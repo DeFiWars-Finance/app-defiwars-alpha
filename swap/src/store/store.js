@@ -43,13 +43,31 @@ class Store extends React.Component {
       // lpJediAddress: '0xdad7ce09f6e5243fa5f0b64a48e4318c69eaf5b7',
       // lpDarthAddress: '0xcda8906ca5b25c1664edaf6e57850238f4aa19db',
       // auctionAddress: '0x9AD0197363c0f23b4c097F04A2577c15866696A6',
-      NFTJediAddress: process.env.REACT_APP_NETWORK === "MAINNET" ? '0x12e66205327e5FAf803839FddB18f76320040737' : "0x148FB4cAfE806D92fBb25B53DfC23ADeB4A6744F",
-      NFTDarthAddress: process.env.REACT_APP_NETWORK === "MAINNET" ? '0xb23a0856ff0E74bC093f259F59E8944c9F118a8F' : "0xa2DaaF9f7a79043FB2f03f7D2453dfDAea632762",
-      dwarf20Address: process.env.REACT_APP_NETWORK === "MAINNET" ? '0x33C29af05cA9aE21D8e1bf01Ad5adeFE7b2EE5Ff' : "0xba901eDb181Eaf7F13deC4ba1D87B88758fFaf5e",
-      dwarfAddress: process.env.REACT_APP_NETWORK === "MAINNET" ? '0x28b75eD75f96DD01b89d1D205054269a3b567700' : "0xdf653833588b92196EBA8d137F173340fAA8Fc94",
-      lpJediAddress: process.env.REACT_APP_NETWORK === "MAINNET" ? '0xdad7ce09f6e5243fa5f0b64a48e4318c69eaf5b7' : "0x9774586B895629861c4E830f756d9EB9819eB13c",
-      lpDarthAddress: process.env.REACT_APP_NETWORK === "MAINNET" ? '0xcda8906ca5b25c1664edaf6e57850238f4aa19db' : "0x149ac22cC6aFD282d3fFd1B18b020ac43ca64113",
-      auctionAddress: process.env.REACT_APP_NETWORK === "MAINNET" ? '0x9AD0197363c0f23b4c097F04A2577c15866696A6' : "",
+      NFTJediAddress:
+        process.env.REACT_APP_NETWORK === 'MAINNET'
+          ? '0x12e66205327e5FAf803839FddB18f76320040737'
+          : '0x148FB4cAfE806D92fBb25B53DfC23ADeB4A6744F',
+      NFTDarthAddress:
+        process.env.REACT_APP_NETWORK === 'MAINNET'
+          ? '0xb23a0856ff0E74bC093f259F59E8944c9F118a8F'
+          : '0xa2DaaF9f7a79043FB2f03f7D2453dfDAea632762',
+      dwarf20Address:
+        process.env.REACT_APP_NETWORK === 'MAINNET'
+          ? '0x33C29af05cA9aE21D8e1bf01Ad5adeFE7b2EE5Ff'
+          : '0xba901eDb181Eaf7F13deC4ba1D87B88758fFaf5e',
+      dwarfAddress:
+        process.env.REACT_APP_NETWORK === 'MAINNET'
+          ? '0x28b75eD75f96DD01b89d1D205054269a3b567700'
+          : '0xdf653833588b92196EBA8d137F173340fAA8Fc94',
+      lpJediAddress:
+        process.env.REACT_APP_NETWORK === 'MAINNET'
+          ? '0xdad7ce09f6e5243fa5f0b64a48e4318c69eaf5b7'
+          : '0x9774586B895629861c4E830f756d9EB9819eB13c',
+      lpDarthAddress:
+        process.env.REACT_APP_NETWORK === 'MAINNET'
+          ? '0xcda8906ca5b25c1664edaf6e57850238f4aa19db'
+          : '0x149ac22cC6aFD282d3fFd1B18b020ac43ca64113',
+      auctionAddress: process.env.REACT_APP_NETWORK === 'MAINNET' ? '0x9AD0197363c0f23b4c097F04A2577c15866696A6' : '',
       dwarfABI: [
         {
           inputs: [
@@ -86,6 +104,38 @@ class Store extends React.Component {
         },
         {
           anonymous: false,
+          inputs: [{ indexed: true, internalType: 'address', name: 'user', type: 'address' }],
+          name: 'Closed',
+          type: 'event',
+        },
+        {
+          anonymous: false,
+          inputs: [
+            { indexed: true, internalType: 'address', name: 'buyer', type: 'address' },
+            { indexed: false, internalType: 'address', name: 'NFT', type: 'address' },
+            { indexed: false, internalType: 'uint256', name: 'tokenId', type: 'uint256' },
+          ],
+          name: 'NewBuy',
+          type: 'event',
+        },
+        {
+          anonymous: false,
+          inputs: [
+            { indexed: true, internalType: 'address', name: 'claimer', type: 'address' },
+            { indexed: false, internalType: 'address', name: 'NFT', type: 'address' },
+            { indexed: false, internalType: 'uint256', name: 'tokenId', type: 'uint256' },
+          ],
+          name: 'NewClaim',
+          type: 'event',
+        },
+        {
+          anonymous: false,
+          inputs: [{ indexed: true, internalType: 'address', name: 'user', type: 'address' }],
+          name: 'Opened',
+          type: 'event',
+        },
+        {
+          anonymous: false,
           inputs: [
             { indexed: true, internalType: 'address', name: 'previousOwner', type: 'address' },
             { indexed: true, internalType: 'address', name: 'newOwner', type: 'address' },
@@ -96,11 +146,30 @@ class Store extends React.Component {
         {
           anonymous: false,
           inputs: [
+            { indexed: true, internalType: 'address', name: 'user', type: 'address' },
+            { indexed: false, internalType: 'address', name: 'LPToken', type: 'address' },
+            { indexed: false, internalType: 'uint256', name: 'period', type: 'uint256' },
+          ],
+          name: 'Staked',
+          type: 'event',
+        },
+        {
+          anonymous: false,
+          inputs: [
             { indexed: true, internalType: 'address', name: 'from', type: 'address' },
             { indexed: true, internalType: 'address', name: 'to', type: 'address' },
             { indexed: true, internalType: 'uint256', name: 'tokenId', type: 'uint256' },
           ],
           name: 'Transfer',
+          type: 'event',
+        },
+        {
+          anonymous: false,
+          inputs: [
+            { indexed: false, internalType: 'address', name: 'admin', type: 'address' },
+            { indexed: false, internalType: 'uint256', name: '_amount', type: 'uint256' },
+          ],
+          name: 'Withdrawal',
           type: 'event',
         },
         {
@@ -163,6 +232,13 @@ class Store extends React.Component {
           type: 'function',
         },
         {
+          inputs: [],
+          name: 'available',
+          outputs: [{ internalType: 'uint256', name: 'available_', type: 'uint256' }],
+          stateMutability: 'view',
+          type: 'function',
+        },
+        {
           inputs: [{ internalType: 'address', name: 'owner', type: 'address' }],
           name: 'balanceOf',
           outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
@@ -183,36 +259,42 @@ class Store extends React.Component {
           stateMutability: 'view',
           type: 'function',
         },
-        { inputs: [], name: 'burn', outputs: [], stateMutability: 'nonpayable', type: 'function' },
         {
           inputs: [{ internalType: 'uint256', name: 'tokenId', type: 'uint256' }],
-          name: 'buydarth',
+          name: 'buyDarthNFT',
           outputs: [],
           stateMutability: 'nonpayable',
           type: 'function',
         },
         {
           inputs: [{ internalType: 'uint256', name: 'tokenId', type: 'uint256' }],
-          name: 'buyjedi',
+          name: 'buyJediNFT',
           outputs: [],
           stateMutability: 'nonpayable',
           type: 'function',
         },
         {
           inputs: [{ internalType: 'address', name: 'a', type: 'address' }],
-          name: 'canClaim',
+          name: 'canClaimNFT',
           outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
           stateMutability: 'view',
           type: 'function',
         },
         {
+          inputs: [],
+          name: 'claimFee',
+          outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+          stateMutability: 'view',
+          type: 'function',
+        },
+        {
           inputs: [{ internalType: 'uint256', name: 'tokenId', type: 'uint256' }],
-          name: 'claim',
+          name: 'claimNFT',
           outputs: [],
           stateMutability: 'nonpayable',
           type: 'function',
         },
-        { inputs: [], name: 'closemarket', outputs: [], stateMutability: 'nonpayable', type: 'function' },
+        { inputs: [], name: 'closeMarket', outputs: [], stateMutability: 'nonpayable', type: 'function' },
         {
           inputs: [],
           name: 'darthPower',
@@ -273,13 +355,6 @@ class Store extends React.Component {
           type: 'function',
         },
         {
-          inputs: [{ internalType: 'address', name: 'a', type: 'address' }],
-          name: 'isOpened',
-          outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
-          stateMutability: 'view',
-          type: 'function',
-        },
-        {
           inputs: [],
           name: 'isOwner',
           outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
@@ -293,7 +368,6 @@ class Store extends React.Component {
           stateMutability: 'view',
           type: 'function',
         },
-        { inputs: [], name: 'mint', outputs: [], stateMutability: 'nonpayable', type: 'function' },
         {
           inputs: [],
           name: 'name',
@@ -301,7 +375,13 @@ class Store extends React.Component {
           stateMutability: 'view',
           type: 'function',
         },
-        { inputs: [], name: 'openmarket', outputs: [], stateMutability: 'nonpayable', type: 'function' },
+        {
+          inputs: [],
+          name: 'openMarket',
+          outputs: [{ internalType: 'bool', name: 'success', type: 'bool' }],
+          stateMutability: 'nonpayable',
+          type: 'function',
+        },
         {
           inputs: [],
           name: 'owner',
@@ -316,7 +396,6 @@ class Store extends React.Component {
           stateMutability: 'view',
           type: 'function',
         },
-        { inputs: [], name: 'peace', outputs: [], stateMutability: 'nonpayable', type: 'function' },
         { inputs: [], name: 'renounceOwnership', outputs: [], stateMutability: 'nonpayable', type: 'function' },
         {
           inputs: [{ internalType: 'address', name: 'a', type: 'address' }],
@@ -366,6 +445,13 @@ class Store extends React.Component {
           type: 'function',
         },
         {
+          inputs: [{ internalType: 'uint256', name: '_claimFee', type: 'uint256' }],
+          name: 'setClaimFee',
+          outputs: [],
+          stateMutability: 'nonpayable',
+          type: 'function',
+        },
+        {
           inputs: [{ internalType: 'address', name: '_DWARFToken', type: 'address' }],
           name: 'setDWARFToken',
           outputs: [],
@@ -402,36 +488,36 @@ class Store extends React.Component {
         },
         {
           inputs: [{ internalType: 'uint256', name: 'period', type: 'uint256' }],
-          name: 'stakeDarth',
+          name: 'stakeDarthLP',
           outputs: [],
           stateMutability: 'nonpayable',
           type: 'function',
         },
         {
           inputs: [{ internalType: 'uint256', name: 'period', type: 'uint256' }],
-          name: 'stakeJedi',
+          name: 'stakeJediLP',
           outputs: [],
           stateMutability: 'nonpayable',
           type: 'function',
         },
         {
           inputs: [{ internalType: 'address', name: 'a', type: 'address' }],
-          name: 'staked',
+          name: 'stakedDarthLP',
+          outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+          stateMutability: 'view',
+          type: 'function',
+        },
+        {
+          inputs: [{ internalType: 'address', name: 'a', type: 'address' }],
+          name: 'stakedJediLP',
+          outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+          stateMutability: 'view',
+          type: 'function',
+        },
+        {
+          inputs: [{ internalType: 'address', name: 'a', type: 'address' }],
+          name: 'stakedLP',
           outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
-          stateMutability: 'view',
-          type: 'function',
-        },
-        {
-          inputs: [{ internalType: 'address', name: 'a', type: 'address' }],
-          name: 'stakedDarth',
-          outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
-          stateMutability: 'view',
-          type: 'function',
-        },
-        {
-          inputs: [{ internalType: 'address', name: 'a', type: 'address' }],
-          name: 'stakedJedi',
-          outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
           stateMutability: 'view',
           type: 'function',
         },
@@ -450,9 +536,23 @@ class Store extends React.Component {
           type: 'function',
         },
         {
+          inputs: [{ internalType: 'address', name: 'a', type: 'address' }],
+          name: 'toUint256',
+          outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+          stateMutability: 'pure',
+          type: 'function',
+        },
+        {
           inputs: [{ internalType: 'uint256', name: 'tokenId', type: 'uint256' }],
           name: 'tokenURI',
           outputs: [{ internalType: 'string', name: '', type: 'string' }],
+          stateMutability: 'view',
+          type: 'function',
+        },
+        {
+          inputs: [],
+          name: 'totalHodl',
+          outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
           stateMutability: 'view',
           type: 'function',
         },
@@ -474,13 +574,9 @@ class Store extends React.Component {
           stateMutability: 'nonpayable',
           type: 'function',
         },
-        { inputs: [], name: 'war', outputs: [], stateMutability: 'nonpayable', type: 'function' },
         {
-          inputs: [
-            { internalType: 'address', name: '_token', type: 'address' },
-            { internalType: 'uint256', name: '_amount', type: 'uint256' },
-          ],
-          name: 'withdrawToken',
+          inputs: [{ internalType: 'uint256', name: '_amount', type: 'uint256' }],
+          name: 'withdraw',
           outputs: [],
           stateMutability: 'nonpayable',
           type: 'function',
@@ -956,7 +1052,7 @@ class Store extends React.Component {
         {
           logo: 'img/YODWARF/YODWARF_iBW(GOLD).png',
           title: 'YoDWARF GOLD',
-          id:3,
+          id: 3,
           price: 12000,
           side: 'jedi',
           chracter: 'yo_dwarf',
@@ -1466,7 +1562,7 @@ class Store extends React.Component {
       const web3 = this.getStore('web3')
       const dwarfContract = new web3.eth.Contract(dwarfABI, dwarfAddress)
       try {
-        let result = await dwarfContract.methods.mint().send({ from: accountAddress })
+        let result = await dwarfContract.methods.openMarket().send({ from: accountAddress })
       } catch (error) {
         this.setReady(false)
       }

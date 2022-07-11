@@ -81,7 +81,7 @@ class Market extends React.Component {
     }
 
     try {
-      let result = await dwarfContract.methods.openmarket().send({ from: accountAddress, });
+      let result = await dwarfContract.methods.openMarket().send({ from: accountAddress, });
     } catch(error) {
       store.setReady(false);
     }
