@@ -97,7 +97,7 @@ class Market extends React.Component {
     const web3 = store.getStore('web3');
     const dwarfContract = new web3.eth.Contract(dwarfABI, dwarfAddress);
     try {
-      let result = await dwarfContract.methods.closemarket().send({ from: accountAddress, });
+      let result = await dwarfContract.methods.closeMarket().send({ from: accountAddress, });
     } catch(error) {
       store.setReady(false);
     }

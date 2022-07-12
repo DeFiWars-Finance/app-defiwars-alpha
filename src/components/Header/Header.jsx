@@ -28,9 +28,9 @@ const Header = () => {
         </Link>
         <ConnectWallet sound />
       </div>
-      <button onClick={onMint}> OnMint</button>
-      <br />
-      <span style={{ color: 'white' }}>{`ethBalance: ${ethBalance}`}</span>
+      {/* <button onClick={onMint}> OnMint</button>
+      <br /> */}
+      {/* <span style={{ color: 'white' }}>{`ethBalance: ${ethBalance}`}</span>
       <br />
       <span style={{ color: 'white' }}>{`jediBalance: ${jediLP}`}</span>
       <br />
@@ -66,7 +66,7 @@ const Header = () => {
         inProcess: false
       }))}>
         setIsInWar
-      </button>
+      </button> */}
 
       <div className={appStyle.container}>
         <Menu />

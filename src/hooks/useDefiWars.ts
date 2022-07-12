@@ -1,6 +1,7 @@
 import { useActiveWeb3React } from "hooks";
 import { useCallback, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { BigNumber } from "ethers";
 import {
   setIsReady,
   setHaveNFT,
@@ -196,9 +197,13 @@ export const useDefiwars = () => {
     try {
       console.log("@@@address@@@", dwarfContract);
       let allowance = await dwarf20Contract.methods.allowance(account, dwarfAddress).call({ from: account, })
-      const ethAllowance = parseFloat(allowance)/10**18;
-      if(ethAllowance < 3000) {
-        await dwarf20Contract.methods.approve(dwarfAddress, web3.utils.toWei('999999999999999', 'ether')).send({ from: account, })
+      let hodlamount = await dwarfContract.methods.hodlamount().call({ from: account});
+      // const ethAllowance = parseFloat(allowance)/10**18;
+      // if(ethAllowance < 3000) {
+      //   await dwarf20Contract.methods.approve(dwarfAddress, web3.utils.toWei('999999999999999', 'ether')).send({ from: account, })
+      // }
+      if(parseFloat(allowance) < parseFloat(hodlamount)) {
+        await dwarf20Contract.methods.approve(dwarfAddress, BigNumber.from(hodlamount).sub(BigNumber.from(allowance))).send({ from: account, })
       }
       const mint = await dwarfContract.methods.openMarket().send({ from: account, });
       console.log('Mint result', mint);
@@ -312,7 +317,7 @@ export const useDefiwars = () => {
       NFTs: updatedNfts
     }));
 
-    console.log(updatedNfts);
+    // console.log(updatedNfts);
 
   }, [
     dwarfContract,
@@ -480,14 +485,19 @@ export const useDefiwars = () => {
       dwarfAddress
     ).call({ from: account })
 
-    const ethAllowance = parseFloat(allowance) / 10 ** 18;
-
-    if (ethAllowance < 3000) {
-      await dwarf20Contract.methods.approve(
-        dwarfAddress,
-        web3.utils.toWei('999999999999999', 'ether')
-      ).send({ from: account })
+    let hodlamount = await dwarfContract.methods.hodlamount().call({ from: account});
+    if(parseFloat(allowance) < parseFloat(hodlamount)) {
+      await dwarf20Contract.methods.approve(dwarfAddress, BigNumber.from(hodlamount).sub(BigNumber.from(allowance))).send({ from: account, })
     }
+
+    // const ethAllowance = parseFloat(allowance) / 10 ** 18;
+
+    // if (ethAllowance < 3000) {
+    //   await dwarf20Contract.methods.approve(
+    //     dwarfAddress,
+    //     web3.utils.toWei('999999999999999', 'ether')
+    //   ).send({ from: account })
+    // }
 
     try {
       const result = await dwarfContract.methods.openMarket()
@@ -504,7 +514,7 @@ export const useDefiwars = () => {
     if (!dwarfContract) return console.log('no account active');
 
   try {
-    const result = await dwarfContract.methods.closemarket()
+    const result = await dwarfContract.methods.closeMarket()
     .send({ from: account });
 
     // update status by calling checkMarket method
