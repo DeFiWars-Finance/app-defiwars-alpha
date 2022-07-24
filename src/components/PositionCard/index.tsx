@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { JSBI, Pair, Percent } from '@pancakeswap-libs/sdk'
+import { JSBI, Pair, Percent, TokenAmount, Token } from '@pancakeswap-libs/sdk'
 import { Button, Card as UIKitCard, CardBody, Text } from '@pancakeswap-libs/uikit'
 import { darken } from 'polished'
 import { ChevronDown, ChevronUp } from 'react-feather'
@@ -17,6 +17,7 @@ import CurrencyLogo from '../CurrencyLogo'
 import DoubleCurrencyLogo from '../DoubleLogo'
 import { RowBetween, RowFixed } from '../Row'
 import { Dots } from '../swap/styleds'
+import { toV2LiquidityToken } from 'state/user/hooks'
 
 export const FixedHeightRow = styled(RowBetween)`
   height: 24px;
@@ -28,6 +29,10 @@ export const HoverCard = styled(Card)`
     border: 1px solid ${({ theme }) => darken(0.06, theme.colors.invertedContrast)};
   }
 `
+
+const getLiquidityValue = (token: Token , totalSupply: TokenAmount , liquidity: TokenAmount, pair: Pair) => {
+  return new TokenAmount(token, JSBI.divide(JSBI.multiply(liquidity.raw, pair.reserveOf(token).raw), totalSupply.raw));
+}
 
 interface PositionCardProps {
   pair: Pair
@@ -41,10 +46,14 @@ export function MinimalPositionCard({ pair, showUnwrapped = false }: PositionCar
   const currency0 = showUnwrapped ? pair.token0 : unwrappedToken(pair.token0)
   const currency1 = showUnwrapped ? pair.token1 : unwrappedToken(pair.token1)
 
+  const liquidityToken = toV2LiquidityToken([pair.token0, pair.token1]);
+
   const [showMore, setShowMore] = useState(false)
 
-  const userPoolBalance = useTokenBalance(account ?? undefined, pair.liquidityToken)
-  const totalPoolTokens = useTotalSupply(pair.liquidityToken)
+  // const userPoolBalance = useTokenBalance(account ?? undefined, pair.liquidityToken)
+  // const totalPoolTokens = useTotalSupply(pair.liquidityToken)
+  const userPoolBalance = useTokenBalance(account ?? undefined, liquidityToken)
+  const totalPoolTokens = useTotalSupply(liquidityToken)
 
   const [token0Deposited, token1Deposited] =
     !!pair &&
@@ -53,8 +62,10 @@ export function MinimalPositionCard({ pair, showUnwrapped = false }: PositionCar
     // this condition is a short-circuit in the case where useTokenBalance updates sooner than useTotalSupply
     JSBI.greaterThanOrEqual(totalPoolTokens.raw, userPoolBalance.raw)
       ? [
-          pair.getLiquidityValue(pair.token0, totalPoolTokens, userPoolBalance, false),
-          pair.getLiquidityValue(pair.token1, totalPoolTokens, userPoolBalance, false),
+          // pair.getLiquidityValue(pair.token0, totalPoolTokens, userPoolBalance, false),
+          // pair.getLiquidityValue(pair.token1, totalPoolTokens, userPoolBalance, false),
+          getLiquidityValue(pair.token0, totalPoolTokens, userPoolBalance, pair),
+          getLiquidityValue(pair.token1, totalPoolTokens, userPoolBalance, pair),
         ]
       : [undefined, undefined]
 
@@ -121,12 +132,18 @@ export default function FullPositionCard({ pair }: PositionCardProps) {
 
   const currency0 = unwrappedToken(pair.token0)
   const currency1 = unwrappedToken(pair.token1)
-
+  const liquidityToken = toV2LiquidityToken([pair.token0, pair.token1]);
+  
   const [showMore, setShowMore] = useState(false)
+  
+  // const userPoolBalance = useTokenBalance(account ?? undefined, pair.liquidityToken)
+  // const totalPoolTokens = useTotalSupply(pair.liquidityToken)
+  const userPoolBalance = useTokenBalance(account ?? undefined, liquidityToken)
+  const totalPoolTokens = useTotalSupply(liquidityToken)
+  // console.log("@@@@@userPoolBalance@@@@@@ \n", userPoolBalance);
 
-  const userPoolBalance = useTokenBalance(account ?? undefined, pair.liquidityToken)
-  const totalPoolTokens = useTotalSupply(pair.liquidityToken)
-
+  
+  
   const poolTokenPercentage =
     !!userPoolBalance && !!totalPoolTokens && JSBI.greaterThanOrEqual(totalPoolTokens.raw, userPoolBalance.raw)
       ? new Percent(userPoolBalance.raw, totalPoolTokens.raw)
@@ -139,10 +156,13 @@ export default function FullPositionCard({ pair }: PositionCardProps) {
     // this condition is a short-circuit in the case where useTokenBalance updates sooner than useTotalSupply
     JSBI.greaterThanOrEqual(totalPoolTokens.raw, userPoolBalance.raw)
       ? [
-          pair.getLiquidityValue(pair.token0, totalPoolTokens, userPoolBalance, false),
-          pair.getLiquidityValue(pair.token1, totalPoolTokens, userPoolBalance, false),
+          // pair.getLiquidityValue(pair.token0, totalPoolTokens, userPoolBalance, false),
+          // pair.getLiquidityValue(pair.token1, totalPoolTokens, userPoolBalance, false),
+          getLiquidityValue(pair.token0, totalPoolTokens, userPoolBalance, pair),
+          getLiquidityValue(pair.token1, totalPoolTokens, userPoolBalance, pair),
         ]
       : [undefined, undefined]
+
 
   return (
     <HoverCard>

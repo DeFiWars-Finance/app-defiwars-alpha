@@ -29,6 +29,8 @@ const RenderActionLink = () => {
 
   const { onMint, onWar, onPeace } = useDefiwars();
 
+  if (account && inProcess) return <ActionLink text="processing <br /> ..." onClick={() => {}} />;
+
   if (account && REACT_APP_NETWORK === "MAINNET" && chainId !== mainNetId)
     return <ActionLink text="Connect to <br /> BSC Mainnet" onClick={onPresentConnectModal} />;
 
@@ -48,16 +50,12 @@ const RenderActionLink = () => {
       />
     );
 
-  if (account && inProcess) return <ActionLink text="processing <br /> ..." onClick={() => {}} />;
-
   if (account && !isInWar && !haveNFT)
     return (
       <ActionLink
         text="MINT my WAR <br />ngNFT"
         onClick={async () => {
           await onMint();
-          console.log("@@@@ isInWar @@@@", isInWar);
-          console.log("@@@@ haveNFT @@@@", haveNFT);
           navigate("/pool", { replace: true });
         }}
       />

@@ -78,7 +78,7 @@ class Collections extends React.Component {
     }
     console.log(this.state.jedivalue);
     try {
-      var result = await dwarfContract.methods.stakeJedi(this.state.jedivalue).send({ from: accountAddress, });
+      var result = await dwarfContract.methods.stakeJediLP(this.state.jedivalue).send({ from: accountAddress, });
       console.log(result);
     }
     catch (error) {
@@ -106,7 +106,7 @@ class Collections extends React.Component {
     }
     console.log(this.state.darthvalue);
     try {
-      var result = await dwarfContract.methods.stakeDarth(this.state.darthvalue).send({ from: accountAddress, });
+      var result = await dwarfContract.methods.stakeDarthLP(this.state.darthvalue).send({ from: accountAddress, });
       console.log(result);
     }
     catch (error) {
@@ -207,7 +207,7 @@ class Collections extends React.Component {
     const canClaim = store.getStore('canClaim');
     const dwarfContract = new web3.eth.Contract(dwarfABI, dwarfAddress);
     try {
-      var result = await dwarfContract.methods.claim(id).send({ from: accountAddress, });
+      var result = await dwarfContract.methods.claimNFT(id).send({ from: accountAddress, });
       console.log(result);
     }
     catch (error) {
@@ -228,7 +228,7 @@ class Collections extends React.Component {
     const canClaim = store.getStore('canClaim');
     const dwarfContract = new web3.eth.Contract(dwarfABI, dwarfAddress);
     try {
-      var result = await dwarfContract.methods.claim(id).send({ from: accountAddress, });
+      var result = await dwarfContract.methods.claimNFT(id).send({ from: accountAddress, });
       console.log(result);
     }
     catch (error) {

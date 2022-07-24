@@ -123,8 +123,8 @@ export default function AddLiquidity() {
     }
 
     const amountsMin = {
-      [Field.CURRENCY_A]: calculateSlippageAmount(parsedAmountA, noLiquidity ? 0 : allowedSlippage)[0],
       [Field.CURRENCY_B]: calculateSlippageAmount(parsedAmountB, noLiquidity ? 0 : allowedSlippage)[0],
+      [Field.CURRENCY_A]: calculateSlippageAmount(parsedAmountA, noLiquidity ? 0 : allowedSlippage)[0],
     }
 
     const deadlineFromNow = Math.ceil(Date.now() / 1000) + deadline
@@ -161,6 +161,7 @@ export default function AddLiquidity() {
       ]
       value = null
     }
+
 
     setAttemptingTxn(true)
 //    const aa = await estimate(...args, value ? { value } : {})
