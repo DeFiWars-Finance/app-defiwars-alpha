@@ -1,6 +1,7 @@
 import "./App.css";
 import "./fonts/Roboto/stylesheet.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import "antd/dist/antd.css";
 import Web3ReactManager from "./components/Web3ReactManager";
 import Sword from "./pages/Sword/Sword";
 import Contact from "./pages/Contact/Contact";
