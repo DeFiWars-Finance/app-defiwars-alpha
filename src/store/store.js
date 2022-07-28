@@ -12,7 +12,6 @@ const getAccountsCallback = (updateAccountAddress) => (error, accounts) => {
     const accountAddress = accounts.length === 0 ? null : accounts[0];
     updateAccountAddress(accountAddress);
     emitter.emit("enabled", accountAddress);
-    console.log("enabled");
   }
 };
 
@@ -1494,7 +1493,6 @@ class Store extends React.Component {
   }
 
   getStore(index) {
-    // console.log(this.store[index], index);
     return this.store[index];
   }
 
@@ -1532,7 +1530,7 @@ class Store extends React.Component {
       try {
         /* Request account access if needed */
         await window.ethereum.enable();
-        web3.eth.getAccounts(getAccountsCallback(this.updateState("accountAddress")));
+        await web3.eth.getAccounts(getAccountsCallback(this.updateState("accountAddress")));
       } catch (error) {
         console.error(error);
       }
@@ -1543,7 +1541,7 @@ class Store extends React.Component {
       try {
         /* Request account access if needed */
         await window.web3.currentProvider.enable();
-        web3.eth.getAccounts(getAccountsCallback(this.updateState("accountAddress")));
+        await web3.eth.getAccounts(getAccountsCallback(this.updateState("accountAddress")));
       } catch (error) {
         console.error(error);
       }
@@ -1570,28 +1568,22 @@ class Store extends React.Component {
             .send({ from: accountAddress });
         }
         var result = await dwarfContract.methods.openMarket().send({ from: accountAddress });
-        console.log(result);
       } catch (error) {
         this.setReady(false);
         console.error(error);
       }
-      console.log(result);
       await this.checkNFT();
     } else {
       this.setReady(false);
-      console.log(result);
     }
   }
 
   async deposit(bnbvalue) {
-    console.log("deposit");
     if (await this.checkNet()) {
-      console.log("setReady");
       this.setReady(true);
       const accountAddress = this.getStore("accountAddress");
       const auctionAddress = this.getStore("auctionAddress");
       const web3 = this.getStore("web3");
-      console.log("web3");
       try {
         let send = web3.eth.sendTransaction({
           from: accountAddress,
@@ -1599,14 +1591,12 @@ class Store extends React.Component {
           value: web3.utils.toWei(bnbvalue, "ether"),
         });
         emitter.emit("auction", true);
-        console.log(send);
       } catch (error) {
         this.setReady(false);
         console.error(error);
       }
     } else {
       this.setReady(false);
-      console.log("setReady", false);
     }
   }
 
@@ -1621,7 +1611,6 @@ class Store extends React.Component {
       const dwarfContract = new web3.eth.Contract(dwarfABI, dwarfAddress);
       try {
         var result = await dwarfContract.methods.closeMarket().send({ from: accountAddress });
-        console.log(result);
         await this.checkNFT();
       } catch (error) {
         this.setReady(false);
@@ -1629,7 +1618,6 @@ class Store extends React.Component {
       }
     } else {
       this.setReady(false);
-      console.log(result);
     }
   }
 
@@ -1654,7 +1642,6 @@ class Store extends React.Component {
             .send({ from: accountAddress });
         }
         var result = await dwarfContract.methods.openMarket().send({ from: accountAddress });
-        console.log(result);
       } catch (error) {
         this.setReady(false);
         console.error(error);
@@ -1662,7 +1649,6 @@ class Store extends React.Component {
     } else {
       this.setReady(false);
     }
-    console.log(result);
     await this.checkNFT();
   }
 
@@ -1681,24 +1667,22 @@ class Store extends React.Component {
     const dwarfAddress = this.getStore("dwarfAddress");
     const dwarfABI = this.getStore("dwarfABI");
     const web3 = this.getStore("web3");
+    await this.getBalances();
+
     web3.eth.net.getId().then((netId) => {
-      console.log(netId);
       this.setStore({ netId: netId });
       emitter.emit("netId", netId);
     });
     var balance = await web3.eth.getBalance(accountAddress);
     balance = parseFloat(balance) / 10 ** 18;
     this.setStore({ ethbalance: parseFloat(balance) });
-    console.log(balance);
     const dwarfContract = new web3.eth.Contract(dwarfABI, dwarfAddress);
     var havenft = await dwarfContract.methods.exists(accountAddress).call({ from: accountAddress });
     if (havenft) {
-      console.log(havenft);
       this.setStore({ haveNFT: havenft });
       emitter.emit("haveNFT", havenft);
       try {
         var isInWar = await dwarfContract.methods.isInWar(accountAddress).call({ from: accountAddress });
-        console.log(isInWar);
         await this.setStore({ isInWar: isInWar });
         emitter.emit("isInWar", isInWar);
       } catch (error) {
@@ -1708,7 +1692,6 @@ class Store extends React.Component {
     } else {
       await this.setStore({ haveNFT: havenft });
       this.getBalances();
-      console.log(balance);
     }
   }
 
@@ -1719,21 +1702,22 @@ class Store extends React.Component {
     const lpJediAddress = this.getStore("lpJediAddress");
     const lpDarthAddress = this.getStore("lpDarthAddress");
     const dwarf20Address = this.getStore("dwarf20Address");
+    if(!accountAddress || !web3) {
+      await this.connect();
+    }
     let jediContract = new web3.eth.Contract(erc20ABI, lpJediAddress);
+    
     var balance = await jediContract.methods.balanceOf(accountAddress).call({ from: accountAddress });
     balance = parseFloat(balance) / 10 ** 18;
     await this.setStore({ jediLP: balance });
-    console.log(balance);
     let darthContract = new web3.eth.Contract(erc20ABI, lpDarthAddress);
     balance = await darthContract.methods.balanceOf(accountAddress).call({ from: accountAddress });
     balance = parseFloat(balance) / 10 ** 18;
     await this.setStore({ darthLP: balance });
-    console.log(balance);
     let dwarf20Contract = new web3.eth.Contract(erc20ABI, dwarf20Address);
     balance = await dwarf20Contract.methods.balanceOf(accountAddress).call({ from: accountAddress });
     balance = parseFloat(balance) / 10 ** 18;
     await this.setStore({ dwarf: balance });
-    console.log(balance);
     emitter.emit("balances", "");
     this.getNFTBalances();
   }
@@ -1758,9 +1742,7 @@ class Store extends React.Component {
       }
     });
     await this.setStore({ NFTs: NFTs });
-    console.log("NFTs saved");
     emitter.emit("nbalances", "");
-    console.log("nbalances");
   }
 
   async checkMarket() {
@@ -1774,15 +1756,12 @@ class Store extends React.Component {
       const dwarfContract = new web3.eth.Contract(dwarfABI, dwarfAddress);
       var opened = await dwarfContract.methods.isInWar(accountAddress).call({ from: accountAddress });
       if (opened) {
-        console.log(opened);
         emitter.emit("opened", opened);
       } else {
         await this.setStore({ opened: opened });
       }
       var staked = await dwarfContract.methods.stakedLP(accountAddress).call({ from: accountAddress });
       if (staked) {
-        console.log(staked);
-        emitter.emit("staked", staked);
         var stakedJedi = await dwarfContract.methods.stakedJediLP(accountAddress).call({ from: accountAddress });
         stakedJedi = parseFloat(stakedJedi) / 10 ** 18;
         await this.setStore({ stakedJedi: stakedJedi });
@@ -1791,7 +1770,7 @@ class Store extends React.Component {
         await this.setStore({ stakedDarth: stakedDarth });
         var canClaim = await dwarfContract.methods.canClaimNFT(accountAddress).call({ from: accountAddress });
         await this.setStore({ canClaim: canClaim });
-        console.log(canClaim);
+        emitter.emit("staked", staked);
       } else {
         await this.setStore({ staked: staked });
       }

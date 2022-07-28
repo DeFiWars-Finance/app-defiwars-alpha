@@ -115,6 +115,7 @@ const Menu = () => {
               <Link to="/swap">DWARFSwap</Link>
               <Link to="/NFA_Market">NFT Marketplace</Link>
               <Link to="/The_Army">My NFTs</Link>
+              <Link to="/NFA_Collections">Collections</Link>
             </div>
           </Collapse>
 
@@ -139,6 +140,7 @@ const Menu = () => {
                 <Link to="/swap">DWARFSwap</Link>
                 <Link to="/NFA_Market">NFT Marketplace</Link>
                 <Link to="/The_Army">My NFTs</Link>
+                <Link to="/NFA_Collections">Collections</Link>
               </div>
             </Collapse>
           </li>
