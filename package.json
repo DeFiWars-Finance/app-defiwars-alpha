@@ -5,6 +5,7 @@
   "dependencies": {
     "@babel/core": "7.12.3",
     "@binance-chain/bsc-connector": "^1.0.0",
+    "@dopex-io/web3-multicall": "^0.1.9",
     "@ethersproject/address": "^5.6.1",
     "@ethersproject/contracts": "^5.6.0",
     "@ethersproject/providers": "^5.6.4",

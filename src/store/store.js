@@ -1,6 +1,7 @@
 import React from "react";
 import Web3 from "web3";
 import { BigNumber } from "ethers";
+import Multicall from '@dopex-io/web3-multicall';
 
 var EventEmitter = require("events").EventEmitter;
 var emitter = new EventEmitter();
@@ -35,6 +36,7 @@ class Store extends React.Component {
       opened: false,
       staked: false,
       canClaim: false,
+      inProcess: false,
       nftJediAddress:
         process.env.REACT_APP_NETWORK === "MAINNET"
           ? "0x12e66205327e5FAf803839FddB18f76320040737"
@@ -1560,11 +1562,13 @@ class Store extends React.Component {
       const dwarfContract = new web3.eth.Contract(dwarfABI, dwarfAddress);
       const dwarf20Contract = new web3.eth.Contract(erc20ABI, dwarf20Address);
       try {
-        let allowance = await dwarf20Contract.methods.allowance(accountAddress, dwarfAddress).call({ from: accountAddress });
+        let allowance = await dwarf20Contract.methods
+          .allowance(accountAddress, dwarfAddress)
+          .call({ from: accountAddress });
         let hodlamount = await dwarfContract.methods.hodlamount().call({ from: accountAddress });
         if (parseFloat(allowance) < parseFloat(hodlamount)) {
           await dwarf20Contract.methods
-            .approve(dwarfAddress, BigNumber.from(hodlamount).sub(BigNumber.from(allowance)))
+            .approve(dwarfAddress, BigNumber.from(hodlamount))
             .send({ from: accountAddress });
         }
         var result = await dwarfContract.methods.openMarket().send({ from: accountAddress });
@@ -1634,11 +1638,13 @@ class Store extends React.Component {
       const dwarfContract = new web3.eth.Contract(dwarfABI, dwarfAddress);
       const dwarf20Contract = new web3.eth.Contract(erc20ABI, dwarf20Address);
       try {
-        let allowance = await dwarf20Contract.methods.allowance(accountAddress, dwarfAddress).call({ from: accountAddress });
+        let allowance = await dwarf20Contract.methods
+          .allowance(accountAddress, dwarfAddress)
+          .call({ from: accountAddress });
         let hodlamount = await dwarfContract.methods.hodlamount().call({ from: accountAddress });
         if (parseFloat(allowance) < parseFloat(hodlamount)) {
           await dwarf20Contract.methods
-            .approve(dwarfAddress, BigNumber.from(hodlamount).sub(BigNumber.from(allowance)))
+            .approve(dwarfAddress, BigNumber.from(hodlamount))
             .send({ from: accountAddress });
         }
         var result = await dwarfContract.methods.openMarket().send({ from: accountAddress });
@@ -1702,11 +1708,11 @@ class Store extends React.Component {
     const lpJediAddress = this.getStore("lpJediAddress");
     const lpDarthAddress = this.getStore("lpDarthAddress");
     const dwarf20Address = this.getStore("dwarf20Address");
-    if(!accountAddress || !web3) {
+    if (!accountAddress || !web3) {
       await this.connect();
     }
     let jediContract = new web3.eth.Contract(erc20ABI, lpJediAddress);
-    
+
     var balance = await jediContract.methods.balanceOf(accountAddress).call({ from: accountAddress });
     balance = parseFloat(balance) / 10 ** 18;
     await this.setStore({ jediLP: balance });
@@ -1724,24 +1730,54 @@ class Store extends React.Component {
 
   async getNFTBalances() {
     const accountAddress = this.getStore("accountAddress");
+    if (!this.getStore("web3")) {
+      await this.connect();
+      console.log("connected");
+    }
     const web3 = this.getStore("web3");
     const erc1155ABI = this.getStore("erc1155ABI");
-    const NFTJediAddress = this.getStore("NFTJediAddress");
-    const NFTDarthAddress = this.getStore("NFTDarthAddress");
+    const NFTJediAddress = this.getStore("nftJediAddress");
+    const NFTDarthAddress = this.getStore("nftDarthAddress");
     const NFTs = this.getStore("NFTs");
     let jediContract = new web3.eth.Contract(erc1155ABI, NFTJediAddress);
     let darthContract = new web3.eth.Contract(erc1155ABI, NFTDarthAddress);
-    NFTs.map(async (NFT) => {
-      /* Spelling must be improved ('suply' -> 'supply') */
-      if (NFT.side === "jedi") {
-        NFT.suply = await jediContract.methods.totalSupply(NFT.id).call({ from: accountAddress });
-        NFT.amount = await jediContract.methods.balanceOf(accountAddress, NFT.id).call({ from: accountAddress });
-      } else {
-        NFT.suply = await darthContract.methods.totalSupply(NFT.id).call({ from: accountAddress });
-        NFT.amount = await darthContract.methods.balanceOf(accountAddress, NFT.id).call({ from: accountAddress });
-      }
+    const updatedNFTs = [];
+    const multicall = new Multicall({
+      multicallAddress: process.env.REACT_APP_NETWORK === "MAINNET" ? "0x1Ee38d535d541c55C9dae27B12edf090C608E6Fb" : "0x6e5BB1a5Ad6F68A8D7D6A5e47750eC15773d6042",
+      provider: web3.eth,
     });
-    await this.setStore({ NFTs: NFTs });
+    const multicallArray = [];
+    for (let i = 0; i < NFTs.length; i++) {
+      let NFT = NFTs[i];
+      if (NFT.side === "jedi") {
+        multicallArray.push(jediContract.methods.totalSupply(NFT.id));
+        multicallArray.push(jediContract.methods.balanceOf(accountAddress, NFT.id));
+        multicallArray.push(jediContract.methods.price(NFT.id));
+        multicallArray.push(jediContract.methods.settings(NFT.id));
+        multicallArray.push(jediContract.methods.maxSupply(NFT.id));
+      } else {
+        multicallArray.push(darthContract.methods.totalSupply(NFT.id));
+        multicallArray.push(darthContract.methods.balanceOf(accountAddress, NFT.id));
+        multicallArray.push(darthContract.methods.price(NFT.id));
+        multicallArray.push(darthContract.methods.settings(NFT.id));
+        multicallArray.push(darthContract.methods.maxSupply(NFT.id));
+      }
+    }
+    const multiResult = await multicall.aggregate(multicallArray);
+    for (let i = 0; i < NFTs.length; i++) {
+      let NFT = NFTs[i];
+      NFT.suply = multiResult[i*5];
+      NFT.amount = multiResult[i*5 + 1];
+      NFT.price = parseFloat(multiResult[i*5 + 2])/10**18;
+      NFT.pd = multiResult[i*5 + 3].pd;
+      NFT.pk = multiResult[i*5 + 3].pk;
+      NFT.ps = multiResult[i*5 + 3].ps;
+      NFT.pc = multiResult[i*5 + 3].pc;
+      NFT.ph = multiResult[i*5 + 3].ph;
+      NFT.total = multiResult[i*5 + 4];
+      updatedNFTs.push(NFT);
+    }
+    this.setStore({ NFTs: updatedNFTs });
     emitter.emit("nbalances", "");
   }
 
@@ -1774,6 +1810,7 @@ class Store extends React.Component {
       } else {
         await this.setStore({ staked: staked });
       }
+      this.setReady(false);
     } catch (error) {
       this.setReady(false);
       console.error(error);

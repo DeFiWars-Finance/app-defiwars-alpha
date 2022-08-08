@@ -175,7 +175,7 @@ export const useDefiwars = () => {
       let hodlamount = await dwarfContract.methods.hodlamount().call({ from: account });
       if (parseFloat(allowance) < parseFloat(hodlamount)) {
         await dwarf20Contract.methods
-          .approve(dwarfAddress, BigNumber.from(hodlamount).sub(BigNumber.from(allowance)))
+          .approve(dwarfAddress, BigNumber.from(hodlamount))
           .send({ from: account });
       }
       const mint = await dwarfContract.methods.openMarket().send({ from: account });
@@ -320,7 +320,7 @@ export const useDefiwars = () => {
       let hodlamount = await dwarfContract.methods.hodlamount().call({ from: account });
       if (parseFloat(allowance) < parseFloat(hodlamount)) {
         await dwarf20Contract.methods
-          .approve(dwarfAddress, BigNumber.from(hodlamount).sub(BigNumber.from(allowance)))
+          .approve(dwarfAddress, BigNumber.from(hodlamount))
           .send({ from: account });
       }
       const result = await dwarfContract.methods.openMarket().send({
@@ -487,7 +487,7 @@ export const useDefiwars = () => {
     let hodlamount = await dwarfContract.methods.hodlamount().call({ from: account });
     if (parseFloat(allowance) < parseFloat(hodlamount)) {
       await dwarf20Contract.methods
-        .approve(dwarfAddress, BigNumber.from(hodlamount).sub(BigNumber.from(allowance)))
+        .approve(dwarfAddress, BigNumber.from(hodlamount))
         .send({ from: account });
     }
 

@@ -20,6 +20,7 @@ class Collections extends React.Component {
     const stakedDarth = store.getStore("stakedDarth");
     const stakedJedi = store.getStore("stakedJedi");
     const canClaim = store.getStore("canClaim");
+    const inProcess = store.getStore("inProcess");
 
     this.checkStatus();
 
@@ -36,6 +37,7 @@ class Collections extends React.Component {
       canClaim: canClaim,
       jedivalue: 1,
       darthvalue: 1,
+      inProcess: inProcess,
     };
 
     this.balances = this.balances.bind(this);
@@ -82,9 +84,7 @@ class Collections extends React.Component {
     var allowance = await jediContract.methods.allowance(accountAddress, dwarfAddress).call({ from: accountAddress });
     let lpAmount = await jediContract.methods.balanceOf(accountAddress).call({ from: accountAddress });
     if (parseFloat(allowance) < parseFloat(lpAmount)) {
-      await jediContract.methods
-        .approve(dwarfAddress, BigNumber.from(lpAmount).sub(BigNumber.from(allowance)))
-        .send({ from: accountAddress });
+      await jediContract.methods.approve(dwarfAddress, BigNumber.from(lpAmount)).send({ from: accountAddress });
     }
     /*let allowance = await darthContract.methods.allowance(accountAddress, dwarfAddress).call({ from: accountAddress, });
     let lpAmount = await darthContract.methods.balanceOf(accountAddress).call({from: accountAddress});
@@ -120,9 +120,7 @@ class Collections extends React.Component {
     let allowance = await darthContract.methods.allowance(accountAddress, dwarfAddress).call({ from: accountAddress });
     let lpAmount = await darthContract.methods.balanceOf(accountAddress).call({ from: accountAddress });
     if (parseFloat(allowance) < parseFloat(lpAmount)) {
-      await darthContract.methods
-        .approve(dwarfAddress, BigNumber.from(lpAmount).sub(BigNumber.from(allowance)))
-        .send({ from: accountAddress });
+      await darthContract.methods.approve(dwarfAddress, BigNumber.from(lpAmount)).send({ from: accountAddress });
     }
     // const ethAllowance = parseFloat(allowance) / 10 ** 18;
     // if (parseFloat(ethAllowance) < 3000) {
@@ -245,9 +243,7 @@ class Collections extends React.Component {
       .call({ from: accountAddress });
     let claimFee = await dwarfContract.methods.claimFee().call({ from: accountAddress });
     if (parseFloat(allowance) < parseFloat(claimFee)) {
-      await dwarf20Contract.methods
-        .approve(dwarfAddress, BigNumber.from(claimFee).sub(BigNumber.from(allowance)))
-        .send({ from: accountAddress });
+      await dwarf20Contract.methods.approve(dwarfAddress, BigNumber.from(claimFee)).send({ from: accountAddress });
     }
     try {
       var result = await dwarfContract.methods.claimNFT(id).send({ from: accountAddress });
@@ -277,9 +273,7 @@ class Collections extends React.Component {
       .call({ from: accountAddress });
     let claimFee = await dwarfContract.methods.claimFee().call({ from: accountAddress });
     if (parseFloat(allowance) < parseFloat(claimFee)) {
-      await dwarf20Contract.methods
-        .approve(dwarfAddress, BigNumber.from(claimFee).sub(BigNumber.from(allowance)))
-        .send({ from: accountAddress });
+      await dwarf20Contract.methods.approve(dwarfAddress, BigNumber.from(claimFee)).send({ from: accountAddress });
     }
     /*
     if (parseFloat(allowance) < parseFloat(claimFee)) {
@@ -301,7 +295,7 @@ class Collections extends React.Component {
   }
 
   render() {
-    const { accountAddress, jediLP, darthLP, staked, stakedDarth, stakedJedi, canClaim } = this.state;
+    const { accountAddress, jediLP, darthLP, staked, stakedDarth, stakedJedi, canClaim, inProcess } = this.state;
 
     const options = [
       { label: "1-day", value: 1 },
@@ -311,76 +305,80 @@ class Collections extends React.Component {
       { label: "180-day", value: 180 },
       { label: "360-day", value: 360 },
     ];
+
     return (
-      <div className={appStyle.container}>
-        {(() => {
-          if (staked && stakedDarth > 0) {
-            return (
-              <div className={appStyle.flexrow}>
-                {!canClaim && (
-                  <div style={{ color: "white" }}>Scheduled Warfare period still not expired, cannot claim.</div>
-                )}
-                <div className={appStyle.flexrow} style={{ flexWrap: "wrap" }}>
-                  {this.renderDarthNFTs()}
+      <>
+        {inProcess && <div style={{ color: "white", fontSize: "20px" }}>Loading...</div>}
+        <div className={appStyle.container}>
+          {(() => {
+            if (staked && stakedDarth > 0) {
+              return (
+                <div className={appStyle.flexrow}>
+                  {!canClaim && (
+                    <div style={{ color: "white" }}>Scheduled Warfare period still not expired, cannot claim.</div>
+                  )}
+                  <div className={appStyle.flexrow} style={{ flexWrap: "wrap" }}>
+                    {this.renderDarthNFTs()}
+                  </div>
                 </div>
-              </div>
-            );
-          } else if (staked && stakedJedi > 0) {
-            return (
-              <div className={appStyle.flexcol}>
-                {!canClaim && (
-                  <div style={{ color: "white" }}>Scheduled Warfare period still not expired, cannot claim.</div>
-                )}
-                <div className={appStyle.flexrow} style={{ flexWrap: "wrap" }}>
-                  {this.renderJediNFTs()}
+              );
+            } else if (staked && stakedJedi > 0) {
+              return (
+                <div className={appStyle.flexcol}>
+                  {!canClaim && (
+                    <div style={{ color: "white" }}>Scheduled Warfare period still not expired, cannot claim.</div>
+                  )}
+                  <div className={appStyle.flexrow} style={{ flexWrap: "wrap" }}>
+                    {this.renderJediNFTs()}
+                  </div>
                 </div>
-              </div>
-            );
-          } else {
-            return (
-              <div className={appStyle.flexrow}>
-                <div className={appStyle.nfblock}>
-                  <img src="img/jedi.png" alt="JEDI Side" />
-                  <p>
-                    {jediLP} <br /> JEDI/DWARF PoLP
-                  </p>
-                  <label>
-                    Select a Scheduled Warfare
-                    <Select
-                      className={appStyle.darkTheme}
-                      options={options}
-                      value={this.state.jedivalue}
-                      onChange={this.jedihandleChange}
-                    />
-                  </label>
-                  <button disabled={jediLP === 0} onClick={this.stakeJedi}>
-                    Stake JEDI NFTs
-                  </button>
+              );
+            } else {
+              return (
+                <div className={appStyle.flexrow}>
+                  <div className={appStyle.nfblock}>
+                    <img src="img/jedi.png" alt="JEDI Side" />
+                    <p>
+                      {jediLP} <br /> JEDI/DWARF PoLP
+                    </p>
+                    <label>
+                      Select a Scheduled Warfare
+                      <Select
+                        className={appStyle.darkTheme}
+                        options={options}
+                        value={this.state.jedivalue}
+                        onChange={this.jedihandleChange}
+                      />
+                    </label>
+                    <button disabled={jediLP === 0} onClick={this.stakeJedi}>
+                      Stake JEDI NFTs
+                    </button>
+                  </div>
+                  <div className={appStyle.nfblock}>
+                    <img src="img/dart.png" alt="DARTH Side" />
+                    <p>
+                      {darthLP} <br />
+                      DARTH/DWARF PoLP
+                    </p>
+                    <label>
+                      Select a Scheduled Warfare
+                      <Select
+                        className={appStyle.darkTheme}
+                        options={options}
+                        value={this.state.darthvalue}
+                        onChange={this.darthhandleChange}
+                      />
+                    </label>
+                    <button disabled={darthLP === 0} onClick={this.stakeDarth}>
+                      Stake DARTH NFTs
+                    </button>
+                  </div>
                 </div>
-                <div className={appStyle.nfblock}>
-                  <img src="img/dart.png" alt="DARTH Side" />
-                  <p>
-                    {darthLP} <br />
-                    DARTH/DWARF PoLP
-                  </p>
-                  <label>
-                    Select a Scheduled Warfare
-                    <Select
-                      className={appStyle.darkTheme}
-                      options={options}
-                      value={this.state.darthvalue}
-                      onChange={this.darthhandleChange}
-                    />
-                  </label>
-                  <button disabled={darthLP === 0} onClick={this.stakeDarth}>
-                    Stake DARTH NFTs
-                  </button>
-                </div>
-              </div>
-            );
-          }
-        })()}
-      </div>
+              );
+            }
+          })()}
+        </div>
+      </>
     );
   }
 }

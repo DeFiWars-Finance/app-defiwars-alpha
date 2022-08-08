@@ -134,7 +134,6 @@ const Oracle = (props) => {
         return false;
       }
     }).forEach((NFT) => {
-      console.log("xxxxxxxxxxxxxx", NFT);
       tempJediPower.pd = Math.floor(
         (tempJediPower.pd + parseFloat(NFT.amount) * NFT.pd) / (parseFloat(NFT.amount) + 1)
       );
@@ -234,6 +233,7 @@ const Oracle = (props) => {
   };
 
   useEffect(() => {
+    store.getNFTBalances();
     emitter.on("balances", balances);
     emitter.on("nbalances", balances);
 

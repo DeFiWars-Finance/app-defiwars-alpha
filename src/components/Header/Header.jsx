@@ -21,10 +21,10 @@ const Header = () => {
   const dispatch = useDispatch();
 
   return (
-    <header className={appStyle.flexauto}>
+    <header>
       <div className={style.logo}>
         <Link to='/'>
-          <img src='/img/sword-logo.png' alt='Home' />
+          <img src='/img/sword-logov2.png' alt='Home' style={{width: "155px", height: "73px"}}/>
         </Link>
         <ConnectWallet sound />
       </div>
@@ -68,7 +68,7 @@ const Header = () => {
         setIsInWar
       </button> */}
 
-      <div className={appStyle.container}>
+      <div className={appStyle.container} style={{marginTop: "0px"}}>
         <Menu />
       </div>
     </header>
