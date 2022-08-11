@@ -27,6 +27,7 @@ import {
   setNFTs,
   setInProcess,
   setAuctionSuccess,
+  setIsOpened
 } from "./actions";
 
 const currentTimestamp = () => new Date().getTime();
@@ -1649,6 +1650,10 @@ export default createReducer(initialState, (builder) =>
       }
 
       state.lastUpdateVersionTimestamp = currentTimestamp();
+    })
+    .addCase(setIsOpened, (state, action) => {
+      state.isOpened = action.payload.isOpened;
+      state.timestamp = currentTimestamp();
     })
     .addCase(updateUserDarkMode, (state, action) => {
       state.userDarkMode = action.payload.userDarkMode;

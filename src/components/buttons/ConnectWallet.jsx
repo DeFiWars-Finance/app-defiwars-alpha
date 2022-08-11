@@ -15,29 +15,50 @@ import useAuth from "../../hooks/useAuth";
 import { useDefiwars } from "hooks/useDefiWars";
 
 const ActionLink = ({ onClick, text }) => {
-  return <a onClick={onClick}>{Parser(text)}</a>;
+  return (
+    <a onClick={onClick}>
+      {Parser(text)}
+      <div className={style.linkBorder}></div>
+    </a>
+  );
 };
 const RenderActionLink = () => {
   const { login, logout } = useAuth();
-  const { onPresentConnectModal, onPresentAccountModal } = useWalletModal(login, logout);
+  const { onPresentConnectModal, onPresentAccountModal } = useWalletModal(
+    login,
+    logout
+  );
   const { account, chainId } = useActiveWeb3React();
   const userState = useSelector((state) => state.user);
   const navigate = useNavigate();
-  const { haveNFT, inProcess, isInWar, loggedIn, mainNetId, testNetId } = userState;
+  const { haveNFT, inProcess, isInWar, loggedIn, mainNetId, testNetId } =
+    userState;
 
   const { REACT_APP_NETWORK } = process.env;
 
   const { onMint, onWar, onPeace } = useDefiwars();
 
-  if (account && inProcess) return <ActionLink text="processing <br /> ..." onClick={() => {}} />;
+  if (account && inProcess)
+    return <ActionLink text="Processing..." onClick={() => {}} />;
 
   if (account && REACT_APP_NETWORK === "MAINNET" && chainId !== mainNetId)
-    return <ActionLink text="Connect to <br /> BSC Mainnet" onClick={onPresentConnectModal} />;
+    return (
+      <ActionLink
+        text="Connect to BSC Mainnet"
+        onClick={onPresentConnectModal}
+      />
+    );
 
   if (account && REACT_APP_NETWORK === "TESTNET" && chainId !== testNetId)
-    return <ActionLink text="Connect to <br /> BSC Testnet" onClick={onPresentConnectModal} />;
+    return (
+      <ActionLink
+        text="Connect to BSC Testnet"
+        onClick={onPresentConnectModal}
+      />
+    );
 
-  if (account && haveNFT && isInWar) return <ActionLink text="MINT my PEACE <br />ngNFT" onClick={onPeace} />;
+  if (account && haveNFT && isInWar)
+    return <ActionLink text="MINT my PEACE ngNFT" onClick={onPeace} />;
 
   if (account && haveNFT && !isInWar)
     return (
@@ -53,7 +74,7 @@ const RenderActionLink = () => {
   if (account && !isInWar && !haveNFT)
     return (
       <ActionLink
-        text="MINT my WAR <br />ngNFT"
+        text="MINT my WAR ngNFT"
         onClick={async () => {
           await onMint();
           navigate("/pool", { replace: true });
@@ -72,7 +93,7 @@ const RenderActionLink = () => {
     );
   }
 
-  return <ActionLink text="Connect<br />Wallet" onClick={onPresentConnectModal} />;
+  return <ActionLink text="Connect Wallet" onClick={onPresentConnectModal} />;
 };
 const ConnectWallet = ({ sound }) => {
   const [playSound] = useSound(bladeSound);
@@ -84,7 +105,7 @@ const ConnectWallet = ({ sound }) => {
 
   useEffect(() => {
     checkNFT();
-  },[account]);
+  }, [account]);
   // checkNFT();
 
   useEffect(() => {
@@ -98,7 +119,7 @@ const ConnectWallet = ({ sound }) => {
   return (
     <div className={style.connectWallet}>
       <RenderActionLink />
-      <ConnectIcon width={100} height={32} />
+      {/* <ConnectIcon width={100} height={32} /> */}
     </div>
   );
 };

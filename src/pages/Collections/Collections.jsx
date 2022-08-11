@@ -308,7 +308,6 @@ class Collections extends React.Component {
 
     return (
       <>
-        {inProcess && <div style={{ color: "white", fontSize: "20px" }}>Loading...</div>}
         <div className={appStyle.container}>
           {(() => {
             if (staked && stakedDarth > 0) {

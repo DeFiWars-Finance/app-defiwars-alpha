@@ -1769,11 +1769,11 @@ class Store extends React.Component {
       NFT.suply = multiResult[i*5];
       NFT.amount = multiResult[i*5 + 1];
       NFT.price = parseFloat(multiResult[i*5 + 2])/10**18;
-      NFT.pd = multiResult[i*5 + 3].pd;
-      NFT.pk = multiResult[i*5 + 3].pk;
-      NFT.ps = multiResult[i*5 + 3].ps;
-      NFT.pc = multiResult[i*5 + 3].pc;
-      NFT.ph = multiResult[i*5 + 3].ph;
+      NFT.pd = multiResult[i*5 + 3][0];
+      NFT.pk = multiResult[i*5 + 3][1];
+      NFT.ps = multiResult[i*5 + 3][2];
+      NFT.pc = multiResult[i*5 + 3][3];
+      NFT.ph = multiResult[i*5 + 3][4];
       NFT.total = multiResult[i*5 + 4];
       updatedNFTs.push(NFT);
     }

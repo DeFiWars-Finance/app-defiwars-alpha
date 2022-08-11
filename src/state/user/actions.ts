@@ -31,54 +31,54 @@ export const muteAudio = createAction<void>('user/muteAudio')
 export const unmuteAudio = createAction<void>('user/unmuteAudio')
 
 export const setAccountAddress = createAction<{ accounAddress: string }>(
-  'defiwars/setAccountAddress'
+  'user/setAccountAddress'
 );
 
 export const setNetId = createAction<{ netId: number | null }>(
-  'defiwars/setNetId'
+  'user/setNetId'
 );
 
 export const setHaveNFT = createAction<{ haveNFT: boolean }>(
-  'defiwars/setHaveNFT'
+  'user/setHaveNFT'
 );
 
 export const setIsInWar = createAction<{ isInWar: boolean, inProcess: boolean }>(
-  'defiwars/setIsInWar'
+  'user/setIsInWar'
 );
 
 export const setIsReady = createAction<{ isReady: boolean }>(
-  'defiwars/setIsReady'
+  'user/setIsReady'
 );
 
 export const setJediLPBalance = createAction<{ jediLP: number }>(
-  'defiwars/setJediLPBalance'
+  'user/setJediLPBalance'
 );
 
 export const setDarthLPBalance = createAction<{ darthLP: number }>(
-  'defiwars/setDarthLPBalance'
+  'user/setDarthLPBalance'
 );
 export const setDwarfBalance = createAction<{ dwarf: number }>(
-  'defiwars/setDwarfBalance'
+  'user/setDwarfBalance'
 );
 
 export const setEthBalance = createAction<{ ethbalance: number }>(
-  'defiwars/setEthBalance'
+  'user/setEthBalance'
 );
 
 export const setNFTs = createAction<{ NFTs: NFT[] }>(
-  'defiwars/setNFTs'
+  'user/setNFTs'
 );
 
 export const setInProcess = createAction<{ inProcess: boolean }>(
-  'defiwars/setInProcess'
+  'user/setInProcess'
 );
 
 export const setAuctionSuccess = createAction<{ auctionSuccess: boolean }>(
-  'defiwars/setAuctionSuccess'
+  'user/setAuctionSuccess'
 );
 
 export const setIsOpened = createAction<{ isOpened: boolean }>(
-  'defiwars/setIsOpened'
+  'user/setIsOpened'
 );
 
 export const setIsStaked = createAction<{
@@ -86,9 +86,9 @@ export const setIsStaked = createAction<{
   stakedJedi: number | null,
   stakedDarth: number | null
 }>(
-  'defiwars/setIsStaked'
+  'user/setIsStaked'
 );
 
 export const setCanClaim = createAction<{ canClaim: boolean }>(
-  'defiwars/setCanClaim'
+  'user/setCanClaim'
 );

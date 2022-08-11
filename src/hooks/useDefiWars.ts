@@ -2,6 +2,7 @@ import { useActiveWeb3React } from "hooks";
 import { useCallback, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { BigNumber } from "ethers";
+import Multicall from '@dopex-io/web3-multicall';
 import {
   setIsReady,
   setHaveNFT,
@@ -118,12 +119,12 @@ export const useDefiwars = () => {
   }, [darthContract, account]);
 
   const getDwarfBalance = useCallback(async () => {
-    if (!dwarfContract || !account) return 0;
+    if (!dwarf20Contract || !account) return 0;
 
-    let balance = await dwarfContract.methods.balanceOf(account).call({ from: account });
+    let balance = await dwarf20Contract.methods.balanceOf(account).call({ from: account });
 
     return parseFloat(balance) / 10 ** 18;
-  }, [dwarfContract, account]);
+  }, [dwarf20Contract, account]);
 
   const getNftJediBalance = useCallback(
     async (nftId) => {
@@ -286,14 +287,64 @@ export const useDefiwars = () => {
       };
     };
 
-    // Update Each NFT present in colletion
-    const updatedNfts = await Promise.all(NFTs.map(getNftBalances));
 
+    const updatedNFTs = [] as any[];
+    const multicall = web3?.currentProvider && new Multicall({
+      multicallAddress: process.env.REACT_APP_NETWORK === "MAINNET" ? "0x1Ee38d535d541c55C9dae27B12edf090C608E6Fb" : "0x6e5BB1a5Ad6F68A8D7D6A5e47750eC15773d6042",
+      provider: web3?.currentProvider,
+    });
+    const multicallArray = [] as any[];
+
+    for (let i = 0; i < NFTs.length; i++) {
+      let NFT = NFTs[i];
+      if (NFT.side === "jedi") {
+        if(nftJediContract){
+          multicallArray.push(nftJediContract.methods.totalSupply(NFT.id));
+          multicallArray.push(nftJediContract.methods.balanceOf(account, NFT.id));
+          multicallArray.push(nftJediContract.methods.price(NFT.id));
+          multicallArray.push(nftJediContract.methods.settings(NFT.id));
+          multicallArray.push(nftJediContract.methods.maxSupply(NFT.id));
+        }
+      } else {
+        if(nftDarthContract){
+          multicallArray.push(nftDarthContract.methods.totalSupply(NFT.id));
+          multicallArray.push(nftDarthContract.methods.balanceOf(account, NFT.id));
+          multicallArray.push(nftDarthContract.methods.price(NFT.id));
+          multicallArray.push(nftDarthContract.methods.settings(NFT.id));
+          multicallArray.push(nftDarthContract.methods.maxSupply(NFT.id));
+        }
+      }
+    }
+    const multiResult = multicall && await multicall.aggregate(multicallArray);
+
+    for (let i = 0; i < NFTs.length; i++) {
+      let NFT = Object.assign({}, NFTs[i]);
+      NFT.suply = multiResult[i*5];
+      NFT.amount = multiResult[i*5 + 1];
+      NFT.price = parseFloat(multiResult[i*5 + 2])/10**18;
+      NFT.pd = multiResult[i*5 + 3][0];
+      NFT.pk = multiResult[i*5 + 3][1];
+      NFT.ps = multiResult[i*5 + 3][2];
+      NFT.pc = multiResult[i*5 + 3][3];
+      NFT.ph = multiResult[i*5 + 3][4];
+      NFT.total = multiResult[i*5 + 4];
+      updatedNFTs.push(NFT);
+    }
     dispatch(
       setNFTs({
-        NFTs: updatedNfts,
+        NFTs: updatedNFTs,
       })
     );
+  
+
+    // Update Each NFT present in colletion
+    // const updatedNfts = await Promise.all(NFTs.map(getNftBalances));
+
+    // dispatch(
+    //   setNFTs({
+    //     NFTs: updatedNfts,
+    //   })
+    // );
 
     // console.log(updatedNfts);
   }, [
@@ -395,27 +446,27 @@ export const useDefiwars = () => {
 
   const checkMarket = useCallback(async () => {
     if (!dwarfContract || !account) return console.log("No account or Contract found");
-
+    
     try {
       const opened = await dwarfContract.methods.isInWar(account).call({ from: account });
-
+      
       if (opened) {
         dispatch(
           setIsOpened({
             isOpened: true,
           })
-        );
-      }
+          );
+        }
 
       const staked = await dwarfContract.methods.stakedLP(account).call({ from: account });
 
       console.log("is staked:", staked);
 
-      const stakedJediResponse = await dwarfContract.methods.stakeJediLP(account).call({ from: account });
+      const stakedJediResponse = await dwarfContract.methods.stakedJediLP(account).call({ from: account });
 
       const stakedJedi = parseFloat(stakedJediResponse) / 10 ** 18;
 
-      const stakedDarthResposne = await dwarfContract.methods.stakedDarth(account).call({ from: account });
+      const stakedDarthResposne = await dwarfContract.methods.stakedDarthLP(account).call({ from: account });
 
       const stakedDarth = parseFloat(stakedDarthResposne) / 10 ** 18;
 
@@ -426,6 +477,7 @@ export const useDefiwars = () => {
           stakedDarth,
         })
       );
+
 
       const canClaim = await dwarfContract.methods.canClaimNFT(account).call({ from: account });
 
@@ -450,7 +502,7 @@ export const useDefiwars = () => {
         console.log(`Jedi NFT with ${id} has been buyed successfully`);
 
         // update balances
-        checkHaveNFT();
+        checkNFT();
       } catch (error) {
         console.log(`Error buying a jedi NFT ${id}`, error);
       }
@@ -468,7 +520,7 @@ export const useDefiwars = () => {
           .send({ from: account })
           .on("confirmation", (confirmationNumber, receipt) => {
             if (confirmationNumber === 1) {
-              checkHaveNFT();
+              checkNFT();
               console.log(`Darth NFT with ${id} has been buyed successfully`);
             }
           });
@@ -482,7 +534,7 @@ export const useDefiwars = () => {
   const stakeDwarf = useCallback(async () => {
     if (!dwarfContract || !dwarf20Contract || !web3) return console.log("no account active");
 
-    const allowance = await dwarf20Contract.methods.allowance(dwarfAddress).call({ from: account });
+    const allowance = await dwarf20Contract.methods.allowance(account, dwarfAddress).call({ from: account });
 
     let hodlamount = await dwarfContract.methods.hodlamount().call({ from: account });
     if (parseFloat(allowance) < parseFloat(hodlamount)) {
@@ -532,6 +584,7 @@ export const useDefiwars = () => {
     onDeposit,
     checkMarket,
     buyJediNFT,
+    buyDarthNFT,
     stakeDwarf,
   };
 };
