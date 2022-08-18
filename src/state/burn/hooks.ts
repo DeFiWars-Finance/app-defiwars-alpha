@@ -1,4 +1,4 @@
-import { Currency, CurrencyAmount, JSBI, Pair, Percent, TokenAmount } from '@pancakeswap-libs/sdk'
+import { Currency, CurrencyAmount, JSBI, Pair, Percent, TokenAmount, Token } from '@pancakeswap-libs/sdk'
 import { useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { usePair } from '../../data/Reserves'
@@ -10,6 +10,7 @@ import { AppDispatch, AppState } from '../index'
 import { tryParseAmount } from '../swap/hooks'
 import { useTokenBalances } from '../wallet/hooks'
 import { Field, typeInput } from './actions'
+import { toV2LiquidityToken } from 'state/user/hooks'
 
 export function useBurnState(): AppState['burn'] {
   return useSelector<AppState, AppState['burn']>(state => state.burn)
@@ -27,35 +28,51 @@ export function useDerivedBurnInfo(
     [Field.CURRENCY_B]?: CurrencyAmount
   }
   error?: string
+  liquidityToken: any
 } {
   const { account, chainId } = useActiveWeb3React()
 
   const { independentField, typedValue } = useBurnState()
-
+  
   // pair + totalsupply
   const [, pair] = usePair(currencyA, currencyB)
 
-  // balances
-  const relevantTokenBalances = useTokenBalances(account ?? undefined, [pair?.liquidityToken])
-  const userLiquidity: undefined | TokenAmount = relevantTokenBalances?.[pair?.liquidityToken?.address ?? '']
+  const [tokenA, tokenB] = [wrappedCurrency(currencyA, chainId), wrappedCurrency(currencyB, chainId)];
 
-  const [tokenA, tokenB] = [wrappedCurrency(currencyA, chainId), wrappedCurrency(currencyB, chainId)]
+  const liquidityToken = tokenA && tokenB && toV2LiquidityToken([tokenA, tokenB]);
+
+  // balances
+  // const relevantTokenBalances = useTokenBalances(account ?? undefined, [pair?.liquidityToken])
+  const relevantTokenBalances = useTokenBalances(account ?? undefined, [liquidityToken])
+  // const userLiquidity: undefined | TokenAmount = relevantTokenBalances?.[pair?.liquidityToken?.address ?? '']
+  const userLiquidity: undefined | TokenAmount = relevantTokenBalances?.[liquidityToken?.address ?? '']
+
+  
   const tokens = {
     [Field.CURRENCY_A]: tokenA,
     [Field.CURRENCY_B]: tokenB,
-    [Field.LIQUIDITY]: pair?.liquidityToken
+    [Field.LIQUIDITY]: liquidityToken
+    // [Field.LIQUIDITY]: pair?.liquidityToken
+  }
+
+  const getLiquidityValue = (token: Token , totalSupply: TokenAmount , liquidity: TokenAmount, pair: Pair) => {
+    return new TokenAmount(token, JSBI.divide(JSBI.multiply(liquidity.raw, pair.reserveOf(token).raw), totalSupply.raw));
   }
 
   // liquidity values
-  const totalSupply = useTotalSupply(pair?.liquidityToken)
+  const totalSupply = useTotalSupply(liquidityToken)
+  // const totalSupply = useTotalSupply(pair?.liquidityToken)
   const liquidityValueA =
     pair &&
     totalSupply &&
     userLiquidity &&
     tokenA &&
     // this condition is a short-circuit in the case where useTokenBalance updates sooner than useTotalSupply
+    // JSBI.greaterThanOrEqual(totalSupply.raw, userLiquidity.raw)
+    //   ? new TokenAmount(tokenA, pair.getLiquidityValue(tokenA, totalSupply, userLiquidity, false).raw)
+    //   : undefined
     JSBI.greaterThanOrEqual(totalSupply.raw, userLiquidity.raw)
-      ? new TokenAmount(tokenA, pair.getLiquidityValue(tokenA, totalSupply, userLiquidity, false).raw)
+      ? new TokenAmount(tokenA, getLiquidityValue(tokenA, totalSupply, userLiquidity, pair).raw)
       : undefined
   const liquidityValueB =
     pair &&
@@ -63,8 +80,11 @@ export function useDerivedBurnInfo(
     userLiquidity &&
     tokenB &&
     // this condition is a short-circuit in the case where useTokenBalance updates sooner than useTotalSupply
+    // JSBI.greaterThanOrEqual(totalSupply.raw, userLiquidity.raw)
+    //   ? new TokenAmount(tokenB, pair.getLiquidityValue(tokenB, totalSupply, userLiquidity, false).raw)
+    //   : undefined
     JSBI.greaterThanOrEqual(totalSupply.raw, userLiquidity.raw)
-      ? new TokenAmount(tokenB, pair.getLiquidityValue(tokenB, totalSupply, userLiquidity, false).raw)
+      ? new TokenAmount(tokenB, getLiquidityValue(tokenB, totalSupply, userLiquidity, pair).raw)
       : undefined
   const liquidityValues: { [Field.CURRENCY_A]?: TokenAmount; [Field.CURRENCY_B]?: TokenAmount } = {
     [Field.CURRENCY_A]: liquidityValueA,
@@ -115,6 +135,7 @@ export function useDerivedBurnInfo(
         : undefined
   }
 
+
   let error: string | undefined
   if (!account) {
     error = 'Connect Wallet'
@@ -124,7 +145,7 @@ export function useDerivedBurnInfo(
     error = error ?? 'Enter an amount'
   }
 
-  return { pair, parsedAmounts, error }
+  return { pair, parsedAmounts, error, liquidityToken }
 }
 
 export function useBurnActionHandlers(): {

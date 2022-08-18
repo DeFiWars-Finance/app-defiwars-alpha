@@ -16,11 +16,15 @@ import Swap from "./pages/Swap/Swap";
 import Pool from "./pages/Pool";
 import AddLiquidity from "./pages/AddLiquidity";
 import DefiWarsLayout from "./layouts/DefiWarsLayout";
-import { RedirectDuplicateTokenIds, RedirectOldAddLiquidityPathStructure } from "./pages/AddLiquidity/redirects";
+import {
+  RedirectDuplicateTokenIds,
+  RedirectOldAddLiquidityPathStructure,
+} from "./pages/AddLiquidity/redirects";
 
 import { RedirectOldRemoveLiquidityPathStructure } from "./pages/RemoveLiquidity/redirects";
 import ProtectedRoute from "./Auth/ProtectedRoute";
 import PoolFinder from "./pages/PoolFinder";
+import RemoveLiquidity from "pages/RemoveLiquidity";
 
 function App() {
   return (
@@ -109,9 +113,27 @@ function App() {
                   </ProtectedRoute>
                 }
               />
-              <Route path="/find" element={<ProtectedRoute><PoolFinder/></ProtectedRoute>} />
+              <Route
+                path="/find"
+                element={
+                  <ProtectedRoute>
+                    <PoolFinder />
+                  </ProtectedRoute>
+                }
+              />
 
-              <Route path="/remove/:tokens" element={<RedirectOldRemoveLiquidityPathStructure />} />
+              <Route
+                path="/remove/:tokens"
+                element={<RedirectOldRemoveLiquidityPathStructure />}
+              />
+              <Route
+                path="/remove/:currencyIdA/:currencyIdB"
+                element={
+                  <ProtectedRoute>
+                    <RemoveLiquidity />
+                  </ProtectedRoute>
+                }
+              />
             </Route>
           </Routes>
         </BrowserRouter>
