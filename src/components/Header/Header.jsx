@@ -24,7 +24,7 @@ const Header = () => {
     <header>
       <div className={style.logo}>
         <Link to='/'>
-          <img src='/img/sword-logov2.png' alt='Home' style={{width: "155px", height: "73px"}}/>
+          <img src='/img/sword-logov2.png' alt='Home' className={appStyle.logo}/>
         </Link>
         <ConnectWallet sound />
       </div>

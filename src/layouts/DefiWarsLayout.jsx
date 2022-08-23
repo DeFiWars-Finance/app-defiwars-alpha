@@ -7,7 +7,7 @@ import Header from "../components/Header/Header";
 const DefiWarsLayout = () => (
   <div className={appStyle.Sword}>
     <Header />
-    <div className={appStyle.container}>
+    <div className={appStyle.container} style={{paddingBottom: "250px"}}>
       <Outlet />
     </div>
     <div className={appStyle.footer}>

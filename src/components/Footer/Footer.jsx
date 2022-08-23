@@ -69,6 +69,18 @@ class Footer extends React.Component {
           </div>
         </div>
       </div>
+      // <div className={style.footerContainer}>
+      //   <div className={style.footerItem}>
+      //     <img alt='logo' src='/img/sword-logov2.png' className={appStyle.logo}/>
+      //     <div className={style.copyright}>Copyright (c) 2021-2022.<br/>DeFiWars Finance</div>
+      //   </div>
+      //   <div className={style.footerItem}>
+      //     <div className={style.privacy}>Privacy Policy<br/><br/></div>
+      //   </div>
+      //   <div className={style.footerItem}>
+      //     <div className={style.privacy}>Terms & Conditions<br/><br/></div>
+      //   </div>
+      // </div>
     );
   }
 }

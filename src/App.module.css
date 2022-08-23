@@ -63,6 +63,11 @@ img {
   src: url("./assets/fonts/Orbitron-Regular.ttf");
 }
 
+@font-face {
+  font-family: PressStart2P;
+  src: url("./assets/fonts/Press_Start_2P/PressStart2P-Regular.ttf");
+}
+
 /* Указываем понятную периодичность в потоке данных у article*/
 article > * + * {
   margin-top: 1em;
@@ -93,6 +98,12 @@ select {
 
 .flexauto {
   flex: auto;
+}
+
+.logo {
+  width: 155px;
+  height: 73px;
+  filter: drop-shadow(-3px 2px 6px #FFC803);
 }
 
 @media (min-width: 575.98px) {
@@ -248,6 +259,10 @@ select {
   bottom: 10px;
   left: 50%;
   transform: translateX(-50%);
+  width: 100%;
+  padding: 0px 50px;
+  display: flex;
+  justify-content: center;
 }
 
 iframe {
