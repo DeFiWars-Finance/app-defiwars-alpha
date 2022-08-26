@@ -95,13 +95,13 @@ const Menu = () => {
       {state.width < 768 ? (
         <MenuMobile styles={styles} right pageWrapId="root">
           <Link to="/What_is_DWARF">
-            What is $DWARF?
+              DWARF
           </Link>
 
           <a
             onClick={() => showHideDefi(!state.showDefi)}
           >
-            DeFi Products
+            Services
           </a>
 
           <Collapse isOpened={state.showDefi}>
@@ -115,23 +115,24 @@ const Menu = () => {
               <Link to="/swap">DWARFSwap</Link>
               <Link to="/NFA_Market">NFT Marketplace</Link>
               <Link to="/The_Army">My NFTs</Link>
+              <Link to="/NFA_Collections">Collections</Link>
             </div>
           </Collapse>
 
-          <Link exact to="/About_the_Team">The Team</Link>
+          <Link exact to="/About_the_Team">Team</Link>
 
-          <Link exact to="/Make_Contact">Make Contact</Link>
+          <Link exact to="/Make_Contact">Contact</Link>
         </MenuMobile>
       ) : null
       }
       <div className={style.Menu}>
         <ul className={style.mainMenu}>
           <li>
-            <Link exact to="/What_is_DWARF">What is $DWARF?</Link>
+            <Link exact to="/What_is_DWARF"><div className={style.menuItem}>DWARF</div></Link>
           </li>
           <li onMouseEnter={() => showHideDefi(true)}
             onMouseLeave={() => showHideDefi(false)}>
-            <a href="#!">DeFi Products</a>
+            <a href="#!"><div className={style.menuItem}>Services</div></a>
             <Collapse isOpened={state.showDefi}>
               <div
                 className={classNames(style.submenu, { [style.submenuActive]: state.showDefi })} >
@@ -139,14 +140,15 @@ const Menu = () => {
                 <Link to="/swap">DWARFSwap</Link>
                 <Link to="/NFA_Market">NFT Marketplace</Link>
                 <Link to="/The_Army">My NFTs</Link>
+                <Link to="/NFA_Collections">Collections</Link>
               </div>
             </Collapse>
           </li>
           <li>
-            <Link exact to="/About_the_Team">The Team</Link>
+            <Link exact to="/About_the_Team"><div className={style.menuItem}>Team</div></Link>
           </li>
           <li>
-            <Link exact to="/Make_Contact">Make Contact</Link>
+            <Link exact to="/Make_Contact"><div className={style.menuItem}>Contact</div></Link>
           </li>
         </ul>
       </div>

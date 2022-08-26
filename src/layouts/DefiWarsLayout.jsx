@@ -8,9 +8,11 @@ const DefiWarsLayout = () => (
   <div className={appStyle.Sword}>
     <Header />
     <div className={appStyle.container}>
-      <Outlet/>
+      <Outlet />
     </div>
-    <Footer />
+    <div className={appStyle.footer}>
+      <Footer />
+    </div>
   </div>
 );
 

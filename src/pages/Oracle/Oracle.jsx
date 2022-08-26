@@ -1,4 +1,7 @@
 import React, { useEffect, useState } from "react";
+// import { Modal } from "antd";
+// import "antd/dist/antd.css";
+import Modal from 'react-modal';
 import style from "./Oracle.css";
 import appStyle from "../../App.module.css";
 import Store from "../../store/store";
@@ -62,9 +65,39 @@ const Oracle = (props) => {
 
   const [isShowState, setIsShowState] = useState(initialIsShowState);
 
+  const [character, setCharacter] = useState("dwarf_sith");
+
+  const [nftModal, setNftModal] = useState(false);
+
+  const [selectedNft, setSelectedNft] = useState({});
+
   const { haveNFT, NFTs, JediPower, jediLP, darthLP, DarthPower } = state;
 
   const { genesis, jedi, darth } = isShowState;
+
+  const characterName = {
+    dwarf_sith: "DWARF Sith",
+    dwarf_vader: "DWARF Vader",
+    obi_dwarf: "OBI-DWARF",
+    yo_dwarf: "YODWARF",
+  };
+
+  const nftModalStyles = {
+    overlay: {
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      backgroundColor: "rgba(0, 0, 0, 0.8)"
+    },
+    // content: {
+    //   top: '50%',
+    //   left: '50%',
+    //   right: 'auto',
+    //   bottom: 'auto',
+    //   marginRight: '-50%',
+    //   transform: 'translate(-50%, -50%)',
+    // },
+  }
 
   const toogleIsShow = (index) => {
     const tempState = { ...isShowState };
@@ -101,7 +134,6 @@ const Oracle = (props) => {
         return false;
       }
     }).forEach((NFT) => {
-      console.log("xxxxxxxxxxxxxx", NFT);
       tempJediPower.pd = Math.floor(
         (tempJediPower.pd + parseFloat(NFT.amount) * NFT.pd) / (parseFloat(NFT.amount) + 1)
       );
@@ -152,8 +184,6 @@ const Oracle = (props) => {
     });
 
     setState({ ...state, JediPower: tempJediPower, DarthPower: tempDarthPower });
-    console.log("tempJediPower", tempJediPower);
-    console.log("tempDarthPower", tempDarthPower);
   };
 
   const balances = () => {
@@ -203,6 +233,7 @@ const Oracle = (props) => {
   };
 
   useEffect(() => {
+    store.getNFTBalances();
     emitter.on("balances", balances);
     emitter.on("nbalances", balances);
 
@@ -216,7 +247,7 @@ const Oracle = (props) => {
 
   const renderNFT = (nft) => {
     return (
-      <div className={appStyle.nfblock}>
+      <div className={appStyle.nfblock} style={{background: "black"}}>
         <div className={appStyle.nfblockPower}>
           <span>Damage: {nft.pd}</span>
           <span>Kinetics: {nft.pk}</span>
@@ -240,18 +271,99 @@ const Oracle = (props) => {
     );
   };
 
+  const renderNftBtn = (nft) => (
+    <div
+      className={style.nftBtnContainer}
+      onClick={() => {
+        setSelectedNft(nft);
+        setNftModal(true);
+      }}
+    >
+      <img src={nft.logo} alt="" />
+    </div>
+  );
+
+  const renderMiami = () => {
+    const miamiNft = NFTs.filter((nft) => nft.character === character && nft.tier === "miami");
+    return (
+      <div className={style.itemContainer}>
+        {miamiNft[0] && renderNftBtn(miamiNft[0])}
+        <div className={style.tierBtn} style={{ backgroundColor: "blue" }}>
+          miami
+        </div>
+      </div>
+    );
+  };
+
+  const renderClassic = () => {
+    const classicNft = NFTs.filter((nft) => nft.character === character && nft.tier === "classic");
+    return (
+      <div className={style.itemContainer}>
+        {classicNft[0] && renderNftBtn(classicNft[0])}
+        <div className={style.tierBtn} style={{ backgroundColor: "darkgoldenrod" }}>
+          classic
+        </div>
+      </div>
+    );
+  };
+
+  const renderCommon = () => {
+    const commonNft = NFTs.filter(
+      (nft) => nft.character === character && nft.tier !== "classic" && nft.tier !== "miami"
+    );
+    return (
+      <>
+        <div className={style.rowContainer}>
+          {commonNft[0] && renderNftBtn(commonNft[0])}
+          {commonNft[1] && renderNftBtn(commonNft[1])}
+          {commonNft[2] && renderNftBtn(commonNft[2])}
+        </div>
+        <div className={style.itemContainer}>
+          <div className={style.rowContainer}>
+            {commonNft[3] && renderNftBtn(commonNft[3])}
+            {commonNft[4] && renderNftBtn(commonNft[4])}
+          </div>
+          <div className={style.tierBtn} style={{ backgroundColor: "deeppink" }}>
+            common
+          </div>
+        </div>
+      </>
+    );
+  };
+
   return (
     <div className={appStyle.container} style={{ minHeight: "658px", marginTop: "0px" }}>
-      <div className={appStyle.flexcol}>
+      <div className={style.characterTitle}>{characterName[character]}</div>
+      <div className={style.rowContainer} style={{ padding: "0px 200px" }}>
+        <div className={style.characterList}>
+          {Object.keys(characterName).map((key) => {
+            return (
+              <div className={style.characterBtn} onClick={() => setCharacter(key)}>
+                {characterName[key]}
+              </div>
+            );
+          })}
+        </div>
+        {renderMiami()}
+        {renderClassic()}
+      </div>
+      {renderCommon()}
+      {/* <Modal className="nftModal" visible={nftModal} footer={null} onCancel={() => setNftModal(false)}>
+        {renderNFT(selectedNft)}
+      </Modal> */}
+      <Modal className="nftModal" isOpen={nftModal} onRequestClose={() => setNftModal(false)} style={nftModalStyles}>
+        {renderNFT(selectedNft)}
+      </Modal>
+      {/* <div className={appStyle.flexcol}>
         <div className={style.genesis} onClick={() => toogleIsShow("genesis")}>
           GENESIS
         </div>
-      </div>
-      <div className={appStyle.flexrow}>
+      </div> */}
+      {/* <div className={appStyle.flexrow}>
         <div className={appStyle.flexcol}>
           <div className={style.textcenter}>
             {genesis.isShow && (
-              <div className={appStyle.nfblock} onClick={() => toogleIsShow("jedi")} style={{ cursor: "pointer" }}>
+              <div className={appStyle.nfblock} style={{ cursor: "pointer" }}>
                 <img src="img/jedi.png" alt="JEDI" />
                 <p>
                   {jediLP} <br /> JEDI/DWARF LP
@@ -281,15 +393,16 @@ const Oracle = (props) => {
                   </tbody>
                 </table>
               </div>
-            )}
+             )}
           </div>
 
           {jedi.isShow && renderJediNFTs()}
+          {renderJediNFTs()}
         </div>
         <div className={appStyle.flexcol}>
           <div className={style.textcenter}>
             {genesis.isShow && (
-              <div className={appStyle.nfblock} onClick={() => toogleIsShow("darth")} style={{ cursor: "pointer" }}>
+              <div className={appStyle.nfblock} style={{ cursor: "pointer" }}>
                 <img src="img/dart.png" alt="DARTH" />
                 <p>
                   {darthLP} <br /> DARTH/DWARF LP
@@ -319,11 +432,12 @@ const Oracle = (props) => {
                   </tbody>
                 </table>
               </div>
-            )}
+            )} 
           </div>
+          {renderDarthNFTs()}
           {darth.isShow && renderDarthNFTs()}
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

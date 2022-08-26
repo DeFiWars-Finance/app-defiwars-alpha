@@ -1,11 +1,20 @@
 import { ChainId, JSBI, Percent, Token, WETH } from '@pancakeswap-libs/sdk'
+import DEFAULT_LIST_TESTNET from './token/pancakeswap_testnet.json';
+import DEFAULT_LIST_MAINNET from './token/pancakeswap_mainnet.json';
+
 export const DEFIWARS_CONECTION="defiwars::connection"
 export const ROUTER_ADDRESS = process.env.REACT_APP_NETWORK === "MAINNET" ? '0x0F2E86E751F44a42bAbB30125d72e47D37cB9DEc' : "0x689D2E85b363f716B50924cb2b194a51c6903E02";
+export const FACTORY_ADDRESS = process.env.REACT_APP_NETWORK === "MAINNET" ? '0x0618adC736Ad781ea772213E86022f858Cdfcb68' : "0x64f998c216c1cd9d5affe7e5c790fe0f00323125";
+export const INIT_CODE_PAIR_HASH = process.env.REACT_APP_NETWORK === "MAINNET" ? '0xffb6ff3a0debad1793517d28597903e93c3a769a3cb743a1d1b913a00a2e6da9' : "0x02ce7026dc6a33e4b614ad705ab5fea12f8a8e5441c29b06301f46c4a0690802";
+
 
 // a list of tokens by chain
 type ChainTokenList = {
   readonly [chainId in ChainId]: Token[]
 }
+
+export const TESTNET_TOKENS = DEFAULT_LIST_TESTNET.tokens.map((token) => new Token(token.chainId, token.address, token.decimals, token.symbol, token.name));
+export const MAINNET_TOKENS = DEFAULT_LIST_MAINNET.tokens.map((token) => new Token(token.chainId, token.address, token.decimals, token.symbol, token.name));
 
 export const DAI = new Token(ChainId.MAINNET, '0x1AF3F329e8BE154074D8769D1FFa4eE058B1DBc3', 18, 'DAI', 'Dai Stablecoin')
 export const BUSD = new Token(ChainId.MAINNET, '0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56', 18, 'BUSD', 'Binance USD')
@@ -21,8 +30,8 @@ const WETH_ONLY: ChainTokenList = {
 
 // used to construct intermediary pairs for trading
 export const BASES_TO_CHECK_TRADES_AGAINST: ChainTokenList = {
-  ...WETH_ONLY,
-  [ChainId.MAINNET]: [...WETH_ONLY[ChainId.MAINNET], DAI, BUSD, BTCB, USDT, UST, ETH],
+  [ChainId.BSCTESTNET]: [...WETH_ONLY[ChainId.BSCTESTNET], ...TESTNET_TOKENS],
+  [ChainId.MAINNET]: [...WETH_ONLY[ChainId.MAINNET], DAI, BUSD, BTCB, USDT, UST, ETH, ...MAINNET_TOKENS],
 }
 
 /**
@@ -41,8 +50,8 @@ export const SUGGESTED_BASES: ChainTokenList = {
 
 // used to construct the list of all pairs we consider by default in the frontend
 export const BASES_TO_TRACK_LIQUIDITY_FOR: ChainTokenList = {
-  ...WETH_ONLY,
-  [ChainId.MAINNET]: [...WETH_ONLY[ChainId.MAINNET], DAI, BUSD, BTCB, USDT],
+  [ChainId.BSCTESTNET]: [...WETH_ONLY[ChainId.BSCTESTNET], ...TESTNET_TOKENS],
+  [ChainId.MAINNET]: [...WETH_ONLY[ChainId.MAINNET], DAI, BUSD, BTCB, USDT, UST, ETH, ...MAINNET_TOKENS],
 }
 
 export const PINNED_PAIRS: { readonly [chainId in ChainId]?: [Token, Token][] } = {

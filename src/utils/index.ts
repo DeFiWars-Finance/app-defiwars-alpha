@@ -4,8 +4,10 @@ import { AddressZero } from '@ethersproject/constants'
 import { JsonRpcSigner, Web3Provider } from '@ethersproject/providers'
 import { BigNumber } from '@ethersproject/bignumber'
 import { abi as IUniswapV2Router02ABI } from '@uniswap/v2-periphery/build/IUniswapV2Router02.json'
+import { abi as IUniswapV2FactoryABI } from '@uniswap/v2-periphery/build/IUniswapV2Factory.json'
 import { ChainId, JSBI, Percent, Token, CurrencyAmount, Currency, ETHER } from '@pancakeswap-libs/sdk'
-import { ROUTER_ADDRESS } from '../constants'
+import { ROUTER_ADDRESS, FACTORY_ADDRESS } from '../constants'
+import dwarfSwapFactoryABI from '../constants/abis/dwarfSwapFactory.json'
 import { TokenAddressMap } from '../state/lists/hooks'
 
 // returns the checksummed address if the address is valid, otherwise returns false
@@ -90,6 +92,10 @@ export function getContract(address: string, ABI: any, library: Web3Provider, ac
 // account is optional
 export function getRouterContract(_: number, library: Web3Provider, account?: string): Contract {
   return getContract(ROUTER_ADDRESS, IUniswapV2Router02ABI, library, account)
+}
+
+export function getFactoryContract(_: number, library: Web3Provider, account?: string): Contract {
+  return getContract(FACTORY_ADDRESS, dwarfSwapFactoryABI, library, account)
 }
 
 export function escapeRegExp(string: string): string {

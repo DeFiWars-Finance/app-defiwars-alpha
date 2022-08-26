@@ -58,6 +58,11 @@ img {
   display: block;
 }
 
+@font-face {
+  font-family: Orbitron;
+  src: url("./assets/fonts/Orbitron-Regular.ttf");
+}
+
 /* Указываем понятную периодичность в потоке данных у article*/
 article > * + * {
   margin-top: 1em;
@@ -87,7 +92,7 @@ select {
 }
 
 .flexauto {
-  flex:auto;
+  flex: auto;
 }
 
 @media (min-width: 575.98px) {
@@ -121,85 +126,85 @@ select {
 }
 
 .flexcol {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .flexrow {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
-.nfblock{
-    width: 300px;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    position: relative;
-    padding: 18px;
-    box-shadow: inset -12.446px -12.446px 31.1151px #353c46, inset 12.446px 12.446px 31.1151px #22262a;
-    border-radius: 5px;
-    margin: 18px 4px;
+.nfblock {
+  width: 300px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  position: relative;
+  padding: 18px;
+  box-shadow: inset -12.446px -12.446px 31.1151px #353c46,
+    inset 12.446px 12.446px 31.1151px #22262a;
+  border-radius: 5px;
+  margin: 18px 4px;
 }
-.nfblock img{
+.nfblock img {
   margin: auto;
   padding: 20px;
-  box-shadow: inset -12.446px -12.446px 31.1151px #353C46, inset 12.446px 12.446px 31.1151px #22262A;
+  box-shadow: inset -12.446px -12.446px 31.1151px #353c46,
+    inset 12.446px 12.446px 31.1151px #22262a;
   border-radius: 50%;
   width: 260px;
   height: 260px;
 }
 
-.nfblock select{
-    background: transparent;
-    color: white;
+.nfblock select {
+  background: transparent;
+  color: white;
 }
-.nfblock input{
-    background: transparent;
-    color: white;
+.nfblock input {
+  background: transparent;
+  color: white;
 }
-.nfblock option{
+.nfblock option {
   color: black;
 }
-.nfblock button{
-    font-family: Audiowide;
-    font-style: normal;
-    font-weight: 400;
-    font-size: 24px;
-    line-height: 31px;
-    color: #fff;
-    text-shadow: 0 0 9px #b0ffff;
-    width: 100%;
-    text-align: center;
-    transition: .5s;
-    padding: 14px;
-    background: none;
-    border: none;
+.nfblock button {
+  font-family: Audiowide;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 31px;
+  color: #fff;
+  text-shadow: 0 0 9px #b0ffff;
+  width: 100%;
+  text-align: center;
+  transition: 0.5s;
+  padding: 14px;
+  background: none;
+  border: none;
 }
-.nfblock p{
+.nfblock p {
   text-align: center;
   color: white;
   padding: 8px;
 }
 
-.nfblock label{
+.nfblock label {
   color: white;
 }
 
-
-.nfblock  button:hover {
-    transition: .5s;
-    text-shadow: 0 0 13px #b0ffff;
-    transform: scale(1.1);
+.nfblock button:hover {
+  transition: 0.5s;
+  text-shadow: 0 0 13px #b0ffff;
+  transform: scale(1.1);
 }
-.nfblock  button:disabled {
-        color: #000;
+.nfblock button:disabled {
+  color: #000;
 }
 
-
-.nfblockPower{
+.nfblockPower {
   position: absolute;
   bottom: 10px;
   left: 10px;
@@ -208,7 +213,7 @@ select {
   flex-direction: column;
   color: #00c3ff;
 }
-.nfblockMine{
+.nfblockMine {
   position: absolute;
   bottom: 10px;
   right: 10px;
@@ -218,21 +223,31 @@ select {
   color: #ffd700;
 }
 
-.pblock{
+.pblock {
   text-align: center;
   color: white;
   padding: 8px;
 }
 
 .Sword {
-    background: url('./img/sword-bg.png') no-repeat center;
-    min-height: 100vh;
-    width: 100vw;
-    background-size: cover;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+  background: url("./img/sword-bgv2.png") repeat center;
+  background-repeat: repeat;
+  min-height: 100vh;
+  width: 100vw;
+  background-size: contain;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  padding-bottom: 50px;
+}
+
+.footer {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 iframe {

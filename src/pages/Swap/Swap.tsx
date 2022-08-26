@@ -204,7 +204,7 @@ const Swap = () => {
       (approvalSubmitted && approval === ApprovalState.APPROVED)) &&
     !(priceImpactSeverity > 3 && !isExpertMode)
 
-  const handleConfirmDismiss = useCallback(() => {
+    const handleConfirmDismiss = useCallback(() => {
     setSwapState((prevState) => ({ ...prevState, showConfirm: false }))
 
     // if there was a tx hash, we want to clear the input

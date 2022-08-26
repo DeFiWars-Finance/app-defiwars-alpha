@@ -11,3 +11,26 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+
+/* .ant-modal-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.nftModal {
+  position: unset;
+  width: max-content !important;
+}
+
+.nftModal .ant-modal-close {
+  display: none !important;
+}
+
+.nftModal .ant-modal-content {
+  background-color: #1e2c57;
+  border-radius: 20px;
+  padding: 100px;
+} */

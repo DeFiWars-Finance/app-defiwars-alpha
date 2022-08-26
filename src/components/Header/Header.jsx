@@ -21,16 +21,16 @@ const Header = () => {
   const dispatch = useDispatch();
 
   return (
-    <header className={appStyle.flexauto}>
+    <header>
       <div className={style.logo}>
         <Link to='/'>
-          <img src='/img/sword-logo.png' alt='Home' />
+          <img src='/img/sword-logov2.png' alt='Home' style={{width: "155px", height: "73px"}}/>
         </Link>
         <ConnectWallet sound />
       </div>
-      <button onClick={onMint}> OnMint</button>
-      <br />
-      <span style={{ color: 'white' }}>{`ethBalance: ${ethBalance}`}</span>
+      {/* <button onClick={onMint}> OnMint</button>
+      <br /> */}
+      {/* <span style={{ color: 'white' }}>{`ethBalance: ${ethBalance}`}</span>
       <br />
       <span style={{ color: 'white' }}>{`jediBalance: ${jediLP}`}</span>
       <br />
@@ -66,9 +66,9 @@ const Header = () => {
         inProcess: false
       }))}>
         setIsInWar
-      </button>
+      </button> */}
 
-      <div className={appStyle.container}>
+      <div className={appStyle.container} style={{marginTop: "0px"}}>
         <Menu />
       </div>
     </header>
