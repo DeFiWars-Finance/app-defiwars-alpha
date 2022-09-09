@@ -27,7 +27,7 @@ import {
   setNFTs,
   setInProcess,
   setAuctionSuccess,
-  setIsOpened
+  setIsOpened,
 } from "./actions";
 
 const currentTimestamp = () => new Date().getTime();
@@ -186,11 +186,11 @@ export const initialState: UserState = {
   testNetId: 97,
   nftJediAddress:
     process.env.REACT_APP_NETWORK === "MAINNET"
-      ? "0x12e66205327e5FAf803839FddB18f76320040737"
+      ? "0xdf53a77Bfe29BeF8Ed5553E49235AfFCf8d1A59C"
       : "0x148FB4cAfE806D92fBb25B53DfC23ADeB4A6744F",
   nftDarthAddress:
     process.env.REACT_APP_NETWORK === "MAINNET"
-      ? "0xb23a0856ff0E74bC093f259F59E8944c9F118a8F"
+      ? "0xA23ac3C61127476F029d87827D04A1d2E0B17101"
       : "0xa2DaaF9f7a79043FB2f03f7D2453dfDAea632762",
   dwarf20Address:
     process.env.REACT_APP_NETWORK === "MAINNET"
@@ -208,7 +208,7 @@ export const initialState: UserState = {
     process.env.REACT_APP_NETWORK === "MAINNET"
       ? "0xcda8906ca5b25c1664edaf6e57850238f4aa19db"
       : "0x149ac22cC6aFD282d3fFd1B18b020ac43ca64113",
-  auctionAddress: process.env.REACT_APP_NETWORK === "MAINNET" ? "0x9AD0197363c0f23b4c097F04A2577c15866696A6" : "",
+  auctionAddress: process.env.REACT_APP_NETWORK === "MAINNET" ? "0x044BdB183Eb1e9E31A7f0cCaF2a52D721eEa4498" : "",
   dwarfABI: [
     {
       inputs: [
