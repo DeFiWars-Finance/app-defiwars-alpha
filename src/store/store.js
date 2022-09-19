@@ -2,6 +2,7 @@ import React from "react";
 import Web3 from "web3";
 import { BigNumber } from "ethers";
 import Multicall from '@dopex-io/web3-multicall';
+import axios from "axios";
 
 var EventEmitter = require("events").EventEmitter;
 var emitter = new EventEmitter();
