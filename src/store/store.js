@@ -45,7 +45,7 @@ class Store extends React.Component {
       nftDarthAddress:
         process.env.REACT_APP_NETWORK === "MAINNET"
           ? "0xb23a0856ff0E74bC093f259F59E8944c9F118a8F"
-          : "0xa2DaaF9f7a79043FB2f03f7D2453dfDAea632762",
+          : "0xa2daaf9f7a79043fb2f03f7d2453dfdaea632762",
       dwarf20Address:
         process.env.REACT_APP_NETWORK === "MAINNET"
           ? "0x33C29af05cA9aE21D8e1bf01Ad5adeFE7b2EE5Ff"
