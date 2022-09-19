@@ -39,6 +39,7 @@ public/spree/products/*
 /public/packs-test
 /node_modules
 /swap/node_modules
+node_modules
 /yarn-error.log
 yarn-debug.log*
 .yarn-integrity
