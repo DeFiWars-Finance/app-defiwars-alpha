@@ -3,6 +3,7 @@ import { useCallback, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { BigNumber } from "ethers";
 import Multicall from '@dopex-io/web3-multicall';
+import axios from "axios";
 import {
   setIsReady,
   setHaveNFT,
@@ -304,6 +305,7 @@ export const useDefiwars = () => {
           multicallArray.push(nftJediContract.methods.price(NFT.id));
           multicallArray.push(nftJediContract.methods.settings(NFT.id));
           multicallArray.push(nftJediContract.methods.maxSupply(NFT.id));
+          multicallArray.push(nftJediContract.methods.uri(NFT.id));
         }
       } else {
         if(nftDarthContract){
@@ -312,6 +314,7 @@ export const useDefiwars = () => {
           multicallArray.push(nftDarthContract.methods.price(NFT.id));
           multicallArray.push(nftDarthContract.methods.settings(NFT.id));
           multicallArray.push(nftDarthContract.methods.maxSupply(NFT.id));
+          multicallArray.push(nftDarthContract.methods.uri(NFT.id));
         }
       }
     }
@@ -319,15 +322,19 @@ export const useDefiwars = () => {
 
     for (let i = 0; i < NFTs.length; i++) {
       let NFT = Object.assign({}, NFTs[i]);
-      NFT.suply = multiResult[i*5];
-      NFT.amount = multiResult[i*5 + 1];
-      NFT.price = parseFloat(multiResult[i*5 + 2])/10**18;
-      NFT.pd = multiResult[i*5 + 3][0];
-      NFT.pk = multiResult[i*5 + 3][1];
-      NFT.ps = multiResult[i*5 + 3][2];
-      NFT.pc = multiResult[i*5 + 3][3];
-      NFT.ph = multiResult[i*5 + 3][4];
-      NFT.total = multiResult[i*5 + 4];
+      NFT.suply = multiResult[i*6];
+      NFT.amount = multiResult[i*6 + 1];
+      NFT.price = parseFloat(multiResult[i*6 + 2])/10**18;
+      NFT.pd = multiResult[i*6 + 3][0];
+      NFT.pk = multiResult[i*6 + 3][1];
+      NFT.ps = multiResult[i*6 + 3][2];
+      NFT.pc = multiResult[i*6 + 3][3];
+      NFT.ph = multiResult[i*6 + 3][4];
+      NFT.total = multiResult[i*6 + 4];
+      const uri = multiResult[i*6 + 5];
+      const url = uri.replace("ipfs://", "https://ipfs.io/ipfs/");
+      const {data: metadata} = await axios.get(url);
+      NFT.logo = metadata.image.replace("ipfs://", "https://ipfs.io/ipfs/");
       updatedNFTs.push(NFT);
     }
     dispatch(
