@@ -2,6 +2,7 @@ import React from "react";
 import Web3 from "web3";
 import { BigNumber } from "ethers";
 import Multicall from '@dopex-io/web3-multicall';
+import axios from "axios";
 
 var EventEmitter = require("events").EventEmitter;
 var emitter = new EventEmitter();
@@ -1755,26 +1756,32 @@ class Store extends React.Component {
         multicallArray.push(jediContract.methods.price(NFT.id));
         multicallArray.push(jediContract.methods.settings(NFT.id));
         multicallArray.push(jediContract.methods.maxSupply(NFT.id));
+        multicallArray.push(jediContract.methods.uri(NFT.id));
       } else {
         multicallArray.push(darthContract.methods.totalSupply(NFT.id));
         multicallArray.push(darthContract.methods.balanceOf(accountAddress, NFT.id));
         multicallArray.push(darthContract.methods.price(NFT.id));
         multicallArray.push(darthContract.methods.settings(NFT.id));
         multicallArray.push(darthContract.methods.maxSupply(NFT.id));
+        multicallArray.push(darthContract.methods.uri(NFT.id));
       }
     }
     const multiResult = await multicall.aggregate(multicallArray);
     for (let i = 0; i < NFTs.length; i++) {
       let NFT = NFTs[i];
-      NFT.suply = multiResult[i*5];
-      NFT.amount = multiResult[i*5 + 1];
-      NFT.price = parseFloat(multiResult[i*5 + 2])/10**18;
-      NFT.pd = multiResult[i*5 + 3][0];
-      NFT.pk = multiResult[i*5 + 3][1];
-      NFT.ps = multiResult[i*5 + 3][2];
-      NFT.pc = multiResult[i*5 + 3][3];
-      NFT.ph = multiResult[i*5 + 3][4];
-      NFT.total = multiResult[i*5 + 4];
+      NFT.suply = multiResult[i*6];
+      NFT.amount = multiResult[i*6 + 1];
+      NFT.price = parseFloat(multiResult[i*6 + 2])/10**18;
+      NFT.pd = multiResult[i*6 + 3][0];
+      NFT.pk = multiResult[i*6 + 3][1];
+      NFT.ps = multiResult[i*6 + 3][2];
+      NFT.pc = multiResult[i*6 + 3][3];
+      NFT.ph = multiResult[i*6 + 3][4];
+      NFT.total = multiResult[i*6 + 4];
+      const uri = multiResult[i*6 + 5];
+      const url = uri.replace("ipfs://", "https://ipfs.io/ipfs/");
+      const {data: metadata} = await axios.get(url);
+      NFT.logo = metadata.image.replace("ipfs://", "https://ipfs.io/ipfs/");
       updatedNFTs.push(NFT);
     }
     this.setStore({ NFTs: updatedNFTs });
