@@ -334,7 +334,7 @@ export const useDefiwars = () => {
       const uri = multiResult[i*6 + 5];
       const url = uri.replace("ipfs://", "https://ipfs.io/ipfs/");
       const {data: metadata} = await axios.get(url);
-      NFT.logo = metadata.image.replace("ipfs://", "https://ipfs.io/ipfs/");
+      NFT.logo = metadata.image.url();
       updatedNFTs.push(NFT);
     }
     dispatch(
@@ -344,17 +344,15 @@ export const useDefiwars = () => {
     );
   
 
-    // Update Each NFT present in colletion
-    // const updatedNfts = await Promise.all(NFTs.map(getNftBalances));
+    // Update Each NFT present in collection
+    const updatedNfts = await Promise.all(NFTs.map(getNftBalances));
+    dispatch(
+      setNFTs({
+        NFTs: updatedNfts,
+      })
+    );
 
-    // dispatch(
-    //   setNFTs({
-    //     NFTs: updatedNfts,
-    //   })
-    // );
-
-    // console.log(updatedNfts);
-  }, [
+  console.log(updatedNfts, [
     dwarfContract,
     getEthBalance,
     getJediBalance,
@@ -365,7 +363,7 @@ export const useDefiwars = () => {
     checkIsInWar,
     NFTs,
     getNftDarthBalance,
-    getNftJediBalance,
+    getNftJediBalance, 
   ]);
 
   const onWar = useCallback(async () => {
