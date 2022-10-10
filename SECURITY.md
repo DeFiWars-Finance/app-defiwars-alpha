@@ -21,4 +21,4 @@ In the future, we will execute our plan to fund a proper Bug Bounty Program to r
 If email contact has failed, please contact one of our Core Team members over Official Telegram Channel & Main Chat.
 You may grab the link in here: https://linktr.ee/defiwars
 
-If Telegram contact has also failed, please contact one of our Core Team members over Official Discord Server: https://discord.gg/e3bBcVwhRc
+If Telegram contact has also failed, please contact one of our Core Team members over Official Discord Server: https://discord.gg/C8s2fUCWuE
