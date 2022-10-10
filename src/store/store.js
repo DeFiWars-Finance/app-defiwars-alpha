@@ -40,11 +40,11 @@ class Store extends React.Component {
       inProcess: false,
       nftJediAddress:
         process.env.REACT_APP_NETWORK === "MAINNET"
-          ? "0x12e66205327e5FAf803839FddB18f76320040737"
+          ? "0xdf53a77Bfe29BeF8Ed5553E49235AfFCf8d1A59C"
           : "0x148FB4cAfE806D92fBb25B53DfC23ADeB4A6744F",
       nftDarthAddress:
         process.env.REACT_APP_NETWORK === "MAINNET"
-          ? "0xb23a0856ff0E74bC093f259F59E8944c9F118a8F"
+          ? "0xA23ac3C61127476F029d87827D04A1d2E0B17101"
           : "0xa2daaf9f7a79043fb2f03f7d2453dfdaea632762",
       dwarf20Address:
         process.env.REACT_APP_NETWORK === "MAINNET"
