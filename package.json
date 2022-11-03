@@ -119,7 +119,11 @@
     "use-sound": "^4.0.1",
     "web-vitals": "^1.0.1",
     "web3": "^1.8.0",
+<<<<<<< HEAD
     "webpack": "^5.74.0",
+=======
+    "webpack": "5.74.0",
+>>>>>>> 6a90f3fed87253a63ad69cdf30e2807b458190b7
     "webpack-dev-server": "4.11.1",
     "webpack-manifest-plugin": "2.2.0",
     "workbox-webpack-plugin": "6.5.4"
